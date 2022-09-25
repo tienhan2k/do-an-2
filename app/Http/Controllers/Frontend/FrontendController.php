@@ -13,22 +13,20 @@ class FrontendController extends Controller
     public function index()
     {
 
-        $sliders = Slider::where('status', '0')->get();
-        $categories = Category::where('status', '0')
+        $category = Category::where('status', '0')
                                 ->inRandomOrder()
-                                ->limit(4)
-                                ->get();
+                                ->first();
+        // dd($category);
+        $sliders = Slider::where('status', '0')->get();
         $products = Product::where('status', '0')
                             ->inRandomOrder()
                             ->limit(8)
                             ->get();
-        $best_sellers = Product::where('status', '0')
-                            ->where('trending', '1')
-                            ->get();
-        $latest_products = Product::where('status', '0')
-                            ->latest()
-                            ->get();
-         return view('frontend.index', compact('sliders', 'categories', 'products', 'best_sellers', 'latest_products'));
+
+        $latest_products = $category->products()->latest()->get();
+        $categories = Category::where('status', '0')->get();
+
+        return view('frontend.index', compact('sliders',  'products', 'latest_products', 'category', 'categories'));
     }
 
     public function categories()
@@ -48,7 +46,7 @@ class FrontendController extends Controller
         $cate_filters = Category::where('status', '0')->get();
 
         if ($category) {
-            $products = $category->products()->paginate(6);
+            $products = $category->products()->paginate(9);
             return view('frontend.collection.products.index', compact('products', 'category', 'best_sellers', 'cate_filters'));
         } else {
             return redirect()->back();

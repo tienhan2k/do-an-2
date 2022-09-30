@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::post('/add-to-cart', [CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [CartController::class, 'deleteProduct']);
+Route::post('/update-cart-item', [CartController::class, 'updateProduct']);
 
 
 

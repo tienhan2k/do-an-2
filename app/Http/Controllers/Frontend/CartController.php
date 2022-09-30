@@ -41,6 +41,20 @@ class CartController extends Controller
         return view('frontend.cart.index', compact('carts_item'));
     }
 
+    public function updateProduct(Request $request)
+    {
+        $prod_id = $request->input('prod_id');
+        $qty = $request->input('qty');
+        if (Auth::check()) {
+            if (Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->exists()) {
+                $cartItem = Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->first();
+                $cartItem->product_qty = $qty;
+                $cartItem->update();
+                return response()->json(['status' => "Đã cập nhật số lượng sản phẩm."]);
+            }
+        }
+    }
+
     public function deleteProduct(Request $request)
     {
         if(Auth::check())
@@ -58,4 +72,6 @@ class CartController extends Controller
             }
 
     }
+
+
 }

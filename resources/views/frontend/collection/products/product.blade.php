@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="wrap-butons">
-                                <button type="button" class="btn add-to-cart addToCartBtn">Add to Cart</button>
+                                <button type="button" class="btn add-to-cart addToCartBtn">Add to Cart</button><br>
                                 <div class="wrap-btn">
                                     <button type="button" class="btn btn-compare">Add Compare</button>
                                     <a href="#" class="btn btn-wishlist">Add Wishlist</a>

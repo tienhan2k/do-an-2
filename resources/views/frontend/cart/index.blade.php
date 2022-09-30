@@ -10,7 +10,7 @@
 
 			<div class="wrap-breadcrumb">
 				<ul>
-					<li class="item-link"><a href="#" class="link">home</a></li>
+					<li class="item-link"><a href="/" class="link">home</a></li>
 					<li class="item-link"><span>cart</span></li>
 				</ul>
 			</div>
@@ -19,8 +19,13 @@
 				<div class="wrap-iten-in-cart">
 					<h3 class="box-title">Products Name</h3>
 					<ul class="products-cart">
+                            @php
+                                $sub_total = 0;
+                                $shipping_fee = 30000;
+                                $total = 0;
+                            @endphp
                         @forelse ($carts_item as $item)
-                            {{-- {{ dd($item->products->productImages[0]); }} --}}
+
                             <li class="pr-cart-item product_data">
                                 <div class="product-image">
                                     <figure><img src="{{ asset('/uploads/products/'.$item->products->productImages[0]->image) }}" alt="{{ $item->products->name }}"></figure>
@@ -30,52 +35,30 @@
                                 </div>
                                 <div class="price-field produtc-price"><p class="price">{{ number_format($item->products->original_price) }} VNĐ</p></div>
                                 <div class="quantity">
-
-
+                                    <input type="hidden" value="{{ $item->product_id }}" class="product_id">
                                     <div class="quantity-input">
                                         <input class="qty-input" type="text" name="quatity" value="{{ $item->product_qty }}" data-max="120"
                                         pattern="[0-9]*">
-                                        <button class="btn btn-increase"></button>
-                                        <button class="btn btn-reduce"></button>
+                                        <button class="btn changeQuantity btn-increase"></button>
+                                        <button class="btn changeQuantity btn-reduce"></button>
                                     </div>
                                 </div>
-                                <div class="price-field sub-total"><p class="price">$256.00</p></div>
+                                <div class="price-field sub-total"><p class="price"></p></div>
                                 <div class="delete">
-                                    <input type="hidden" value="{{ $item->product_id }}" class="product_id">
                                     <button class="btn btn-delete" title="">
                                         <span>Delete</span>
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </li>
-
+                            @php
+                                $sub_total += $item->products->original_price * $item->product_qty;
+                            @endphp
                         @empty
-
+                            <h4 style="text-align: center">Không có sản phẩm nào trong giỏ hàng.</h4>
                         @endforelse
 
-						{{-- <li class="pr-cart-item">
-							<div class="product-image">
-								<figure><img src="assets/images/products/digital_20.jpg" alt=""></figure>
-							</div>
-							<div class="product-name">
-								<a class="link-to-product" href="#">Radiant-360 R6 Wireless Omnidirectional Speaker [White]</a>
-							</div>
-							<div class="price-field produtc-price"><p class="price">$256.00</p></div>
-							<div class="quantity">
-								<div class="quantity-input">
-									<input type="text" name="product-quatity" value="1" data-max="120" pattern="[0-9]*">
-									<a class="btn btn-increase" href="#"></a>
-									<a class="btn btn-reduce" href="#"></a>
-								</div>
-							</div>
-							<div class="price-field sub-total"><p class="price">$256.00</p></div>
-							<div class="delete">
-								<a href="#" class="btn btn-delete" title="">
-									<span>Delete from your cart</span>
-									<i class="fa fa-times-circle" aria-hidden="true"></i>
-								</a>
-							</div>
-						</li> --}}
+
 
 					</ul>
 				</div>
@@ -83,9 +66,9 @@
 				<div class="summary">
 					<div class="order-summary">
 						<h4 class="title-box">Order Summary</h4>
-						<p class="summary-info"><span class="title">Subtotal</span><b class="index">$512.00</b></p>
-						<p class="summary-info"><span class="title">Shipping</span><b class="index">Free Shipping</b></p>
-						<p class="summary-info total-info "><span class="title">Total</span><b class="index">$512.00</b></p>
+						<p class="summary-info"><span class="title">Subtotal</span><b class="index">{{ number_format($sub_total) }} VNĐ</b></p>
+						<p class="summary-info"><span class="title">Shipping</span><b class="index">{{number_format($shipping_fee) }} VNĐ</b></p>
+						<p class="summary-info total-info "><span class="title">Total</span><b class="index">{{ number_format($total = $sub_total + $shipping_fee)}} VNĐ</b></p>
 					</div>
 					<div class="checkout-info">
 						<label class="checkbox-field">
@@ -94,10 +77,10 @@
 						<a class="btn btn-checkout" href="checkout.html">Check out</a>
 						<a class="link-to-shop" href="shop.html">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
 					</div>
-					<div class="update-clear">
+					{{-- <div class="update-clear">
 						<a class="btn btn-clear" href="#">Clear Shopping Cart</a>
 						<a class="btn btn-update" href="#">Update Shopping Cart</a>
-					</div>
+					</div> --}}
 				</div>
 
 				<div class="wrap-show-advance-info-box style-1 box-in-site">

@@ -40,6 +40,7 @@
 	<script src="{{ asset('assets/js/jquery.flexslider.js') }}"></script>
 	<script src="{{ asset('assets/js/functions.js') }}"></script>
 	<script src="{{ asset('assets/js/jquery-ui-1.12.4.minb8ff.js?ver=1.12.4') }}"></script>
+	<script src="{{ asset('assets/js/custom-cart.js') }}"></script>
     @yield('scripts')
 
 </body>

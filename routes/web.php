@@ -79,20 +79,21 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
 
 Auth::routes();
 
-Route::get('/cart', [CartController::class, 'viewCart']);
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/collections', [FrontendController::class, 'categories'])->name('frontend.categories');
-Route::get('/{category_slug}', [FrontendController::class, 'products'])->name('frontend.products');
-Route::get('/{category_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
+Route::get('/collections/{category_slug}', [FrontendController::class, 'products'])->name('frontend.products');
+Route::get('/collections/{category_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
 
 
-
-
-// Route::middleware(['auth'])->group(function () {
-// });
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart.view');
+});
 Route::post('/add-to-cart', [CartController::class, 'addProduct']);
+Route::post('/delete-cart-item', [CartController::class, 'deleteProduct']);
+
+
+
 
 
 

@@ -351,7 +351,7 @@
                                 @forelse ($products as $related_pro)
                                     <div class="product product-style-2 equal-elem ">
                                         <div class="product-thumnail">
-                                            <a href="{{ url($category->slug . '/' . $related_pro->slug) }}"
+                                            <a href="{{ url('/collections/'.$category->slug.'/'.$related_pro->slug) }}"
                                                 title="{{ $related_pro->name }}">
                                                 <figure><img
                                                         src="{{ asset('uploads/products/' . $related_pro->productImages[0]->image) }}"
@@ -394,7 +394,7 @@
     <!--main area-->
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     <script>
         $(document).ready(function() {
 
@@ -422,7 +422,7 @@
                     success: function(response) {
                         alert(response.status);
                     }
-                   
+
                 });
             });
 
@@ -452,4 +452,4 @@
             });
         })
     </script>
-@endsection
+@endsection --}}

@@ -22,7 +22,7 @@
             @forelse ($categories as $cateItem)
                 <div class="col-6 col-md-3">
                     <div class="category-card">
-                        <a href="{{ url($cateItem->slug) }}">
+                        <a href="{{url('/collections/'.$cateItem->slug)}}">
                             <div class="category-card-img">
                                 <img src="{{ asset($cateItem->image) }}" class="w-100" alt="Laptop">
                             </div>

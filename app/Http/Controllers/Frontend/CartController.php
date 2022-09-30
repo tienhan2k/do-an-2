@@ -36,7 +36,26 @@ class CartController extends Controller
 
     public function viewCart()
     {
-        // $carts_item = Cart::where('user_id', Auth::id())->get();
-        return view('frontend.cart.index');
+        $carts_item = Cart::where('user_id', Auth::id())->get();
+        // dd($carts_item);
+        return view('frontend.cart.index', compact('carts_item'));
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        if(Auth::check())
+            {
+                $prod_id = $request->input("prod_id");
+                if(Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->exists())
+                {
+                    $cartItem = Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->first();
+                    $cartItem->delete();
+                    return response()->json(['status' => "Xoá sản phẩm thành công!"]);
+                }
+            }
+            else {
+                return response()->json(['status' => "Đăng nhập để tiếp tục."]);
+            }
+
     }
 }

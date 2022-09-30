@@ -72,12 +72,12 @@
                             <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
                                 <div class="product product-style-3 equal-elem ">
                                     <div class="product-thumnail">
-                                        <a href="{{ url($category->slug.'/'.$item->slug) }}" title="{{ $item->name }}">
+                                        <a href="{{ url('/collections/'.$category->slug.'/'.$item->slug) }}" title="{{ $item->name }}">
                                             <figure><img src="{{ asset('uploads/products/' . $item->productImages[0]->image)}}" alt="{{ $item->name }}"></figure>
                                         </a>
                                     </div>
                                     <div class="product-info">
-                                        <a href="{{ url($item->slug) }}" class="product-name"><span>{{ $item->name }}</span></a>
+                                        <a href="{{ url('/collections/'.$category->slug.'/'.$item->slug) }}" class="product-name"><span>{{ $item->name }}</span></a>
                                         <div class="wrap-price"><span class="product-price">{{ number_format($item->original_price) }} VNĐ</span></div>
                                         <a href="#" class="btn add-to-cart">Add To Cart</a>
                                     </div>

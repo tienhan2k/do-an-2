@@ -135,11 +135,11 @@
                             </a>
                         </div>
                         <div class="wrap-icon-section minicart">
-                            <a href="{{ url('cart') }}" class="link-direction">
+                            <a href="{{ route('frontend.cart.view') }}" class="link-direction">
                                 <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                                 <div class="left-info">
                                     <span class="index">156 items</span>
-                                    <a href="{{ url('cart') }}" class="title">CART</a>
+                                    <a href="{{ route('frontend.cart.view') }}" class="title">CART</a>
                                 </div>
                             </a>
                         </div>

@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="product-info">
                                         <a href="{{ url($item->slug) }}" class="product-name"><span>{{ $item->name }}</span></a>
-                                        <div class="wrap-price"><span class="product-price">{{ number_format($item->original_price) }}</span></div>
+                                        <div class="wrap-price"><span class="product-price">{{ number_format($item->original_price) }} VNĐ</span></div>
                                         <a href="#" class="btn add-to-cart">Add To Cart</a>
                                     </div>
                                 </div>
@@ -94,13 +94,10 @@
                 </div>
 
                 <div class="wrap-pagination-info">
-                    <ul class="page-numbers">
-                        <li><span class="page-number-item current" >1</span></li>
-                        <li><a class="page-number-item" href="#" >2</a></li>
-                        <li><a class="page-number-item" href="#" >3</a></li>
-                        <li><a class="page-number-item next-link" href="#" >Next</a></li>
+                    <ul class="page-numbers text-center">
+                        {{ $products->links() }}
                     </ul>
-                    <p class="result-count">Showing 1-8 of 12 result</p>
+                    {{-- <p class="result-count">Showing 1-8 of 12 result</p> --}}
                 </div>
             </div><!--end main products area-->
 

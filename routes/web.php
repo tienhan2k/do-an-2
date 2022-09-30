@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FrontendController;
 
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
@@ -78,17 +79,20 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
 
 Auth::routes();
 
+Route::get('/cart', [CartController::class, 'viewCart']);
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/collections', [FrontendController::class, 'categories'])->name('frontend.categories');
 Route::get('/{category_slug}', [FrontendController::class, 'products'])->name('frontend.products');
-Route::get('/{product_slug}', [FrontendController::class, 'productDetails']);
+Route::get('/{category_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/cart', [FrontendController::class, 'index'])->name('frontend.index');
-});
 
+
+// Route::middleware(['auth'])->group(function () {
+// });
+
+Route::post('/add-to-cart', [CartController::class, 'addProduct']);
 
 
 

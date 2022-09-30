@@ -97,7 +97,7 @@
                             <form action="#" id="form-search-top" name="form-search-top">
                                 <input type="text" name="search" value="" placeholder="Search here...">
                                 <button form="form-search-top" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                <div class="wrap-list-cate">
+                                {{-- <div class="wrap-list-cate">
                                     <input type="hidden" name="product-cate" value="0" id="product-cate">
                                     <a href="#" class="link-control">All Category</a>
                                     <ul class="list-cate">
@@ -119,7 +119,7 @@
                                         <li class="level-2">Mp3 Player & Headphones</li>
                                         <li class="level-2">Table & Accessories</li>
                                     </ul>
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                     </div>
@@ -135,11 +135,11 @@
                             </a>
                         </div>
                         <div class="wrap-icon-section minicart">
-                            <a href="#" class="link-direction">
+                            <a href="{{ url('cart') }}" class="link-direction">
                                 <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                                 <div class="left-info">
-                                    <span class="index">4 items</span>
-                                    <span class="title">CART</span>
+                                    <span class="index">156 items</span>
+                                    <a href="{{ url('cart') }}" class="title">CART</a>
                                 </div>
                             </a>
                         </div>

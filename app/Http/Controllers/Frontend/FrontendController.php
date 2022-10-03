@@ -29,6 +29,15 @@ class FrontendController extends Controller
         return view('frontend.index', compact('sliders',  'products', 'latest_products', 'category', 'categories'));
     }
 
+    public function getAllProducts()
+    {
+
+        return view('frontend.collection.products.all-products', [
+            'products' => Product::where('status', '0')->paginate(9),
+            // 'category' => Category::where('status', '0')->get()
+        ]);
+    }
+
     public function categories()
     {
         return view('frontend.collection.categories.index', [

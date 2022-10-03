@@ -6,7 +6,15 @@
 
 <main id="main">
     <div class="container">
-
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                @if (session('message'))
+                    <div class="alert alert-success">{{ session('message') }}</div>
+                @endif
+            </div>
+        </div>
+        <br>
         <!--MAIN SLIDE-->
         <div class="wrap-main-slide">
             <div class="slide-carousel owl-carousel style-nav-1" data-items="1" data-loop="1" data-nav="true" data-dots="false">

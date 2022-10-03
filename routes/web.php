@@ -10,6 +10,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
@@ -81,6 +82,7 @@ Auth::routes();
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/all-products', [FrontendController::class, 'getAllProducts'])->name('frontend.all_products');
 Route::get('/collections', [FrontendController::class, 'categories'])->name('frontend.categories');
 Route::get('/collections/{category_slug}', [FrontendController::class, 'products'])->name('frontend.products');
 Route::get('/collections/{category_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
@@ -88,6 +90,8 @@ Route::get('/collections/{category_slug}/{product_slug}', [FrontendController::c
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart.view');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('frontend.checkout.view');
+    Route::post('/place-order', [CheckoutController::class, 'placeOrder'])->name('frontend.checkout.place-order');
 });
 Route::post('/add-to-cart', [CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [CartController::class, 'deleteProduct']);

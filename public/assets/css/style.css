@@ -4812,7 +4812,7 @@ table.shop_attributes tbody{
     margin-bottom: 10px;
 }
 .wrap-address-billing .row-in-form{
-    margin: 0;
+    margin: 0px;
     display: block;
     float: left;
     width: calc( 50% - 15px );

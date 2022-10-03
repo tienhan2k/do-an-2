@@ -36,12 +36,19 @@
                                 <div class="price-field produtc-price"><p class="price">{{ number_format($item->products->original_price) }} VNĐ</p></div>
                                 <div class="quantity">
                                     <input type="hidden" value="{{ $item->product_id }}" class="product_id">
-                                    <div class="quantity-input">
-                                        <input class="qty-input" type="text" name="quatity" value="{{ $item->product_qty }}" data-max="120"
-                                        pattern="[0-9]*">
-                                        <button class="btn changeQuantity btn-increase"></button>
-                                        <button class="btn changeQuantity btn-reduce"></button>
-                                    </div>
+                                    @if ($item->products->quantity >= $item->product_qty)
+                                        <div class="quantity-input">
+                                            <input class="qty-input" type="text" name="quatity" value="{{ $item->product_qty }}" data-max="120"
+                                            pattern="[0-9]*">
+                                            <button class="btn changeQuantity btn-increase"></button>
+                                            <button class="btn changeQuantity btn-reduce"></button>
+                                        </div>
+                                        @php
+                                        $sub_total += $item->products->original_price * $item->product_qty;
+                                        @endphp
+                                    @else
+                                        <h4 class="text-center">Out of stock</h4>
+                                    @endif
                                 </div>
                                 <div class="price-field sub-total"><p class="price"></p></div>
                                 <div class="delete">
@@ -51,9 +58,7 @@
                                     </button>
                                 </div>
                             </li>
-                            @php
-                                $sub_total += $item->products->original_price * $item->product_qty;
-                            @endphp
+
                         @empty
                             <h4 style="text-align: center">Không có sản phẩm nào trong giỏ hàng.</h4>
                         @endforelse
@@ -74,8 +79,8 @@
 						<label class="checkbox-field">
 							<input class="frm-input " name="have-code" id="have-code" value="" type="checkbox"><span>I have promo code</span>
 						</label>
-						<a class="btn btn-checkout" href="checkout.html">Check out</a>
-						<a class="link-to-shop" href="shop.html">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+						<a class="btn btn-checkout" href="{{ route('frontend.checkout.view') }}">Check out</a>
+						<a class="link-to-shop" href="{{ route('frontend.categories') }}">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
 					</div>
 					{{-- <div class="update-clear">
 						<a class="btn btn-clear" href="#">Clear Shopping Cart</a>

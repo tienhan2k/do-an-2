@@ -63,7 +63,9 @@ $(document).ready(function () {
         }
     });
 
-    $('.btn-delete').click(function (e) {
+    // $('.btn-delete').click(function (e) {
+    $(document).on('click', '.btn-delete', function (e) {
+
         e.preventDefault();
 
         var prod_id = $(this)
@@ -84,8 +86,9 @@ $(document).ready(function () {
                 'prod_id': prod_id,
             },
             success: function (response) {
-                // swal(response.status);
-                location.reload();
+                // location.reload();
+                $('.cartitems').load(location.href + " .cartitems");
+                swal('',response.status, 'success');
             },
         });
     });

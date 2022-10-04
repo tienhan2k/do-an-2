@@ -244,7 +244,7 @@
             url: "/add-to-cart/" + id,
 
         }).done(function (response) {
-                swal(response.status);
+                swal('', response.status, 'success');
             });
     }
 </script>

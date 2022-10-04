@@ -14,11 +14,11 @@
 					<li class="item-link"><span>cart</span></li>
 				</ul>
 			</div>
-			<div class=" main-content-area">
+			<div class=" main-content-area cartitems">
 
 				<div class="wrap-iten-in-cart">
 					<h3 class="box-title">Products Name</h3>
-					<ul class="products-cart">
+					<ul class="products-cart ">
                             @php
                                 $sub_total = 0;
                                 $shipping_fee = 30000;

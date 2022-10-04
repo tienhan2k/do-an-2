@@ -127,7 +127,7 @@
                                         </div>
                                         <p class="summary-info grand-total"><span>Grand Total</span> <span
                                                 class="grand-total-price">{{ number_format($total = $sub_total + $shipping_fee)}} VNĐ</span></p>
-                                        <a href="thankyou.html" class="btn btn-medium">Place order now</a>
+                                        <button type="submit" class="btn btn-medium">Place order now</button>
                                     </div>
                                     <div class="summary-item shipping-method">
                                         <h4 class="title-box f-title">Shipping method</h4>
@@ -139,7 +139,7 @@
                                             <input id="coupon-code" type="text" name="coupon-code" value=""
                                                 placeholder="">
                                         </p>
-                                        <button type="submit" class="btn btn-small">Apply</button>
+                                        <button  class="btn btn-small">Apply</button>
                                     </div>
                                 </div>
                             </form>

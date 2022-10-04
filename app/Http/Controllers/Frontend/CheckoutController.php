@@ -16,15 +16,20 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        return view('frontend.checkout.index',[
-            'cartItems' => Cart::where('user_id', Auth::id())->get(),
-        ]);
+        $cartItems = Cart::where('user_id', Auth::id())->get();
+        // dd($cartItems->count());
+        if ($cartItems->count() == 0) {
+            return redirect('/cart')->with('error', 'YOU MUST CHOICE A PRODUCT!');
+        } else {
+            return view('frontend.checkout.index', compact('cartItems'));
+        }
+
+
     }
 
     public function placeOrder(CheckoutFormRequest $request)
     {
         $request->validated();
-
         $order = Order::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
@@ -35,7 +40,7 @@ class CheckoutController extends Controller
             'province' => $request->province,
             'district' => $request->district,
             'message' => $request->message,
-            'tracking_no' => 'VanTien'.rand(0000, 9999),
+            'tracking_no' => 'vantien'.rand(0000, 9999),
             'status' => 0,
         ]);
 
@@ -54,8 +59,8 @@ class CheckoutController extends Controller
 
         if (Auth::user()->address == NULL) {
             User::where('id', Auth::id())->first()->update([
-                'name' => $request->name,
-                'email' => $request->email,
+                // 'name' => $request->name,
+                // 'email' => $request->email,
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'city' => $request->city,
@@ -66,7 +71,7 @@ class CheckoutController extends Controller
         $cartItems = Cart::where('user_id', Auth::id())->get();
         Cart::destroy($cartItems);
 
-        return redirect('/')->with('status', 'Successfully! Thank you for your order.');
+        return redirect('/')->with('success', 'Successfully! Thank you for your order.');
     }
 
 }

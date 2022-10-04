@@ -15,26 +15,24 @@ class CartController extends Controller
         $prod_id = $request->input('prod_id');
         $prod_qty = $request->input('prod_qty');
 
-
         if (Auth::check()) {
             $prod_check = Product::where('id', $prod_id)->first();
             if ($prod_check) {
                 if (Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json(['status' => $prod_check->name . " đã tồn tại trong giỏ hàng."]);
+                    return response()->json(['status' => $prod_check->name . " is available in your cart."]);
                 } else {
                     $cart_item = new Cart();
                     $cart_item->product_id = $prod_id;
                     $cart_item->user_id = Auth::id();
                     $cart_item->product_qty = $prod_qty;
                     $cart_item->save();
-                    return response()->json(['status' => $prod_check->name . " đã được thêm vào giỏ hàng."]);
+                    return response()->json(['status' => $prod_check->name . " added successfully. Congrats!"]);
                 }
             }
         } else {
-            return response()->json(['status' => "Hãy đăng nhập để tiếp tục."]);
+            return response()->json(['status' => "Please login to add this item."]);
         }
     }
-
 
     public function addProductInAllProductPage($id)
     {
@@ -54,11 +52,11 @@ class CartController extends Controller
                     $cart_item->user_id = Auth::id();
                     $cart_item->product_qty = $prod_qty;
                     $cart_item->save();
-                    return response()->json(['status' => $prod_check->name . " đã được thêm vào giỏ hàng."]);
+                    return response()->json(['status' => $prod_check->name . " added successfully. Congrats!"]);
                 }
             }
         } else {
-            return response()->json(['status' => "Hãy đăng nhập để tiếp tục."]);
+            return response()->json(['status' => "Please login to add this item."]);
         }
     }
 
@@ -78,7 +76,7 @@ class CartController extends Controller
                 $cartItem = Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->first();
                 $cartItem->product_qty = $qty;
                 $cartItem->update();
-                return response()->json(['status' => "Đã cập nhật số lượng sản phẩm."]);
+                return response()->json(['status' => "We just updated your product quantity."]);
             }
         }
     }
@@ -92,14 +90,13 @@ class CartController extends Controller
                 {
                     $cartItem = Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->first();
                     $cartItem->delete();
-                    return response()->json(['status' => "Xoá sản phẩm thành công!"]);
+                    return response()->json(['status' => "Delete successfully."]);
                 }
             }
             else {
-                return response()->json(['status' => "Đăng nhập để tiếp tục."]);
+                return response()->json(['status' => "Please login to delete this item."]);
             }
 
     }
-
 
 }

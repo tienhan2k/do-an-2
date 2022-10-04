@@ -66,7 +66,7 @@ class CheckoutController extends Controller
         $cartItems = Cart::where('user_id', Auth::id())->get();
         Cart::destroy($cartItems);
 
-        return redirect('/')->with('message', 'Successfully! Thank you for your order.');
+        return redirect('/')->with('status', 'Successfully! Thank you for your order.');
     }
 
 }

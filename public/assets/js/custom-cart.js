@@ -3,13 +3,14 @@ $(document).ready(function () {
         e.preventDefault();
 
         var prod_id = $(this)
-            .closest(".product_data")
-            .find(".product_id")
-            .val();
+                    .closest(".product_data")
+                    .find(".product_id")
+                    .val();
+
         var prod_qty = $(this)
-            .closest(".product_data ")
-            .find(".qty-input")
-            .val();
+                    .closest(".product_data ")
+                    .find(".qty-input")
+                    .val();
 
         // alert(prod_id);
         // alert(prod_qty);
@@ -24,10 +25,10 @@ $(document).ready(function () {
             url: "/add-to-cart",
             data: {
                 'prod_id': prod_id,
-                'prod_qty': prod_qty,
+                'prod_qty': prod_qty
             },
             success: function (response) {
-                alert(response.status);
+                swal(response.status);
             },
         });
     });
@@ -83,8 +84,8 @@ $(document).ready(function () {
                 'prod_id': prod_id,
             },
             success: function (response) {
-                window.location.reload();
-                alert(response.status);
+                // swal(response.status);
+                location.reload();
             },
         });
     });

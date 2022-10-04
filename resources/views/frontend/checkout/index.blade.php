@@ -65,8 +65,8 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4 class="text-center">Items</h4>
-                                            <hr>
+                                            <h3 class="text-center"><strong>Items</strong></h3>
+                                            <br>
                                             <table class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
@@ -76,13 +76,22 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @php
+                                                        $sub_total = 0;
+                                                        $shipping_fee = 30000;
+                                                        $total = 0;
+                                                    @endphp
                                                     @foreach ($cartItems as $item)
+                                                        @php
+                                                            $sub_total += $item->products->original_price * $item->product_qty;
+                                                        @endphp
                                                         <tr>
                                                             <td>{{ $item->products->name }}</td>
                                                             <td class="text-center">{{ $item->product_qty }}</td>
-                                                            <td class="text-center">{{ number_format($item->products->original_price) }}
+                                                            <td class="text-center">{{ number_format($sub_total) }}
                                                                 VNĐ</td>
                                                         </tr>
+
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -117,13 +126,13 @@
                                             </label>
                                         </div>
                                         <p class="summary-info grand-total"><span>Grand Total</span> <span
-                                                class="grand-total-price">$100.00</span></p>
+                                                class="grand-total-price">{{ number_format($total = $sub_total + $shipping_fee)}} VNĐ</span></p>
                                         <a href="thankyou.html" class="btn btn-medium">Place order now</a>
                                     </div>
                                     <div class="summary-item shipping-method">
                                         <h4 class="title-box f-title">Shipping method</h4>
                                         <p class="summary-info"><span class="title">Flat Rate</span></p>
-                                        <p class="summary-info"><span class="title">{{ number_format(30000) }} VNĐ</span></p>
+                                        <p class="summary-info"><span class="title">{{ number_format($shipping_fee) }} VNĐ</span></p>
                                         <h4 class="title-box">Discount Codes</h4>
                                         <p class="row-in-form">
                                             <label for="coupon-code">Enter Your Coupon code:</label>

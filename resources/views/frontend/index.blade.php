@@ -6,7 +6,8 @@
 
 <main id="main">
     <div class="container">
-        <br>
+        
+        {{-- <br>
         <div class="row">
             <div class="col-md-12">
                 @if (session('message'))
@@ -14,7 +15,8 @@
                 @endif
             </div>
         </div>
-        <br>
+        <br> --}}
+
         <!--MAIN SLIDE-->
         <div class="wrap-main-slide">
             <div class="slide-carousel owl-carousel style-nav-1" data-items="1" data-loop="1" data-nav="true" data-dots="false">
@@ -109,7 +111,7 @@
                                 @foreach ($latest_products as $latest)
                                     <div class="product product-style-2 equal-elem ">
                                         <div class="product-thumnail">
-                                            <a href="{{ $category->slug.'/'. $latest->slug }}" title="{{ $latest->name }}">
+                                            <a href="{{ url('/collections/').$category->slug.'/'. $latest->slug }}" title="{{ $latest->name }}">
                                                 <figure><img src="{{ asset('uploads/products/' . $latest->productImages[0]->image)}}" width="800" height="800" alt="{{ $latest->name }}"></figure>
                                             </a>
                                             {{-- <div class="group-flash">
@@ -148,7 +150,7 @@
                                     @foreach ($categories as $item)
                                         <div class="product product-style-2 equal-elem ">
                                             <div class="product-thumnail">
-                                                <a href="detail.html" title="{{ $item->name }}">
+                                                <a href="{{ url('/collections/'.$item->slug) }}" title="{{ $item->name }}">
                                                     <figure><img src="{{ asset($item->image) }}" width="800" height="800" alt=""></figure>
                                                 </a>
                                             </div>

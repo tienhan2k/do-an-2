@@ -18,7 +18,7 @@
                 </ul>
             </div>
             <div class="row product_data">
-
+ 
                 <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
                     <div class="wrap-product-detail">
                         <div class="detail-media">
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="wrap-butons">
-                                <button type="button" class="btn add-to-cart addToCartBtn">Add to Cart</button><br>
+                                <a type="button" class="btn add-to-cart addToCartBtn">Add to Cart</a><br>
                                 <div class="wrap-btn">
                                     <button type="button" class="btn btn-compare">Add Compare</button>
                                     <a href="#" class="btn btn-wishlist">Add Wishlist</a>
@@ -374,7 +374,9 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <h1>khong tim thay san pham nao</h1>
+                                    <div class="col-md-12 text-center">
+                                        <h6>No products found.</h6>
+                                    </div>
                                 @endforelse
 
 

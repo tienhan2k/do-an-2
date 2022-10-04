@@ -93,6 +93,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('frontend.checkout.view');
     Route::post('/place-order', [CheckoutController::class, 'placeOrder'])->name('frontend.checkout.place-order');
 });
+Route::get('/add-to-cart/{id}', [CartController::class, 'addProductInAllProductPage']);
 Route::post('/add-to-cart', [CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [CartController::class, 'deleteProduct']);
 Route::post('/update-cart-item', [CartController::class, 'updateProduct']);

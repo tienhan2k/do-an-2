@@ -15,6 +15,7 @@ class CartController extends Controller
         $prod_id = $request->input('prod_id');
         $prod_qty = $request->input('prod_qty');
 
+
         if (Auth::check()) {
             $prod_check = Product::where('id', $prod_id)->first();
             if ($prod_check) {
@@ -23,6 +24,33 @@ class CartController extends Controller
                 } else {
                     $cart_item = new Cart();
                     $cart_item->product_id = $prod_id;
+                    $cart_item->user_id = Auth::id();
+                    $cart_item->product_qty = $prod_qty;
+                    $cart_item->save();
+                    return response()->json(['status' => $prod_check->name . " đã được thêm vào giỏ hàng."]);
+                }
+            }
+        } else {
+            return response()->json(['status' => "Hãy đăng nhập để tiếp tục."]);
+        }
+    }
+
+
+    public function addProductInAllProductPage($id)
+    {
+        // $prod_id = $request->input('prod_id');
+        // dd($request->input('prod_qty'));
+
+        $prod_qty = 1;
+
+        if (Auth::check()) {
+            $prod_check = Product::where('id', $id)->first();
+            if ($prod_check) {
+                if (Cart::where('product_id', $id)->where('user_id', Auth::id())->exists()) {
+                    return response()->json(['status' => $prod_check->name . " đã tồn tại trong giỏ hàng."]);
+                } else {
+                    $cart_item = new Cart();
+                    $cart_item->product_id = $id;
                     $cart_item->user_id = Auth::id();
                     $cart_item->product_qty = $prod_qty;
                     $cart_item->save();

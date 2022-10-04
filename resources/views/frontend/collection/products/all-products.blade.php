@@ -1,11 +1,10 @@
 @extends('layouts.master')
 
-@section('title', 'Products')
+@section('title', 'All products')
 
 @include('partials.breadcrumb')
 
 @section('content')
-
 
     <main id="main" class="main-site left-sidebar">
 
@@ -65,13 +64,18 @@
 
                     </div><!--end wrap shop control-->
 
-                    <div class="row">
+                    <div class="row product_data">
 
                         <ul class="product-list grid-products equal-container">
+                            {{-- @php
+                                $i = 1;
+                            @endphp --}}
                             @forelse ($products as $item)
+                            {{-- <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
                                 <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
                                     <div class="product product-style-3 equal-elem ">
                                         <div class="product-thumnail">
+                                            {{-- <input type="hidden" value="1" class="qty-input"> --}}
                                             <a href="{{ url('/collections/'.$item->category->slug.'/'.$item->slug) }}" title="{{ $item->name }}">
                                                 <figure><img src="{{ asset('uploads/products/' . $item->productImages[0]->image)}}" alt="{{ $item->name }}"></figure>
                                             </a>
@@ -79,12 +83,14 @@
                                         <div class="product-info">
                                             <a href="{{ url('/collections/'.$item->category->slug.'/'.$item->slug) }}" class="product-name"><span>{{ $item->name }}</span></a>
                                             <div class="wrap-price"><span class="product-price">{{ number_format($item->original_price) }} VNĐ</span></div>
-                                            <a href="#" class="btn add-to-cart">Add To Cart</a>
+                                            <a onClick="addProductInAllProductPage({{ $item->id }})" href="javascript:0" class="btn add-to-cart">Add To Cart</a>
                                         </div>
                                     </div>
                                 </li>
                             @empty
-                                <h6>ko tim thay</h6>
+                                <div class="col-md-12 text-center">
+                                    <h6>No products found.</h6>
+                                </div>
                             @endforelse
 
 
@@ -231,7 +237,17 @@
 
     </main>
 
+<script>
+    function addProductInAllProductPage(id) {
+        $.ajax({
+            type: "get",
+            url: "/add-to-cart/" + id,
 
+        }).done(function (response) {
+                swal(response.status);
+            });
+    }
+</script>
 
 @endsection
 

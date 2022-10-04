@@ -34,7 +34,7 @@
                 </div>
             @empty
                 <div class="col-md-12 text-center">
-                    <h6>khong tim thay the loai nao</h6>
+                    <h6>No categories found.</h6>
                 </div>
             @endforelse
 

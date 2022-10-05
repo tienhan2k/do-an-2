@@ -4,14 +4,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ColorController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\DashboardController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -92,6 +93,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart.view');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('frontend.checkout.view');
     Route::post('/place-order', [CheckoutController::class, 'placeOrder'])->name('frontend.checkout.place-order');
+    Route::get('/my-orders', [UserController::class, 'index'])->name('frontend.order.view');
+    Route::get('/view-orders/{id}', [UserController::class, 'view'])->name('frontend.order.details');
+
 });
 Route::get('/add-to-cart/{id}', [CartController::class, 'addProductInAllProductPage']);
 Route::post('/add-to-cart', [CartController::class, 'addProduct']);

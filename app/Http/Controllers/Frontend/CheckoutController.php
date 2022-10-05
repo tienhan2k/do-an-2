@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItems;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -23,13 +24,22 @@ class CheckoutController extends Controller
         } else {
             return view('frontend.checkout.index', compact('cartItems'));
         }
-
-
     }
 
     public function placeOrder(CheckoutFormRequest $request)
     {
         $request->validated();
+        // $str = Str::camel($request->name.rand(0000, 9999));
+        // dd($str);
+        $total = 0;
+        $cartitems_total = Cart::where('user_id', Auth::id())->get();
+        // dd($cartitems_total);
+        foreach($cartitems_total as $product)
+        {
+            $total += ($product->products->original_price * $product->product_qty);
+        }
+        $total += 30000;
+        // dd($total);
         $order = Order::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
@@ -40,7 +50,8 @@ class CheckoutController extends Controller
             'province' => $request->province,
             'district' => $request->district,
             'message' => $request->message,
-            'tracking_no' => 'vantien'.rand(0000, 9999),
+            'total_price' => $total,
+            'tracking_no' => 'vantien'.rand(00000, 99999),
             'status' => 0,
         ]);
 

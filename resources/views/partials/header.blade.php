@@ -65,10 +65,13 @@
                                                 <li class="menu-item" >
                                                     <a title="" href="#">My Account</a>
                                                 </li>
+                                                <li class="menu-item" >
+                                                    <a href="{{ route('frontend.order.view') }}">My Orders</a>
+                                                </li>
                                                 <li class="menu-item">
                                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                                 </li>
-                                                    <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                                                <form id="logout-form" method="POST" action="{{ route('logout') }}">
                                                     @csrf
                                                 </form>
 

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\OrderItems;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -19,7 +20,13 @@ class Order extends Model
         'province',
         'district',
         'message',
+        'total_price',
         'status',
         'tracking_no',
     ];
+
+    public function orederItems()
+    {
+        return $this->hasMany(OrderItems::class);
+    }
 }

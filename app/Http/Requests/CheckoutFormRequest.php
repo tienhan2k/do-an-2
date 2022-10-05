@@ -56,6 +56,10 @@ class CheckoutFormRequest extends FormRequest
                 'nullable',
                 'string'
             ],
+            // 'total_price' => [
+            //     'required',
+            //     'integer'
+            // ],
             // 'status',
             // 'tracking_no',
         ];

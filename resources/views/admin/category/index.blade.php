@@ -30,7 +30,7 @@
                         <tbody>
                             @forelse ($categories as $index => $category)
                                 <tr>
-                                    <td>{{ $index }}</td>
+                                    <td>{{$index + $categories->firstItem()}}</td>
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->status == '1' ? 'Hidden' : 'Visible' }}</td>
                                     <td>

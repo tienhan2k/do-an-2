@@ -31,9 +31,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($products as $product)
+                            @forelse ($products as $index => $product)
                                 <tr>
-                                    <td>{{ $product->id }}</td>
+                                    <td>{{$index + $products->firstItem()}}</td>
                                     <td>
                                         @if ($product->category)
                                             {{ $product->category->name }}

@@ -30,9 +30,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($sliders as $slider)
+                            @forelse ($sliders as $index => $slider)
                                 <tr>
-                                    <td>{{ $slider->id }}</td>
+                                    <td>{{$index + $sliders->firstItem()}}</td>
                                     <td>{{ $slider->title }}</td>
                                     <td>{{ $slider->description }}</td>
                                     <td>

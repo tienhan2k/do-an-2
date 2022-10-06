@@ -29,9 +29,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($colors as $color)
+                            @forelse ($colors as $index => $color)
                                 <tr>
-                                    <td>{{ $color->id }}</td>
+                                    <td>{{$index + $colors->firstItem()}}</td>
                                     <td>{{ $color->name }}</td>
                                     <td>{{ $color->code }}</td>
                                     <td>{{ $color->status == '1' ? 'Hidden' : 'Visible' }}</td>

@@ -29,9 +29,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($brands as $brand)
+                            @forelse ($brands as $index => $brand)
                                 <tr>
-                                    <td>{{ $brand->id }}</td>
+                                    <td>{{$index + $brands->firstItem()}}</td>
                                     <td>{{ $brand->name }}</td>
                                     <td>
                                         @if ($brand->category)

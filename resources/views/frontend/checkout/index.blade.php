@@ -88,8 +88,7 @@
                                                         <tr>
                                                             <td>{{ $item->products->name }}</td>
                                                             <td class="text-center">{{ $item->product_qty }}</td>
-                                                            <td class="text-center">{{ number_format($sub_total) }}
-                                                                VNĐ</td>
+                                                            <td class="text-right"> <strong>{{ number_format($sub_total) }} </strong>VNĐ</td>
                                                         </tr>
 
                                                     @endforeach

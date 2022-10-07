@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -76,6 +77,19 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::get('slider/edit/{id}', 'edit')->name('slider.edit');
         Route::patch('slider/{id}', 'update')->name('slider.update');
         Route::get('slider/{id}', 'destroy')->name('slider.delete');
+    });
+
+
+    Route::controller(OrderController::class)->group(function ()
+    {
+        Route::get('order', 'index')->name('order.index');
+        Route::get('view-order/{id}', 'show')->name('order.view');
+        // Route::get('order/create', 'create')->name('order.create');
+        // Route::post('order', 'store')->name('order.store');
+        // Route::get('order/edit/{id}', 'edit')->name('order.edit');
+        Route::patch('order/{id}', 'update')->name('order.update');
+        Route::get('order-history', 'viewHistory')->name('order.history');
+        Route::get('order/{id}', 'destroy')->name('order.delete');
     });
 });
 

@@ -103,7 +103,7 @@
             <div class="collapse {{ Request::is('admin/order', 'admin/order/create') ? 'show' : '' }}" id="ui-order">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link {{ Request::is('admin/order') ? 'active' : '' }}" href="{{ route('order.index') }}">View order</a></li>
-                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/order/create') ? 'active' : '' }}" href="{{ route('order.create') }}">Add order</a></li>
+                    {{-- <li class="nav-item"> <a class="nav-link {{ Request::is('admin/order/create') ? 'active' : '' }}" href="{{ route('order.create') }}">Add order</a></li> --}}
                 </ul>
             </div>
         </li>

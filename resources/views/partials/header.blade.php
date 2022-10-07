@@ -60,7 +60,7 @@
                                     </li>
                                     @else
                                         <li class="menu-item menu-item-has-children parent" >
-                                            <a  href="#">xin chao {{ Auth::user()->name }}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                            <a  href="#">Hi, {{ Auth::user()->name }}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                             <ul class="submenu curency" >
                                                 <li class="menu-item" >
                                                     <a title="" href="#">My Account</a>
@@ -69,9 +69,12 @@
                                                     <a href="{{ route('frontend.order.view') }}">My Orders</a>
                                                 </li>
                                                 <li class="menu-item">
-                                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                                        {{ __('Logout') }}
+                                                    </a>
                                                 </li>
-                                                <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                     @csrf
                                                 </form>
 

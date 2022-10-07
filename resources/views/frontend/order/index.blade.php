@@ -25,10 +25,10 @@
                             @foreach ($orders as $item)
                                 <tr>
                                     <td>{{ $item->tracking_no }}</td>
-                                    <td>{{ number_format($item->total_price) }} VNĐ</td>
-                                    <td>{{ $item->status == '0' ? 'pending' : 'completed' }}</td>
+                                    <td><strong>{{ number_format($item->total_price) }}</strong> VNĐ</td>
+                                    <td>{!! $item->status == '0' ? '<h6 style="color: red">Pending</h6>' : '<h6 style="color: green">Completed</h6>' !!}</td>
                                     <td class="text-center">
-                                        <a href="{{ url('/view-orders/'.$item->id) }}" class="btn tbtn-sm btn-primary">View</a>
+                                        <a href="{{ url('/view-orders/'.$item->id) }}" class="btn tbtn-sm btn-info">View</a>
                                     </td>
                                 </tr>
                             @endforeach

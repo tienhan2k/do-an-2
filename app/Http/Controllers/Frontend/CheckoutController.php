@@ -32,9 +32,9 @@ class CheckoutController extends Controller
         // $str = Str::camel($request->name.rand(0000, 9999));
         // dd($str);
         $total = 0;
-        $cartitems_total = Cart::where('user_id', Auth::id())->get();
-        // dd($cartitems_total);
-        foreach($cartitems_total as $product)
+        $cartItemsTotal = Cart::where('user_id', Auth::id())->get();
+        // dd($cartItemsTotal);
+        foreach($cartItemsTotal as $product)
         {
             $total += ($product->products->original_price * $product->product_qty);
         }
@@ -51,7 +51,7 @@ class CheckoutController extends Controller
             'district' => $request->district,
             'message' => $request->message,
             'total_price' => $total,
-            'tracking_no' => 'vantien'.rand(00000, 99999),
+            'tracking_no' => Str::camel($request->name.rand(0000, 9999)),
             'status' => 0,
         ]);
 

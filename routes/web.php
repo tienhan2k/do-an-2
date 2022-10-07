@@ -91,6 +91,13 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::get('order-history', 'viewHistory')->name('order.history');
         Route::get('order/{id}', 'destroy')->name('order.delete');
     });
+
+
+    Route::controller(DashboardController::class)->group(function ()
+    {
+        Route::get('user', 'user')->name('user.index');
+        Route::get('view-user/{id}', 'show')->name('user.view');
+    });
 });
 
 Auth::routes();

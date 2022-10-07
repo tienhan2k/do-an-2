@@ -93,17 +93,17 @@
             </div>
         </li>
 
-        <li class="nav-item {{ Request::is('admin/order', 'admin/order/create') ? 'active' : '' }}"">
+        <li class="nav-item {{ Request::is('admin/order', 'admin/order-history', 'admin/view-order/*') ? 'active' : '' }}"">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-order" aria-expanded="{{ Request::is('admin/order') ? 'true' : '' }}"
                 aria-controls="ui-order">
                 <i class="mdi mdi-view-carousel menu-icon"></i>
                 <span class="menu-title">Orders</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse {{ Request::is('admin/order', 'admin/order/create') ? 'show' : '' }}" id="ui-order">
+            <div class="collapse {{ Request::is('admin/order', 'admin/order-history', 'admin/view-order/*') ? 'show' : '' }}" id="ui-order">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/order') ? 'active' : '' }}" href="{{ route('order.index') }}">View order</a></li>
-                    {{-- <li class="nav-item"> <a class="nav-link {{ Request::is('admin/order/create') ? 'active' : '' }}" href="{{ route('order.create') }}">Add order</a></li> --}}
+                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/order') ? 'active' : '' }}" href="{{ route('order.index') }}">View orders</a></li>
+                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/order-history') ? 'active' : '' }}" href="{{ route('order.history') }}">Orders history</a></li>
                 </ul>
             </div>
         </li>

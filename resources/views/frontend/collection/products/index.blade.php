@@ -117,7 +117,7 @@
                                                 class="btn add-to-cart" href="javascript:0">Add To Cart</a>
                                             <div class="product-wish">
                                                 @if ($wishlist->contains('product_id', $item->id))
-                                                    <a href="javascript:0" class="removeFromWishlist"><i class="fa1 fa-heart"></i></a>
+                                                    <a href="javascript:0" onclick="removeFromWishlist({{ $item->id }})"><i class="fa1 fa-heart"></i></a>
                                                 @else
                                                     <a href="javascript:0" onclick="addToWishlistInProductPage({{ $item->id }})">
                                                         <i class="fa fa-heart"></i>
@@ -132,11 +132,7 @@
                                     <h6>No products found.</h6>
                                 </div>
                             @endforelse
-
-
-
                         </ul>
-
                     </div>
 
                     <div class="wrap-pagination-info">
@@ -257,7 +253,7 @@
                                         <div class="thumbnnail">
                                             <a href="detail.html"
                                                 title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="assets/images/products/digital_01.jpg" alt="">
+                                                <figure><img src="{{ asset('assets/images/products/digital_01.jpg')}}" alt="">
                                                 </figure>
                                             </a>
                                         </div>
@@ -274,7 +270,7 @@
                                         <div class="thumbnnail">
                                             <a href="detail.html"
                                                 title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="assets/images/products/digital_17.jpg" alt="">
+                                                <figure><img src="{{ asset('assets/images/products/digital_17.jpg')}}" alt="">
                                                 </figure>
                                             </a>
                                         </div>
@@ -316,6 +312,16 @@
             $.ajax({
                 type: "get",
                 url: "/add-to-wishlist/" + id,
+
+            }).done(function(response) {
+                $('.productItem').load(location.href + " .productItem");
+                swal('', response.status, 'success');
+            });
+        }
+        function removeFromWishlist(id) {
+            $.ajax({
+                type: "get",
+                url: "/delete-from-wishlist/" + id,
 
             }).done(function(response) {
                 $('.productItem').load(location.href + " .productItem");

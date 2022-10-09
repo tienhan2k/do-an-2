@@ -25,7 +25,6 @@
                             <figure><img src="{{ asset('assets/images/shop-banner.jpg') }}" alt=""></figure>
                         </a>
                     </div>
-
                     <div class="wrap-shop-control">
 
                         <h1 class="shop-title">All Product</h1>
@@ -63,7 +62,6 @@
                         </div>
 
                     </div>
-                    <!--end wrap shop control-->
                     <style>
                         .product-wish {
                             position: absolute;
@@ -93,7 +91,7 @@
                     <div class="row product_data productItem">
 
                         <ul class="product-list grid-products equal-container">
-                            
+
                             @forelse ($products as $item)
                                 {{-- <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
                                 <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
@@ -117,7 +115,7 @@
                                                 class="btn add-to-cart">Add To Cart</a>
                                             <div class="product-wish">
                                                 @if ($wishlist->contains('product_id', $item->id))
-                                                    <a href="javascript:0" class="removeFromWishlist"><i
+                                                    <a href="javascript:0" onclick="removeFromWishlist({{ $item->id }})"><i
                                                             class="fa1 fa-heart"></i></a>
                                                 @else
                                                     <a href="javascript:0"
@@ -317,6 +315,16 @@
             $.ajax({
                 type: "get",
                 url: "/add-to-wishlist/" + id,
+
+            }).done(function(response) {
+                $('.productItem').load(location.href + " .productItem");
+                swal('', response.status, 'success');
+            });
+        }
+        function removeFromWishlist(id) {
+            $.ajax({
+                type: "get",
+                url: "/delete-from-wishlist/" + id,
 
             }).done(function(response) {
                 $('.productItem').load(location.href + " .productItem");

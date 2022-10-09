@@ -14,7 +14,7 @@ class WishlistController extends Controller
     public function index()
     {
         return view('frontend.wishlist.index', [
-            'wishlist' => Wishlist::where('user_id', Auth::id())->get(),
+            'wishlist' => Wishlist::where('user_id', Auth::id())->paginate(9),
         ]);
     }
 
@@ -80,6 +80,14 @@ class WishlistController extends Controller
 
     public function destroy($id)
     {
-        //
+        if (Auth::check()) {
+            if (Wishlist::where('product_id', $id)->where('user_id', Auth::id())->exists()) {
+                $wishItem = Wishlist::where('product_id', $id)->where('user_id', Auth::id())->first();
+                $wishItem->delete();
+                return response()->json(['status' => "Delete successfully."]);
+            }
+        } else {
+            return response()->json(['status' => "Please login to delete this item."]);
+        }
     }
 }

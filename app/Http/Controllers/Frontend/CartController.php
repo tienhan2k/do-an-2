@@ -83,20 +83,15 @@ class CartController extends Controller
 
     public function deleteProduct(Request $request)
     {
-        if(Auth::check())
-            {
-                $prod_id = $request->input("prod_id");
-                if(Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->exists())
-                {
-                    $cartItem = Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->first();
-                    $cartItem->delete();
-                    return response()->json(['status' => "Delete successfully."]);
-                }
+        if (Auth::check()) {
+            $prod_id = $request->input("prod_id");
+            if (Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->exists()) {
+                $cartItem = Cart::where('product_id', $prod_id)->where('user_id', Auth::id())->first();
+                $cartItem->delete();
+                return response()->json(['status' => "Delete successfully."]);
             }
-            else {
-                return response()->json(['status' => "Please login to delete this item."]);
-            }
-
+        } else {
+            return response()->json(['status' => "Please login to delete this item."]);
+        }
     }
-
 }

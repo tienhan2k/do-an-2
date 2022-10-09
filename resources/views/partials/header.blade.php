@@ -132,7 +132,7 @@
 
                     <div class="wrap-icon right-section">
                         <div class="wrap-icon-section wishlist">
-                            <a href="#" class="link-direction">
+                            <a href="{{ route('frontend.wishlist.index') }}" class="link-direction">
                                 <i class="fa fa-heart" aria-hidden="true"></i>
                                 <div class="left-info">
                                     <span class="index">0 item</span>

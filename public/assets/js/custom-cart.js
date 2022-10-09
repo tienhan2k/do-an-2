@@ -33,6 +33,35 @@ $(document).ready(function () {
         });
     });
 
+
+    $(".addToWishlist").click(function (e) {
+        e.preventDefault();
+
+        var prod_id = $(this)
+                    .closest(".product_data")
+                    .find(".product_id")
+                    .val();
+
+        // alert(prod_id);
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            method: "POST",
+            url: "/add-to-wishlist",
+            data: {
+                'prod_id': prod_id
+            },
+            success: function (response) {
+                swal(response.status);
+            },
+        });
+    });
+
+
     $('.btn-increase').click(function (e) {
         e.preventDefault();
 

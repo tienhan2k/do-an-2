@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -31,10 +32,9 @@ class FrontendController extends Controller
 
     public function getAllProducts()
     {
-
         return view('frontend.collection.products.all-products', [
             'products' => Product::where('status', '0')->paginate(9),
-            // 'category' => Category::where('status', '0')->get()
+            'wishlist' => Wishlist::get(),
         ]);
     }
 
@@ -53,10 +53,11 @@ class FrontendController extends Controller
                             ->where('trending', '1')
                             ->get();
         $cate_filters = Category::where('status', '0')->get();
+        $wishlist = Wishlist::get();
 
         if ($category) {
             $products = $category->products()->paginate(9);
-            return view('frontend.collection.products.index', compact('products', 'category', 'best_sellers', 'cate_filters'));
+            return view('frontend.collection.products.index', compact('products', 'category', 'best_sellers', 'cate_filters', 'wishlist'));
         } else {
             return redirect()->back();
         }

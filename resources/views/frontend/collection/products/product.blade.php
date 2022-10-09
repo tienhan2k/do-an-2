@@ -18,7 +18,7 @@
                 </ul>
             </div>
             <div class="row product_data">
- 
+
                 <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
                     <div class="wrap-product-detail">
                         <div class="detail-media">
@@ -81,10 +81,10 @@
                                 </div>
                             </div>
                             <div class="wrap-butons">
-                                <a type="button" class="btn add-to-cart addToCartBtn">Add to Cart</a><br>
+                                <a  class="btn add-to-cart addToCartBtn">Add to Cart</a><br>
                                 <div class="wrap-btn">
                                     <button type="button" class="btn btn-compare">Add Compare</button>
-                                    <a href="#" class="btn btn-wishlist">Add Wishlist</a>
+                                    <a href="#" class="btn btn-wishlist addToWishlist">Add Wishlist</a>
                                 </div>
                             </div>
                         </div>

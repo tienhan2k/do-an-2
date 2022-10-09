@@ -34,7 +34,7 @@
                         <div class="wrap-right">
 
                             <div class="sort-item orderby ">
-                                <select name="orderby" class="use-chosen" >
+                                <select name="orderby" class="use-chosen">
                                     <option value="menu_order" selected="selected">Default sorting</option>
                                     <option value="popularity">Sort by popularity</option>
                                     <option value="rating">Sort by average rating</option>
@@ -63,25 +63,67 @@
 
                         </div>
 
-                    </div><!--end wrap shop control-->
+                    </div>
+                    <!--end wrap shop control-->
+                    <style>
+                        .product-wish {
+                            position: absolute;
+                            top: 10%;
+                            left: 0;
+                            z-index: 99;
+                            right: 30px;
+                            text-align: right;
+                            padding-top: 0;
+                        }
 
-                    <div class="row">
+                        .product-wish .fa {
+
+                            color: #cbcbcb;
+                            font-size: 32px;
+                        }
+
+                        .product-wish .fa:hover {
+                            color: red !important;
+                        }
+                        .product-wish .fa1 {
+                            font-size: 32px;
+                            color: red;
+                        }
+
+                    </style>
+                    <div class="row product_data productItem">
 
                         <ul class="product-list grid-products equal-container">
                             @forelse ($products as $item)
                                 <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
-                                    <div class="product product-style-3 equal-elem ">
-                                        <div class="product-thumnail">
-                                            {{-- <input type="hidden" value="1" class="qty-input"> --}}
-                                            {{-- <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
-                                            <a href="{{ url('/collections/'.$category->slug.'/'.$item->slug) }}" title="{{ $item->name }}">
-                                                <figure><img src="{{ asset('uploads/products/' . $item->productImages[0]->image)}}" alt="{{ $item->name }}"></figure>
+                                    <div class="product product-style-3 equal-elem" >
+                                        <div class="product-thumnail" >
+                                            {{-- <input type="hidden" value="1" class="qty-input">
+                                            <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
+                                            <a href="{{ url('/collections/' . $category->slug . '/' . $item->slug) }}"
+                                                title="{{ $item->name }}">
+                                                <figure><img
+                                                        src="{{ asset('uploads/products/' . $item->productImages[0]->image) }}"
+                                                        alt="{{ $item->name }}"></figure>
                                             </a>
                                         </div>
                                         <div class="product-info">
-                                            <a href="{{ url('/collections/'.$category->slug.'/'.$item->slug) }}" class="product-name"><span>{{ $item->name }}</span></a>
-                                            <div class="wrap-price"><span class="product-price">{{ number_format($item->original_price) }} VNĐ</span></div>
-                                            <a onClick="addProductInAllProductPage({{ $item->id }})" class="btn add-to-cart" href="javascript:0">Add To Cart</a>
+                                            <a href="{{ url('/collections/' . $category->slug . '/' . $item->slug) }}"
+                                                class="product-name"><span>{{ $item->name }}</span></a>
+                                            <div class="wrap-price"><span
+                                                    class="product-price">{{ number_format($item->original_price) }}
+                                                    VNĐ</span></div>
+                                            <a onClick="addProductInAllProductPage({{ $item->id }})"
+                                                class="btn add-to-cart" href="javascript:0">Add To Cart</a>
+                                            <div class="product-wish">
+                                                @if ($wishlist->contains('product_id', $item->id))
+                                                    <a href="javascript:0" class="removeFromWishlist"><i class="fa1 fa-heart"></i></a>
+                                                @else
+                                                    <a href="javascript:0" onclick="addToWishlistInProductPage({{ $item->id }})">
+                                                        <i class="fa fa-heart"></i>
+                                                    </a>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -103,7 +145,8 @@
                         </ul>
                         {{-- <p class="result-count">Showing 1-8 of 12 result</p> --}}
                     </div>
-                </div><!--end main products area-->
+                </div>
+                <!--end main products area-->
 
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 sitebar">
                     <div class="widget mercado-widget categories-widget">
@@ -114,7 +157,8 @@
                                     <a href="#" class="cate-link">Fashion & Accessories</a>
                                     <span class="toggle-control">+</span>
                                     <ul class="sub-cate">
-                                        <li class="category-item"><a href="#" class="cate-link">Batteries (22)</a></li>
+                                        <li class="category-item"><a href="#" class="cate-link">Batteries (22)</a>
+                                        </li>
                                         <li class="category-item"><a href="#" class="cate-link">Headsets (16)</a></li>
                                         <li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
                                     </ul>
@@ -123,7 +167,8 @@
                                     <a href="#" class="cate-link">Furnitures & Home Decors</a>
                                     <span class="toggle-control">+</span>
                                     <ul class="sub-cate">
-                                        <li class="category-item"><a href="#" class="cate-link">Batteries (22)</a></li>
+                                        <li class="category-item"><a href="#" class="cate-link">Batteries (22)</a>
+                                        </li>
                                         <li class="category-item"><a href="#" class="cate-link">Headsets (16)</a></li>
                                         <li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
                                     </ul>
@@ -140,11 +185,17 @@
                         <h2 class="widget-title">Brand</h2>
                         <div class="widget-content">
                             <ul class="list-style vertical-list list-limited" data-show="6">
-                                <li class="list-item"><a class="filter-link active" href="#">Fashion Clothings</a></li>
+                                <li class="list-item"><a class="filter-link active" href="#">Fashion Clothings</a>
+                                </li>
                                 <li class="list-item"><a class="filter-link " href="#">Laptop Batteries</a></li>
-                                <li class="list-item default-hiden"><a class="filter-link " href="#">Printer & Ink</a></li>
-                                <li class="list-item default-hiden"><a class="filter-link " href="#">CPUs & Prosecsors</a></li>
-                                <li class="list-item"><a data-label='Show less<i class="fa fa-angle-up" aria-hidden="true"></i>' class="btn-control control-show-more" href="#">Show more<i class="fa fa-angle-down" aria-hidden="true"></i></a></li>
+                                <li class="list-item default-hiden"><a class="filter-link " href="#">Printer &
+                                        Ink</a></li>
+                                <li class="list-item default-hiden"><a class="filter-link " href="#">CPUs &
+                                        Prosecsors</a></li>
+                                <li class="list-item"><a
+                                        data-label='Show less<i class="fa fa-angle-up" aria-hidden="true"></i>'
+                                        class="btn-control control-show-more" href="#">Show more<i
+                                            class="fa fa-angle-down" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
                     </div><!-- brand widget-->
@@ -165,12 +216,18 @@
                         <h2 class="widget-title">Color</h2>
                         <div class="widget-content">
                             <ul class="list-style vertical-list has-count-index">
-                                <li class="list-item"><a class="filter-link " href="#">Red <span>(217)</span></a></li>
-                                <li class="list-item"><a class="filter-link " href="#">Yellow <span>(179)</span></a></li>
-                                <li class="list-item"><a class="filter-link " href="#">Black <span>(79)</span></a></li>
-                                <li class="list-item"><a class="filter-link " href="#">Blue <span>(283)</span></a></li>
-                                <li class="list-item"><a class="filter-link " href="#">Grey <span>(116)</span></a></li>
-                                <li class="list-item"><a class="filter-link " href="#">Pink <span>(29)</span></a></li>
+                                <li class="list-item"><a class="filter-link " href="#">Red <span>(217)</span></a>
+                                </li>
+                                <li class="list-item"><a class="filter-link " href="#">Yellow
+                                        <span>(179)</span></a></li>
+                                <li class="list-item"><a class="filter-link " href="#">Black <span>(79)</span></a>
+                                </li>
+                                <li class="list-item"><a class="filter-link " href="#">Blue <span>(283)</span></a>
+                                </li>
+                                <li class="list-item"><a class="filter-link " href="#">Grey <span>(116)</span></a>
+                                </li>
+                                <li class="list-item"><a class="filter-link " href="#">Pink <span>(29)</span></a>
+                                </li>
                             </ul>
                         </div>
                     </div><!-- Color -->
@@ -198,12 +255,15 @@
                                 <li class="product-item">
                                     <div class="product product-widget-style">
                                         <div class="thumbnnail">
-                                            <a href="detail.html" title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="assets/images/products/digital_01.jpg" alt=""></figure>
+                                            <a href="detail.html"
+                                                title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
+                                                <figure><img src="assets/images/products/digital_01.jpg" alt="">
+                                                </figure>
                                             </a>
                                         </div>
                                         <div class="product-info">
-                                            <a href="#" class="product-name"><span>Radiant-360 R6 Wireless Omnidirectional Speaker...</span></a>
+                                            <a href="#" class="product-name"><span>Radiant-360 R6 Wireless
+                                                    Omnidirectional Speaker...</span></a>
                                             <div class="wrap-price"><span class="product-price">$168.00</span></div>
                                         </div>
                                     </div>
@@ -212,12 +272,15 @@
                                 <li class="product-item">
                                     <div class="product product-widget-style">
                                         <div class="thumbnnail">
-                                            <a href="detail.html" title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="assets/images/products/digital_17.jpg" alt=""></figure>
+                                            <a href="detail.html"
+                                                title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
+                                                <figure><img src="assets/images/products/digital_17.jpg" alt="">
+                                                </figure>
                                             </a>
                                         </div>
                                         <div class="product-info">
-                                            <a href="#" class="product-name"><span>Radiant-360 R6 Wireless Omnidirectional Speaker...</span></a>
+                                            <a href="#" class="product-name"><span>Radiant-360 R6 Wireless
+                                                    Omnidirectional Speaker...</span></a>
                                             <div class="wrap-price"><span class="product-price">$168.00</span></div>
                                         </div>
                                     </div>
@@ -227,11 +290,14 @@
                         </div>
                     </div><!-- brand widget-->
 
-                </div><!--end sitebar-->
+                </div>
+                <!--end sitebar-->
 
-            </div><!--end row-->
+            </div>
+            <!--end row-->
 
-        </div><!--end container-->
+        </div>
+        <!--end container-->
 
     </main>
 
@@ -241,12 +307,21 @@
                 type: "get",
                 url: "/add-to-cart/" + id,
 
-            }).done(function (response) {
-                    swal('', response.status, 'success');
-                });
+            }).done(function(response) {
+                swal('', response.status, 'success');
+            });
+        }
+
+        function addToWishlistInProductPage(id) {
+            $.ajax({
+                type: "get",
+                url: "/add-to-wishlist/" + id,
+
+            }).done(function(response) {
+                $('.productItem').load(location.href + " .productItem");
+                swal('', response.status, 'success');
+            });
         }
     </script>
 
 @endsection
-
-

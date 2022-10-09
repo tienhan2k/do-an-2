@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Frontend\WishlistController;
 
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -84,9 +85,6 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
     {
         Route::get('order', 'index')->name('order.index');
         Route::get('view-order/{id}', 'show')->name('order.view');
-        // Route::get('order/create', 'create')->name('order.create');
-        // Route::post('order', 'store')->name('order.store');
-        // Route::get('order/edit/{id}', 'edit')->name('order.edit');
         Route::patch('order/{id}', 'update')->name('order.update');
         Route::get('order-history', 'viewHistory')->name('order.history');
         Route::get('order/{id}', 'destroy')->name('order.delete');
@@ -110,18 +108,24 @@ Route::get('/collections/{category_slug}', [FrontendController::class, 'products
 Route::get('/collections/{category_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
 
 
+Route::get('/add-to-cart/{id}', [CartController::class, 'addProductInAllProductPage']);
+Route::post('/add-to-cart', [CartController::class, 'addProduct']);
+Route::post('/delete-cart-item', [CartController::class, 'deleteProduct']);
+Route::post('/update-cart-item', [CartController::class, 'updateProduct']);
+Route::post('/add-to-wishlist', [WishlistController::class, 'store']);
+Route::get('/add-to-wishlist/{id}', [WishlistController::class, 'storeInProductPage']);
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart.view');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('frontend.checkout.view');
     Route::post('/place-order', [CheckoutController::class, 'placeOrder'])->name('frontend.checkout.place-order');
     Route::get('/my-orders', [UserController::class, 'index'])->name('frontend.order.view');
     Route::get('/view-orders/{id}', [UserController::class, 'view'])->name('frontend.order.details');
-
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('frontend.wishlist.index');
 });
-Route::get('/add-to-cart/{id}', [CartController::class, 'addProductInAllProductPage']);
-Route::post('/add-to-cart', [CartController::class, 'addProduct']);
-Route::post('/delete-cart-item', [CartController::class, 'deleteProduct']);
-Route::post('/update-cart-item', [CartController::class, 'updateProduct']);
+
+
 
 
 

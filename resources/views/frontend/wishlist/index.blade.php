@@ -15,7 +15,6 @@
 
             <div class="row">
 
-                
                     <style>
                         .product-wish {
                             position: absolute;
@@ -91,7 +90,7 @@
                         </ul>
                         {{-- <p class="result-count">Showing 1-8 of 12 result</p> --}}
                     </div>
-                
+
                 <!--end main products area-->
 
             </div>

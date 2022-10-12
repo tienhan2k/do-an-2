@@ -19,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/chosen.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/color-01.css')}}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     @yield('styles')
 </head>
 
@@ -42,7 +43,25 @@
 	<script src="{{ asset('assets/js/jquery-ui-1.12.4.minb8ff.js') }}"></script>
 	<script src="{{ asset('assets/js/custom-cart.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        var availableTags = [];
 
+        $.ajax({
+            method: "GET",
+            url: '/product-list',
+            success: function (response) {
+                // console.log(response);
+                startAutoComplete(response);
+            }
+        });
+
+        function startAutoComplete(availableTags) {
+            $( "#search_product" ).autocomplete({
+            source: availableTags
+            });
+        }
+
+    </script>
     @if (session('status'))
         <script>
             swal("{{ session('status') }}")

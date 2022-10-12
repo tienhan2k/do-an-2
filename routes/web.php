@@ -106,6 +106,8 @@ Route::get('/all-products', [FrontendController::class, 'getAllProducts'])->name
 Route::get('/collections', [FrontendController::class, 'categories'])->name('frontend.categories');
 Route::get('/collections/{category_slug}', [FrontendController::class, 'products'])->name('frontend.products');
 Route::get('/collections/{category_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
+Route::get('/product-list', [FrontendController::class, 'getProductListAjax']);
+Route::post('/search-product', [FrontendController::class, 'searchProduct']);
 
 
 Route::get('/add-to-cart/{id}', [CartController::class, 'addProductInAllProductPage']);

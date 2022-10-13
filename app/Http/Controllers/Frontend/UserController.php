@@ -19,9 +19,9 @@ class UserController extends Controller
 
     public function view($id)
     {
-        $orders = Order::where('id', $id)
+        $order = Order::where('id', $id)
                         ->where('user_id', Auth::id())
                         ->first();
-        return view('frontend.order.view', compact('orders'));
+        return view('frontend.order.view', compact('order'));
     }
 }

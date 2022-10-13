@@ -4,17 +4,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\WishlistController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Frontend\WishlistController;
 
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -126,6 +127,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-orders', [UserController::class, 'index'])->name('frontend.order.view');
     Route::get('/view-orders/{id}', [UserController::class, 'view'])->name('frontend.order.details');
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('frontend.wishlist.index');
+    Route::get('/review-item/{order_item_id}', [ReviewController::class, 'create']);
+    Route::post('/add-review', [ReviewController::class, 'store'])->name('frontend.review.store');
 });
 
 

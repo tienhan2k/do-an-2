@@ -20,17 +20,17 @@
                             <h4 class="text-center"><strong>Customer Information</strong></h4>
                             <hr>
                             <label for="">Name</label>
-                            <div class="border p-2">{{ $orders->name }}</div>
+                            <div class="border p-2">{{ $order->name }}</div>
                             <label for="">Email</label>
-                            <div class="border p-2">{{ $orders->email }}</div>
+                            <div class="border p-2">{{ $order->email }}</div>
                             <label for="">Phone Number</label>
-                            <div class="border p-2">{{ $orders->phone }}</div>
+                            <div class="border p-2">{{ $order->phone }}</div>
                             <label for="">Address</label>
                             <div class="border p-2">
-                                {{ $orders->address }}, Phường
-                                {{ $orders->district }}, Quận
-                                {{ $orders->province }}, Thành phố
-                                {{ $orders->city }}
+                                {{ $order->address }}, Phường
+                                {{ $order->district }}, Quận
+                                {{ $order->province }}, Thành phố
+                                {{ $order->city }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -43,10 +43,11 @@
                                         <th class="text-center">Quantity</th>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Product Image</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders->orederItems as $item)
+                                    @foreach ($order->orederItems as $item)
                                         <tr>
                                             <td>{{ $item->products->name }}</td>
                                             <td class="text-center">{{ $item->qty }}</td>
@@ -54,11 +55,16 @@
                                             <td class="text-center">
                                                 <img src="{{ asset('uploads/products/'.$item->products->productImages[0]->image) }}" title="Sản phẩm {{ $item->products->name }}" style="width: 70px; height: 70px;" >
                                             </td>
+                                            <td class="text-center">
+                                                @if ($order->status == '1' && $item->review_status == false)
+                                                    <a href="{{ url('/review-item/'.$item->id) }}" class="float-end ">Write review</a>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            <h4>Total: <strong>{{ number_format($orders->total_price) }}</strong>  VNĐ</h4>
+                            <h4>Total: <strong>{{ number_format($order->total_price) }}</strong>  VNĐ</h4>
                         </div>
                     </div>
                 </div>

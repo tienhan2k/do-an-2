@@ -122,7 +122,6 @@
                                 <div class="tab-content-item " id="review">
 
                                     <div class="wrap-review-form">
-
                                         <div id="comments">
                                             <h2 class="woocommerce-Reviews-title">01 review for <span>Radiant-360 R6
                                                     Chainsaw Omnidirectional [Orage]</span></h2>
@@ -153,7 +152,7 @@
                                             </ol>
                                         </div><!-- #comments -->
 
-                                        <div id="review_form_wrapper">
+                                        {{-- <div id="review_form_wrapper">
                                             <div id="review_form">
                                                 <div id="respond" class="comment-respond">
 
@@ -211,7 +210,7 @@
 
                                                 </div><!-- .comment-respond-->
                                             </div><!-- #review_form -->
-                                        </div><!-- #review_form_wrapper -->
+                                        </div><!-- #review_form_wrapper --> --}}
 
                                     </div>
                                 </div>

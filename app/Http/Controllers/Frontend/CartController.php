@@ -45,7 +45,7 @@ class CartController extends Controller
             $prod_check = Product::where('id', $id)->first();
             if ($prod_check) {
                 if (Cart::where('product_id', $id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json(['status' => $prod_check->name . " đã tồn tại trong giỏ hàng."]);
+                    return response()->json(['status' => $prod_check->name . " is available in your cart."]);
                 } else {
                     $cart_item = new Cart();
                     $cart_item->product_id = $id;

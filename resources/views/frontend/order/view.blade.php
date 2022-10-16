@@ -58,6 +58,8 @@
                                             <td class="text-center">
                                                 @if ($order->status == '1' && $item->review_status == false)
                                                     <a href="{{ url('/review-item/'.$item->id) }}" class="float-end ">Write review</a>
+                                                {{-- {{ dd($item->id ) }} --}}
+
                                                 @endif
                                             </td>
                                         </tr>

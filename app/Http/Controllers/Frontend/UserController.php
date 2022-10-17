@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $order = Order::where('id', $id)
                         ->where('user_id', Auth::id())
-                        ->first();
+                        ->firstOrFail();
         return view('frontend.order.view', compact('order'));
     }
 }

@@ -28,5 +28,9 @@ class OrderItems extends Model
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
+    // public function review()
+    // {
+    //     return $this->hasOne(Review::class);
+    // }
 
 }

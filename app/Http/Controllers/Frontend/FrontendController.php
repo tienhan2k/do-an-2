@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Slider;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -67,12 +68,14 @@ class FrontendController extends Controller
     public function productDetails($category_slug, $product_slug)
     {
         $category = Category::where('slug', $category_slug)->first();
-
         $product_details = Product::where('slug', $product_slug)->first();
+        // dd($product_details->id);
+        $reviews = Review::where('product_id', $product_details->id)
+                            ->get();
         $products = $category->products()->get();
         // dd($product_de);
         if ($product_details) {
-            return view('frontend.collection.products.product', compact('product_details', 'products','category'));
+            return view('frontend.collection.products.product', compact('product_details', 'products','category', 'reviews'));
         } else {
             return redirect()->back();
         }

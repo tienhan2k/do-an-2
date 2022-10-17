@@ -74,7 +74,7 @@
     @endif
     @if (session('error'))
         <script>
-            swal('',"{{ session('error') }}",'error')
+            swal('Error',"{{ session('error') }}",'error')
         </script>
     @endif
 

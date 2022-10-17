@@ -15,21 +15,25 @@ class ReviewController extends Controller
     {
         $order_item = OrderItems::findOrFail($order_item_id);
         $check = Order::where('user_id', Auth::id())->get();
-        // dd($check);
+
         if ($check->isEmpty()) {
-            return redirect('/')->with('status', 'There is something wrong!');
+
+            return redirect('/')->with('error', 'There is something wrong!');
         } else {
             $verify_purchase = Order::where('user_id', Auth::id())
-                                ->join('order_items', 'orders.id', 'order_items.order_id')
-                                ->where('order_items.product_id', $order_item->products->id)
-                                ->get();
-                                // dd($verify_purchase);
+                            ->where('status', '1')
+                            ->join('order_items', 'orders.id', 'order_id')
+                            ->where('order_items.product_id', $order_item->products->id)
+                            ->get();
             if ($verify_purchase->isEmpty()) {
-                return redirect('/')->with('status', 'There is something hihi!');
+                return redirect('/')->with('error', 'You did not buy this to make review!');
             } else {
-                return view('frontend.review.index', compact('order_item', 'verify_purchase'));
+                if ($order_item->review_status == 0) {
+                    return view('frontend.review.index', compact('order_item', 'verify_purchase'));
+                } else {
+                    return redirect()->back()->with('error', 'You have reviewed this product before!');
+                }
             }
-
         }
     }
 
@@ -46,6 +50,6 @@ class ReviewController extends Controller
 
         $order_item->review_status = true;
         $order_item->save();
-        return redirect(route('frontend.index'))->with('status', 'Write review done. Thank you!');
+        return redirect(route('frontend.index'))->with('success', 'Write review done. Thank you!');
     }
 }

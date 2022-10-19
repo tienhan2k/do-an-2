@@ -11,8 +11,8 @@
 
                     <h2>Users
 
-                        {{-- <a href="{{ route('slider.create') }}" class="text-white btn btn-primary btn-sm float-end">Add
-                            slider</a> --}}
+                        <a href="{{ route('user.create') }}" class="text-white btn btn-primary btn-sm float-end">Add
+                            user</a>
                         {{-- <a href="{{ route('order.history') }}" class="btn text-white btn-sm btn-info float-end">Order history</a> --}}
 
                     </h2>
@@ -27,6 +27,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -38,8 +39,22 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>
+                                        @if ($user->role == '0')
+                                            <label for="" class="badge btn-sm btn-success">User</label>
+                                        @elseif ($user->role == '1')
+                                            <label for="" class="badge btn-danger">Admin</label>
+                                        @else
+                                            <label for="" class="badge btn-info">None</label>
+                                        @endif
+                                    </td>
+                                    <td>
                                         <a href="{{ route('user.view', $user->id) }}"
                                             class="btn btn-sm btn-info">View</a>
+                                        <a href="{{ route('user.edit', $user->id) }}"
+                                            class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="{{ route('user.delete', $user->id) }}"
+                                            onclick="return confirm('Are you sure?')"
+                                            class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             @empty

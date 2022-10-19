@@ -29,9 +29,7 @@
                                     <td>{!! $item->status == '0' ? '<h6 style="color: red">Pending</h6>' : '<h6 style="color: green"><strong>Completed</strong></h6>' !!}</td>
                                     <td class="text-center">
                                         <a href="{{ url('/view-orders/'.$item->id) }}" class="btn btn-sm btn-info">View</a>
-                                        {{-- @if ($item->status == '1')
-                                            <a href="{{ url('/review-orders/'.$item->order_id) }}" class="float-end ">Write review</a>
-                                        @endif --}}
+
                                     </td>
                                 </tr>
                             @endforeach

@@ -18,7 +18,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::user()->role == '1') {
-            return redirect('/home')->with('status', 'ban hong phai la admin');
+            return redirect('/home')->with('status', 'There is something wrong here! Please try again.');
         }
 
         return $next($request);

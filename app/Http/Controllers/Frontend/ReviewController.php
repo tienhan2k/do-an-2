@@ -17,7 +17,6 @@ class ReviewController extends Controller
         $check = Order::where('user_id', Auth::id())->get();
 
         if ($check->isEmpty()) {
-
             return redirect('/')->with('error', 'There is something wrong!');
         } else {
             $verify_purchase = Order::where('user_id', Auth::id())

@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index()
+
+    public function showProfile()
+    {
+        return view('frontend.user.profile', [
+            'user' => User::findOrFail(Auth::user()->id),
+        ]);
+    }
+
+    public function listOrders()
     {
         // $orders = Order::where('user_id', Auth::id())->get();
         return view('frontend.order.index', [
@@ -17,7 +26,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function view($id)
+    public function viewOrder($id)
     {
         $order = Order::where('id', $id)
                         ->where('user_id', Auth::id())

@@ -3,9 +3,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            {{-- @if (session('message'))
-                <h2 class="alert alert-success" >{{ session('message') }}</h2>
-            @endif --}}
+            @if ($errors->any())
+                <div class="alert alert-warning">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
             <div class="card">
 
                 <div class="card-header">
@@ -17,14 +21,6 @@
 
                 </div>
                 <div class="card-body">
-
-                    @if ($errors->any())
-                        <div>
-                            @foreach ($errors->all() as $error)
-                                <div>{{ $error }}</div>
-                            @endforeach
-                        </div>
-                    @endif
 
                     <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -170,6 +166,13 @@
                                         <div class="md-3">
                                             <label>Trending</label>
                                             <input type="checkbox" name="trending" style="width: 20px; height: 20px" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="md-3">
+                                            <label>Featured</label>
+                                            <input type="checkbox" name="featured" style="width: 20px; height: 20px" />
                                         </div>
                                     </div>
 

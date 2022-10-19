@@ -26,6 +26,7 @@ class Product extends Model
         'sale_price',
         'quantity',
         'trending',
+        'featured',
         'status',
         'meta_description',
         'meta_keyword',

@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
@@ -91,12 +92,17 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::get('order/{id}', 'destroy')->name('order.delete');
     });
 
-
-    Route::controller(DashboardController::class)->group(function ()
+    Route::controller(AdminUserController::class)->group(function ()
     {
-        Route::get('user', 'user')->name('user.index');
+        Route::get('user', 'index')->name('user.index');
+        Route::get('user/create', 'create')->name('user.create');
+        Route::post('user', 'store')->name('user.store');
         Route::get('view-user/{id}', 'show')->name('user.view');
+        Route::get('edit-user/{id}', 'edit')->name('user.edit');
+        Route::patch('user/{id}', 'update')->name('user.update');
+        Route::get('delete-user/{id}', 'destroy')->name('user.delete');
     });
+
 });
 
 Auth::routes();
@@ -124,11 +130,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart.view');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('frontend.checkout.view');
     Route::post('/place-order', [CheckoutController::class, 'placeOrder'])->name('frontend.checkout.place-order');
-    Route::get('/my-orders', [UserController::class, 'index'])->name('frontend.order.view');
-    Route::get('/view-orders/{id}', [UserController::class, 'view'])->name('frontend.order.details');
+    Route::get('/my-orders', [UserController::class, 'listOrders'])->name('frontend.order.view');
+    Route::get('/view-orders/{id}', [UserController::class, 'viewOrder'])->name('frontend.order.details');
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('frontend.wishlist.index');
     Route::get('/review-item/{order_item_id}', [ReviewController::class, 'create']);
     Route::post('/add-review', [ReviewController::class, 'store'])->name('frontend.review.store');
+    Route::get('/profile', [UserController::class, 'showProfile'])->name('frontend.user.profile');
 });
 
 

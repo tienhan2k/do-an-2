@@ -115,24 +115,21 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <i class="mdi mdi-account menu-icon"></i>
-                <span class="menu-title">User</span>
+        <li class="nav-item {{ Request::is('admin/user', 'admin/view-user/*') ? 'active' : '' }}"">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-user" aria-expanded="{{ Request::is('admin/user') ? 'true' : '' }}"
+                aria-controls="ui-color">
+                <i class="mdi mdi-tag-multiple menu-icon"></i>
+                <span class="menu-title">Users</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="auth">
+            <div class="collapse {{ Request::is('admin/user', 'admin/view-user/*') ? 'show' : '' }}" id="ui-user">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a>
-                    </li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a>
-                    </li>
+                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/user/*') ? 'active' : '' }}" href="{{ route('user.index') }}">View User</a></li>
+                    {{-- <li class="nav-item"> <a class="nav-link {{ Request::is('admin/admin/view-user/*') ? 'active' : '' }}" href="{{ route('user.view') }}">Add Color</a></li> --}}
                 </ul>
             </div>
         </li>
+
         <li class="nav-item">
             <a class="nav-link" href="documentation/documentation.html">
                 <i class="mdi mdi-settings menu-icon"></i>

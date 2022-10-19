@@ -63,7 +63,7 @@
                                             <a  href="#">Hi, {{ Auth::user()->name }}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                             <ul class="submenu curency" >
                                                 <li class="menu-item" >
-                                                    <a title="" href="#">My Account</a>
+                                                    <a title="" href="{{ route('frontend.user.profile') }}">My Account</a>
                                                 </li>
                                                 <li class="menu-item" >
                                                     <a href="{{ route('frontend.order.view') }}">My Orders</a>

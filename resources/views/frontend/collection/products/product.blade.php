@@ -130,8 +130,11 @@
                                                     id="li-comment-20">
                                                     <div id="comment-20" class="comment_container">
                                                         @foreach ($reviews as $item)
-                                                            <img alt="" src="{{ asset('assets/images/author-avata.jpg') }}"
-                                                                height="80" width="80">
+                                                            @if (Auth::user()->image)
+                                                                <img src="{{ asset('uploads/profile') }}/{{ $user->image }}" height="80" width="80" alt="">
+                                                            @else
+                                                                <img src="{{ asset('uploads/profile/avata-dummy.png') }}" height="80" width="80" alt="">
+                                                            @endif
                                                             <div class="comment-text">
                                                                 <div class="star-rating">
                                                                     <span class="width-{{ $item->rating*20 }}-percent">Rated <strong

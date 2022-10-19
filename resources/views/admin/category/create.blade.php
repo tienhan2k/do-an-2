@@ -3,9 +3,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            {{-- @if (session('message'))
-                <h2 class="alert alert-success" >{{ session('message') }}</h2>
-            @endif --}}
+            @if ($errors->any())
+                <div class="alert alert-warning">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">
 
@@ -17,13 +21,6 @@
                 </div>
                 <div class="card-body">
 
-                    @if ($errors->any())
-                        <div>
-                            @foreach ($errors->all() as $error)
-                                <div>{{ $error }}</div>
-                            @endforeach
-                        </div>
-                    @endif
 
                     <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf

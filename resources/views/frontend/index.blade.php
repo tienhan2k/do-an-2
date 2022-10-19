@@ -6,7 +6,7 @@
 
 <main id="main">
     <div class="container">
-        
+
         {{-- <br>
         <div class="row">
             <div class="col-md-12">
@@ -111,7 +111,7 @@
                                 @foreach ($latest_products as $latest)
                                     <div class="product product-style-2 equal-elem ">
                                         <div class="product-thumnail">
-                                            <a href="{{ url('/collections/').$category->slug.'/'. $latest->slug }}" title="{{ $latest->name }}">
+                                            <a href="{{ url('/collections').'/'.$category->slug.'/'. $latest->slug }}" title="{{ $latest->name }}">
                                                 <figure><img src="{{ asset('uploads/products/' . $latest->productImages[0]->image)}}" width="800" height="800" alt="{{ $latest->name }}"></figure>
                                             </a>
                                             {{-- <div class="group-flash">

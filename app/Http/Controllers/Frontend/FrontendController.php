@@ -102,7 +102,7 @@ class FrontendController extends Controller
             if ($product) {
                 return redirect('/collections/'.$product->category->slug.'/'.$product->slug);
             } else {
-                return redirect()->back()->with('status', 'No products found with your search :D');
+                return redirect()->back()->with('error', 'No products found with your search :D');
             }
         } else {
             return redirect()->back();

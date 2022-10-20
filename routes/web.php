@@ -136,6 +136,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/review-item/{order_item_id}', [ReviewController::class, 'create']);
     Route::post('/add-review', [ReviewController::class, 'store'])->name('frontend.review.store');
     Route::get('/profile', [UserController::class, 'showProfile'])->name('frontend.user.profile');
+    Route::get('/profile/edit/{id}', [UserController::class, 'editProfile'])->name('frontend.user.profile-edit');
+    Route::patch('/profile/update/{id}', [UserController::class, 'updateProfile'])->name('frontend.user.profile-update');
+
 });
 
 

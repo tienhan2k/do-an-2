@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Brand;
 use App\Models\Review;
 use App\Models\Slider;
+use App\Models\Product;
+use App\Models\Category;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Sale;
 
 class FrontendController extends Controller
 {
@@ -18,17 +20,20 @@ class FrontendController extends Controller
         $category = Category::where('status', '0')
                                 ->inRandomOrder()
                                 ->first();
-        // dd($category);
         $sliders = Slider::where('status', '0')->get();
         $products = Product::where('status', '0')
                             ->inRandomOrder()
                             ->limit(8)
                             ->get();
-
+        $sale_products = Product::where('sale_price', '>', 0)
+                        ->inRandomOrder()
+                        ->get()
+                        ->take(8);
+        $sale_time = Sale::first();
         $latest_products = $category->products()->latest()->get();
         $categories = Category::where('status', '0')->get();
 
-        return view('frontend.index', compact('sliders',  'products', 'latest_products', 'category', 'categories'));
+        return view('frontend.index', compact('sliders',  'products', 'latest_products', 'category', 'categories', 'sale_products', 'sale_time'));
     }
 
     public function getAllProducts()
@@ -49,16 +54,13 @@ class FrontendController extends Controller
     public function products($category_slug)
     {
         $category = Category::where('slug', $category_slug)->first();
-
-        $best_sellers = Product::where('status', '0')
-                            ->where('trending', '1')
-                            ->get();
         $cate_filters = Category::where('status', '0')->get();
+        $brands_filters = Brand::where('status', '0')->get();
         $wishlist = Wishlist::get();
 
         if ($category) {
             $products = $category->products()->paginate(9);
-            return view('frontend.collection.products.index', compact('products', 'category', 'best_sellers', 'cate_filters', 'wishlist'));
+            return view('frontend.collection.products.index', compact('products', 'category', 'brands_filters', 'cate_filters', 'wishlist'));
         } else {
             return redirect()->back();
         }
@@ -69,13 +71,11 @@ class FrontendController extends Controller
     {
         $category = Category::where('slug', $category_slug)->first();
         $product_details = Product::where('slug', $product_slug)->first();
-        // dd($product_details->id);
-        $reviews = Review::where('product_id', $product_details->id)
-                            ->get();
+        $reviews = Review::where('product_id', $product_details->id)->get();
         $products = $category->products()->get();
-        // dd($product_de);
+        $sale_time = Sale::first();
         if ($product_details) {
-            return view('frontend.collection.products.product', compact('product_details', 'products','category', 'reviews'));
+            return view('frontend.collection.products.product', compact('product_details', 'products','category', 'reviews', 'sale_time'));
         } else {
             return redirect()->back();
         }

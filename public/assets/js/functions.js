@@ -119,15 +119,15 @@
     	    if($("#slider-range").length > 0){
                 $( "#slider-range" ).slider({
                     range: true,
-                    min: 0,
-                    max: 500,
-                    values: [ 75, 300 ],
+                    min: 10,
+                    max: 10000,
+                    values: [ 3000, 6000 ],
                     slide: function( event, ui ) {
-                        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+                        $( "#amount" ).val(ui.values[ 0 ] + " k" + "-" + ui.values[ 1 ] + " k");
                     }
                 });
-                $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-                    " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+                $( "#amount" ).val(  $( "#slider-range" ).slider( "values", 0 ) + " k"  +
+                "-" + $( "#slider-range" ).slider( "values", 1 ) + " k" );
             }
 		},
         /* ---------------------------------------------
@@ -357,7 +357,7 @@
 	                    _this.addClass('active');
 	                    _this.parents().siblings('.tab-contents').find('.active').removeClass('active');
 	                    _this.parents().siblings('.tab-contents').find(_this.attr('href')).addClass('active');
-                    }  
+                    }
                 });
             }
 

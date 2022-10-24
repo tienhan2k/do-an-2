@@ -115,7 +115,7 @@
             </a>
         </li>
 
-        <li class="nav-item {{ Request::is('admin/user', 'admin/view-user/*') ? 'active' : '' }}"">
+        <li class="nav-item {{ Request::is('admin/user', 'admin/view-user/*') ? 'active' : '' }}">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-user" aria-expanded="{{ Request::is('admin/user') ? 'true' : '' }}"
                 aria-controls="ui-color">
                 <i class="mdi mdi-tag-multiple menu-icon"></i>

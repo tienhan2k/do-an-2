@@ -36,13 +36,6 @@ class ColorController extends Controller
         return redirect(route('color.index'))->with('message', 'Thêm thành công.');
     }
 
-
-    public function show($id)
-    {
-        //
-    }
-
-
     public function edit($id)
     {
         return view('admin.color.edit', [

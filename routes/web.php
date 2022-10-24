@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\WishlistController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\SaleController;
 
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -90,6 +91,13 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::patch('order/{id}', 'update')->name('order.update');
         Route::get('order-history', 'viewHistory')->name('order.history');
         Route::get('order/{id}', 'destroy')->name('order.delete');
+    });
+
+    Route::controller(SaleController::class)->group(function ()
+    {
+        Route::get('sale', 'index')->name('sale.index');
+        Route::get('sale/edit/{id}', 'edit')->name('sale.edit');
+        Route::patch('/sale/{id}', 'update')->name('sale.update');
     });
 
     Route::controller(AdminUserController::class)->group(function ()

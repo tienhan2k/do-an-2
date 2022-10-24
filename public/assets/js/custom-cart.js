@@ -33,7 +33,6 @@ $(document).ready(function () {
         });
     });
 
-
     $(".addToWishlist").click(function (e) {
         e.preventDefault();
 
@@ -60,7 +59,6 @@ $(document).ready(function () {
             },
         });
     });
-
 
     $('.btn-increase').click(function (e) {
         e.preventDefault();
@@ -121,7 +119,6 @@ $(document).ready(function () {
             },
         });
     });
-
 
     $('.changeQuantity').click(function (e) {
         e.preventDefault();

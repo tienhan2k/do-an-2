@@ -85,19 +85,19 @@
                         .product-wish .fa:hover {
                             color: red !important;
                         }
+
                         .product-wish .fa1 {
                             font-size: 32px;
                             color: red;
                         }
-
                     </style>
                     <div class="row product_data productItem">
 
                         <ul class="product-list grid-products equal-container">
                             @forelse ($products as $item)
                                 <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
-                                    <div class="product product-style-3 equal-elem" >
-                                        <div class="product-thumnail" >
+                                    <div class="product product-style-3 equal-elem">
+                                        <div class="product-thumnail">
                                             {{-- <input type="hidden" value="1" class="qty-input">
                                             <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
                                             <a href="{{ url('/collections/' . $category->slug . '/' . $item->slug) }}"
@@ -117,9 +117,12 @@
                                                 class="btn add-to-cart" href="javascript:0">Add To Cart</a>
                                             <div class="product-wish">
                                                 @if ($wishlist->contains('product_id', $item->id))
-                                                    <a href="javascript:0" onclick="removeFromWishlist({{ $item->id }})"><i class="fa1 fa-heart"></i></a>
+                                                    <a href="javascript:0"
+                                                        onclick="removeFromWishlist({{ $item->id }})"><i
+                                                            class="fa1 fa-heart"></i></a>
                                                 @else
-                                                    <a href="javascript:0" onclick="addToWishlistInProductPage({{ $item->id }})">
+                                                    <a href="javascript:0"
+                                                        onclick="addToWishlistInProductPage({{ $item->id }})">
                                                         <i class="fa fa-heart"></i>
                                                     </a>
                                                 @endif
@@ -148,31 +151,13 @@
                     <div class="widget mercado-widget categories-widget">
                         <h2 class="widget-title">All Categories</h2>
                         <div class="widget-content">
-                            <ul class="list-category">
-                                <li class="category-item has-child-cate">
-                                    <a href="#" class="cate-link">Fashion & Accessories</a>
-                                    <span class="toggle-control">+</span>
-                                    <ul class="sub-cate">
-                                        <li class="category-item"><a href="#" class="cate-link">Batteries (22)</a>
-                                        </li>
-                                        <li class="category-item"><a href="#" class="cate-link">Headsets (16)</a></li>
-                                        <li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
-                                    </ul>
-                                </li>
-                                <li class="category-item has-child-cate">
-                                    <a href="#" class="cate-link">Furnitures & Home Decors</a>
-                                    <span class="toggle-control">+</span>
-                                    <ul class="sub-cate">
-                                        <li class="category-item"><a href="#" class="cate-link">Batteries (22)</a>
-                                        </li>
-                                        <li class="category-item"><a href="#" class="cate-link">Headsets (16)</a></li>
-                                        <li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
-                                    </ul>
-                                </li>
-                                <li class="category-item">
-                                    <a href="#" class="cate-link">Tools & Equipments</a>
-                                </li>
-                                <li class="category-item">
+                            <ul class="list-category vertical-list" data-show="6">
+                                @foreach ($cate_filters as $category_item)
+                                    <li class="category-item">
+                                        <a href="{{ $category_item->slug }}"
+                                            class="cate-link {{ Request::is('collections/' . $category_item->slug) ? 'active' : '' }}">{{ $category_item->name }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div><!-- Categories widget-->
@@ -181,17 +166,12 @@
                         <h2 class="widget-title">Brand</h2>
                         <div class="widget-content">
                             <ul class="list-style vertical-list list-limited" data-show="6">
-                                <li class="list-item"><a class="filter-link active" href="#">Fashion Clothings</a>
-                                </li>
-                                <li class="list-item"><a class="filter-link " href="#">Laptop Batteries</a></li>
-                                <li class="list-item default-hiden"><a class="filter-link " href="#">Printer &
-                                        Ink</a></li>
-                                <li class="list-item default-hiden"><a class="filter-link " href="#">CPUs &
-                                        Prosecsors</a></li>
-                                <li class="list-item"><a
-                                        data-label='Show less<i class="fa fa-angle-up" aria-hidden="true"></i>'
-                                        class="btn-control control-show-more" href="#">Show more<i
-                                            class="fa fa-angle-down" aria-hidden="true"></i></a></li>
+                                @foreach ($brands_filters as $brand)
+                                    <li class="list-item">
+                                        <a class="filter-link" href="#">{{ $brand->name }}</a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                     </div><!-- brand widget-->
@@ -199,12 +179,7 @@
                     <div class="widget mercado-widget filter-widget price-filter">
                         <h2 class="widget-title">Price</h2>
                         <div class="widget-content">
-                            <div id="slider-range"></div>
-                            <p>
-                                <label for="amount">Price:</label>
-                                <input type="text" id="amount" readonly>
-                                <button class="filter-submit">Filter</button>
-                            </p>
+                            <div id="slider"></div>
                         </div>
                     </div><!-- Price-->
 
@@ -253,7 +228,8 @@
                                         <div class="thumbnnail">
                                             <a href="detail.html"
                                                 title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="{{ asset('assets/images/products/digital_01.jpg')}}" alt="">
+                                                <figure><img src="{{ asset('assets/images/products/digital_01.jpg') }}"
+                                                        alt="">
                                                 </figure>
                                             </a>
                                         </div>
@@ -270,7 +246,8 @@
                                         <div class="thumbnnail">
                                             <a href="detail.html"
                                                 title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="{{ asset('assets/images/products/digital_17.jpg')}}" alt="">
+                                                <figure><img src="{{ asset('assets/images/products/digital_17.jpg') }}"
+                                                        alt="">
                                                 </figure>
                                             </a>
                                         </div>
@@ -318,6 +295,7 @@
                 swal('', response.status, 'success');
             });
         }
+
         function removeFromWishlist(id) {
             $.ajax({
                 type: "get",
@@ -328,6 +306,22 @@
                 swal('', response.status, 'success');
             });
         }
-    </script>
 
+        var slider = document.getElementById('slider');
+                noUiSlider.create(slider, [
+                    start: [1000, 3000],
+                    connect: true,
+                    range: {
+                        'min': 1,
+                        'max': 9999
+                    },
+                    pips:{
+                        mode: 'steps',
+                        stepped: true,
+                        density: 4
+                    }
+                ]);
+    </script>
 @endsection
+
+

@@ -39,7 +39,8 @@
                                 <p><b>District: </b><input value="{{ $user->district }}" type="text" name="district" class="form-control"></p>
                                 <p><b>City: </b><input value="{{ $user->city }}" type="text" name="city" class="form-control"></p>
                                 <p><b>Province: </b><input value="{{ $user->province }}" type="text" name="province" class="form-control"></p>
-                                <button type="submit" class="btn btn-info pull-right">Update</button>
+                                <a href="{{ route('frontend.user.profile') }}" class="btn btn-info pull-right">Back</a>
+                                <button type="submit" class="btn btn-info pull-left">Update</button>
                             </div>
                         </form>
                     </div>

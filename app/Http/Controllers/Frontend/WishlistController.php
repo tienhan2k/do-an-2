@@ -18,13 +18,6 @@ class WishlistController extends Controller
         ]);
     }
 
-
-    public function create()
-    {
-        //
-    }
-
-
     public function store(Request $request)
     {
         if (Auth::check()) {
@@ -58,25 +51,6 @@ class WishlistController extends Controller
             return response()->json(['status' => "Please login to add this item."]);
         }
     }
-
-
-    public function show($id)
-    {
-        //
-    }
-
-
-    public function edit($id)
-    {
-        //
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
 
     public function destroy($id)
     {

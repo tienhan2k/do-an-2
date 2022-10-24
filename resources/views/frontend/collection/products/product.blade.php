@@ -9,6 +9,16 @@
     <!--main area-->
     <main id="main" class="main-site">
 
+        <style>
+            .original_price{
+                font-weight: 300;
+                font-size: 13px !important;
+                color: #aaaaaa !important;
+                text-decoration: line-through;
+                padding-left: 10px;
+            }
+        </style>
+
         <div class="container">
 
             <div class="wrap-breadcrumb">
@@ -57,9 +67,16 @@
                                 <a class="link-socail" href="#"><img
                                         src="{{ asset('assets/images/social-list.png') }}" alt=""></a>
                             </div>
-                            <div class="wrap-price"><span
-                                    class="product-price">{{ number_format($product_details->original_price) }} VNĐ</span>
-                            </div>
+                            @if ($product_details->sale_price > 0 && $sale_time->status == 0 && $sale_time->sale_date > Carbon\Carbon::now())
+                                <div class="wrap-price">
+                                    <span class="product-price">{{ number_format($product_details->sale_price) }} VNĐ</span>
+                                    <del><span class="product-price original_price">{{ number_format($product_details->original_price) }} VNĐ</span></del>
+                                </div>
+                            @else
+                                <div class="wrap-price">
+                                    <span class="product-price">{{ number_format($product_details->original_price) }} VNĐ</span>
+                                </div>
+                            @endif
 
                             @if ($product_details->quantity > 0)
                                 <div class="stock-info in-stock">
@@ -276,7 +293,7 @@
                                         <div class="thumbnnail">
                                             <a href="detail.html"
                                                 title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="assets/images/products/digital_01.jpg" alt="">
+                                                <figure><img src="{{ asset('assets/images/products/digital_01.jpg') }}" alt="">
                                                 </figure>
                                             </a>
                                         </div>

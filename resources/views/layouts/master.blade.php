@@ -20,7 +20,6 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/color-01.css')}}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.css" crossOrigin="anonymous" integrity="sha512-qveKnGrvOChbSzAdtSs8p69eoLegyh+1hwOMbmpCViIwj7rn4oJjdmMvWOuyQlTOZgTlZA0N2PXA7iA8/2TUYA==" />
     @yield('styles')
 </head>
 
@@ -44,8 +43,7 @@
 	<script src="{{ asset('assets/js/jquery-ui-1.12.4.minb8ff.js') }}"></script>
 	<script src="{{ asset('assets/js/custom-cart.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.1/nouislider.min.js" integrity="sha512-1mDhG//LAjM3pLXCJyaA+4c+h5qmMoTc7IuJyuNNPaakrWT9rVTxICK4tIizf7YwJsXgDC2JP74PGCc7qxLAHw==" crossOrigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('assets/js/custom-sale.js') }}"></script>
+
     <script>
         var availableTags = [];
 
@@ -65,11 +63,13 @@
         }
 
     </script>
+
     @if (session('status'))
         <script>
             swal("{{ session('status') }}")
-        </scrip>
+        </script>
     @endif
+
     @if (session('success'))
         <script>
             swal('Success',"{{ session('success') }}",'success')

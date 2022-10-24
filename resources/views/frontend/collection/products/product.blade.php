@@ -10,7 +10,7 @@
     <main id="main" class="main-site">
 
         <style>
-            .original_price{
+            .original_price {
                 font-weight: 300;
                 font-size: 13px !important;
                 color: #aaaaaa !important;
@@ -49,18 +49,24 @@
                         </div>
                         <div class="detail-info">
                             <div class="product-rating">
-
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <a href="#" class="count-review">(05 review)</a>
+                                <style>
+                                    .color-gray {
+                                        color: #e6e6e6 !important;
+                                    }
+                                </style>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $review_count_star)
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    @else
+                                        <i class="fa fa-star color-gray" aria-hidden="true"></i>
+                                    @endif
+                                @endfor
+                                <a href="#" class="count-review">({{ count($reviews) }} review)</a>
                             </div>
                             <h2 class="product-name">{{ $product_details->name }}</h2>
                             <div class="short-desc">
                                 <ul>
-                                    {{ $product_details->small_description }}
+                                    {!! $product_details->small_description !!}
                                 </ul>
                             </div>
                             <div class="wrap-social">
@@ -70,11 +76,14 @@
                             @if ($product_details->sale_price > 0 && $sale_time->status == 0 && $sale_time->sale_date > Carbon\Carbon::now())
                                 <div class="wrap-price">
                                     <span class="product-price">{{ number_format($product_details->sale_price) }} VNĐ</span>
-                                    <del><span class="product-price original_price">{{ number_format($product_details->original_price) }} VNĐ</span></del>
+                                    <del><span
+                                            class="product-price original_price">{{ number_format($product_details->original_price) }}
+                                            VNĐ</span></del>
                                 </div>
                             @else
                                 <div class="wrap-price">
-                                    <span class="product-price">{{ number_format($product_details->original_price) }} VNĐ</span>
+                                    <span class="product-price">{{ number_format($product_details->original_price) }}
+                                        VNĐ</span>
                                 </div>
                             @endif
 
@@ -99,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="wrap-butons">
-                                <a  class="btn add-to-cart addToCartBtn">Add to Cart</a><br>
+                                <a class="btn add-to-cart addToCartBtn">Add to Cart</a><br>
                                 <div class="wrap-btn">
                                     <button type="button" class="btn btn-compare">Add Compare</button>
                                     <a href="#" class="btn btn-wishlist addToWishlist">Add Wishlist</a>
@@ -141,24 +150,31 @@
                                     <div class="wrap-review-form">
 
                                         <div id="comments">
-                                            <h2 class="woocommerce-Reviews-title">{{ $reviews->count() }} review for <span>{{ $product_details->name }}</span></h2>
+                                            <h2 class="woocommerce-Reviews-title">{{ $reviews->count() }} review for
+                                                <span>{{ $product_details->name }}</span>
+                                            </h2>
                                             <ol class="commentlist">
                                                 <li class="comment byuser comment-author-admin bypostauthor even thread-even depth-1"
                                                     id="li-comment-20">
                                                     <div id="comment-20" class="comment_container">
                                                         @foreach ($reviews as $item)
-                                                            @if (Auth::user()->image)
-                                                                <img src="{{ asset('uploads/profile') }}/{{ $user->image }}" height="80" width="80" alt="">
+                                                            @if ($item->user->image)
+                                                                <img src="{{ asset('uploads/profile') }}/{{ $item->user->image }}"
+                                                                    height="80" width="80" alt="">
                                                             @else
-                                                                <img src="{{ asset('uploads/profile/avata-dummy.png') }}" height="80" width="80" alt="">
+                                                                <img src="{{ asset('uploads/profile/avata-dummy.png') }}"
+                                                                    height="80" width="80" alt="">
                                                             @endif
                                                             <div class="comment-text">
                                                                 <div class="star-rating">
-                                                                    <span class="width-{{ $item->rating*20 }}-percent">Rated <strong
-                                                                            class="rating">{{ $item->rating }}</strong> out of 5</span>
+                                                                    <span
+                                                                        class="width-{{ $item->rating * 20 }}-percent">Rated
+                                                                        <strong class="rating">{{ $item->rating }}</strong>
+                                                                        out of 5</span>
                                                                 </div>
                                                                 <p class="meta">
-                                                                    <strong class="woocommerce-review__author">{{ $item->user->name }}</strong>
+                                                                    <strong
+                                                                        class="woocommerce-review__author">{{ $item->user->name }}</strong>
                                                                     <span class="woocommerce-review__dash">–</span>
                                                                     <time class="woocommerce-review__published-date"
                                                                         datetime="2008-02-14 20:00">{{ Carbon\Carbon::parse($item->created_at)->format('d F Y g:i A') }}</time>
@@ -173,65 +189,6 @@
                                             </ol>
                                         </div><!-- #comments -->
 
-                                        {{-- <div id="review_form_wrapper">
-                                            <div id="review_form">
-                                                <div id="respond" class="comment-respond">
-
-                                                    <form action="#" method="post" id="commentform"
-                                                        class="comment-form" novalidate="">
-                                                        <p class="comment-notes">
-                                                            <span id="email-notes">Your email address will not be
-                                                                published.</span> Required fields are marked <span
-                                                                class="required">*</span>
-                                                        </p>
-                                                        <div class="comment-form-rating">
-                                                            <span>Your rating</span>
-                                                            <p class="stars">
-
-                                                                <label for="rated-1"></label>
-                                                                <input type="radio" id="rated-1" name="rating"
-                                                                    value="1">
-                                                                <label for="rated-2"></label>
-                                                                <input type="radio" id="rated-2" name="rating"
-                                                                    value="2">
-                                                                <label for="rated-3"></label>
-                                                                <input type="radio" id="rated-3" name="rating"
-                                                                    value="3">
-                                                                <label for="rated-4"></label>
-                                                                <input type="radio" id="rated-4" name="rating"
-                                                                    value="4">
-                                                                <label for="rated-5"></label>
-                                                                <input type="radio" id="rated-5" name="rating"
-                                                                    value="5" checked="checked">
-                                                            </p>
-                                                        </div>
-                                                        <p class="comment-form-author">
-                                                            <label for="author">Name <span
-                                                                    class="required">*</span></label>
-                                                            <input id="author" name="author" type="text"
-                                                                value="">
-                                                        </p>
-                                                        <p class="comment-form-email">
-                                                            <label for="email">Email <span
-                                                                    class="required">*</span></label>
-                                                            <input id="email" name="email" type="email"
-                                                                value="">
-                                                        </p>
-                                                        <p class="comment-form-comment">
-                                                            <label for="comment">Your review <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <textarea id="comment" name="comment" cols="45" rows="8"></textarea>
-                                                        </p>
-                                                        <p class="form-submit">
-                                                            <input name="submit" type="submit" id="submit"
-                                                                class="submit" value="Submit">
-                                                        </p>
-                                                    </form>
-
-                                                </div><!-- .comment-respond-->
-                                            </div><!-- #review_form -->
-                                        </div><!-- #review_form_wrapper --> --}}
 
                                     </div>
                                 </div>
@@ -293,7 +250,8 @@
                                         <div class="thumbnnail">
                                             <a href="detail.html"
                                                 title="Radiant-360 R6 Wireless Omnidirectional Speaker [White]">
-                                                <figure><img src="{{ asset('assets/images/products/digital_01.jpg') }}" alt="">
+                                                <figure><img src="{{ asset('assets/images/products/digital_01.jpg') }}"
+                                                        alt="">
                                                 </figure>
                                             </a>
                                         </div>
@@ -324,7 +282,7 @@
                                 @forelse ($products as $related_pro)
                                     <div class="product product-style-2 equal-elem ">
                                         <div class="product-thumnail">
-                                            <a href="{{ url('/collections/'.$category->slug.'/'.$related_pro->slug) }}"
+                                            <a href="{{ url('/collections/' . $category->slug . '/' . $related_pro->slug) }}"
                                                 title="{{ $related_pro->name }}">
                                                 <figure><img
                                                         src="{{ asset('uploads/products/' . $related_pro->productImages[0]->image) }}"

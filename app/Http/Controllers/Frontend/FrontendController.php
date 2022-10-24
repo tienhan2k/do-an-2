@@ -27,8 +27,7 @@ class FrontendController extends Controller
                             ->get();
         $sale_products = Product::where('sale_price', '>', 0)
                         ->inRandomOrder()
-                        ->get()
-                        ->take(8);
+                        ->get();
         $sale_time = Sale::first();
         $latest_products = $category->products()->latest()->get();
         $categories = Category::where('status', '0')->get();
@@ -73,9 +72,10 @@ class FrontendController extends Controller
         $product_details = Product::where('slug', $product_slug)->first();
         $reviews = Review::where('product_id', $product_details->id)->get();
         $products = $category->products()->get();
-        $sale_time = Sale::first();
+        $sale_time = Sale::find(1);
+        $review_count_star = $reviews->avg('rating');
         if ($product_details) {
-            return view('frontend.collection.products.product', compact('product_details', 'products','category', 'reviews', 'sale_time'));
+            return view('frontend.collection.products.product', compact('product_details', 'products','category', 'reviews', 'sale_time', 'review_count_star'));
         } else {
             return redirect()->back();
         }

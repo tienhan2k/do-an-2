@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SaleController;
 
+
+
+Auth::routes();
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -113,7 +116,6 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
 
 });
 
-Auth::routes();
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');

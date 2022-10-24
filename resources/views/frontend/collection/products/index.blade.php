@@ -306,21 +306,6 @@
                 swal('', response.status, 'success');
             });
         }
-
-        var slider = document.getElementById('slider');
-                noUiSlider.create(slider, [
-                    start: [1000, 3000],
-                    connect: true,
-                    range: {
-                        'min': 1,
-                        'max': 9999
-                    },
-                    pips:{
-                        mode: 'steps',
-                        stepped: true,
-                        density: 4
-                    }
-                ]);
     </script>
 @endsection
 

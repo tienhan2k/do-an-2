@@ -126,7 +126,6 @@ Route::get('/collections/{category_slug}/{product_slug}', [FrontendController::c
 Route::get('/product-list', [FrontendController::class, 'getProductListAjax']);
 Route::post('/search-product', [FrontendController::class, 'searchProduct']);
 
-
 Route::get('/add-to-cart/{id}', [CartController::class, 'addProductInAllProductPage']);
 Route::post('/add-to-cart', [CartController::class, 'addProduct']);
 Route::post('/delete-cart-item', [CartController::class, 'deleteProduct']);

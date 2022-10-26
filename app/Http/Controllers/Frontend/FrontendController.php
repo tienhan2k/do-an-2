@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Sale;
 use App\Models\Brand;
+use App\Models\Color;
 use App\Models\Review;
 use App\Models\Slider;
 use App\Models\Product;
@@ -10,7 +12,6 @@ use App\Models\Category;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Sale;
 
 class FrontendController extends Controller
 {
@@ -50,16 +51,28 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function products($category_slug)
+    public function products(Request $request, $category_slug)
     {
         $category = Category::where('slug', $category_slug)->first();
         $cate_filters = Category::where('status', '0')->get();
         $brands_filters = Brand::where('status', '0')->get();
         $wishlist = Wishlist::get();
-
+        $colors = Color::where('status', 0)->get();
         if ($category) {
-            $products = $category->products()->paginate(9);
-            return view('frontend.collection.products.index', compact('products', 'category', 'brands_filters', 'cate_filters', 'wishlist'));
+            if ($request->get('sort') == 'name_a_z' ) {
+                $products = $category->products()->where('status', '0')->orderBy('name', 'asc')->paginate(9);
+            } elseif($request->get('sort') == 'name_z_a') {
+                $products = $category->products()->where('status', '0')->orderBy('name', 'desc')->paginate(9);
+            } elseif ($request->get('sort') == 'product_lastest') {
+                $products = $category->products()->where('status', '0')->orderBy('created_at', 'desc')->paginate(9);
+            } elseif ($request->get('sort') == 'price_low_high') {
+                $products = $category->products()->where('status', '0')->orderBy('original_price', 'asc')->paginate(9);
+            } elseif ($request->get('sort') == 'price_high_low') {
+                $products = $category->products()->where('status', '0')->orderBy('original_price', 'desc')->paginate(9);
+            } else {
+                $products = $category->products()->where('status', '0')->paginate(9);
+            }
+            return view('frontend.collection.products.index', compact('products', 'category', 'brands_filters', 'cate_filters', 'wishlist', 'colors'));
         } else {
             return redirect()->back();
         }

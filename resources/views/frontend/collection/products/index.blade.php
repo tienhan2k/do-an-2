@@ -32,30 +32,23 @@
                         <h1 class="shop-title">{{ $category->name }}</h1>
 
                         <div class="wrap-right">
-
-                            <div class="sort-item orderby ">
-                                <select name="orderby" class="use-chosen">
-                                    <option value="menu_order" selected="selected">Default sorting</option>
-                                    <option value="popularity">Sort by popularity</option>
-                                    <option value="rating">Sort by average rating</option>
-                                    <option value="date">Sort by newness</option>
-                                    <option value="price">Sort by price: low to high</option>
-                                    <option value="price-desc">Sort by price: high to low</option>
-                                </select>
-                            </div>
-
-                            {{-- <div class="sort-item product-per-page">
-                                <select name="post-per-page" class="use-chosen" >
-                                    <option value="12" selected="selected">12 per page</option>
-                                    <option value="16">16 per page</option>
-                                    <option value="18">18 per page</option>
-                                    <option value="21">21 per page</option>
-                                    <option value="24">24 per page</option>
-                                    <option value="30">30 per page</option>
-                                    <option value="32">32 per page</option>
-                                </select>
-                            </div> --}}
-
+                            <form>
+                                <div class="sort-item orderby">
+                                    <select name="sort" class="use-chosen" id="sort">
+                                        <option value="" selected="selected">Default sorting</option>
+                                        <option value="name_a_z" @if ($_GET['sort'] == 'name_a_z') selected='' @endif>Sort
+                                            by name: A - Z</option>
+                                        <option value="name_z_a" @if ($_GET['sort'] == 'name_z_a') selected='' @endif>Sort
+                                            by name: Z - A</option>
+                                        <option value="product_lastest"
+                                            @if ($_GET['sort'] == 'product_lastest') selected='' @endif>Sort by lastest</option>
+                                        <option value="price_low_high" @if ($_GET['sort'] == 'price_low_high') selected='' @endif>
+                                            Sort by price: low to high</option>
+                                        <option value="price_high_low" @if ($_GET['sort'] == 'price_high_low') selected='' @endif>
+                                            Sort by price: high to low</option>
+                                    </select>
+                                </div>
+                            </form>
                             {{-- <div class="change-display-mode">
                                 <a href="#" class="grid-mode display-mode active"><i class="fa fa-th"></i>Grid</a>
                                 <a href="list.html" class="list-mode display-mode"><i class="fa fa-th-list"></i>List</a>
@@ -140,7 +133,11 @@
 
                     <div class="wrap-pagination-info">
                         <ul class="page-numbers text-center">
-                            {{ $products->links() }}
+                            @if (isset($_GET['sort']))
+                                {{ $products->appends(['sort' => $_GET['sort']])->links() }}
+                            @else
+                                {{ $products->links() }}
+                            @endif
                         </ul>
                         {{-- <p class="result-count">Showing 1-8 of 12 result</p> --}}
                     </div>
@@ -176,29 +173,31 @@
                         </div>
                     </div><!-- brand widget-->
 
-                    <div class="widget mercado-widget filter-widget price-filter">
+                    {{-- <div class="widget mercado-widget filter-widget price-filter">
                         <h2 class="widget-title">Price</h2>
                         <div class="widget-content">
-                            <div id="slider"></div>
+                            <form action="">
+                                @csrf
+                                <div id="slider-range"></div>
+                                <p>
+                                    <label for="amount">Price:</label>
+                                    <input type="text" id="amount" readonly>
+                                    <button class="filter-submit">Filter</button>
+                                </p>
+                            </form>
                         </div>
-                    </div><!-- Price-->
+                    </div><!-- Price--> --}}
 
                     <div class="widget mercado-widget filter-widget">
                         <h2 class="widget-title">Color</h2>
                         <div class="widget-content">
                             <ul class="list-style vertical-list has-count-index">
-                                <li class="list-item"><a class="filter-link " href="#">Red <span>(217)</span></a>
-                                </li>
-                                <li class="list-item"><a class="filter-link " href="#">Yellow
-                                        <span>(179)</span></a></li>
-                                <li class="list-item"><a class="filter-link " href="#">Black <span>(79)</span></a>
-                                </li>
-                                <li class="list-item"><a class="filter-link " href="#">Blue <span>(283)</span></a>
-                                </li>
-                                <li class="list-item"><a class="filter-link " href="#">Grey <span>(116)</span></a>
-                                </li>
-                                <li class="list-item"><a class="filter-link " href="#">Pink <span>(29)</span></a>
-                                </li>
+                                @foreach ($colors as $color)
+                                    <li class="list-item">
+                                        <a class="filter-link " href="#">{{ $color->name }} <span>(217)</span></a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                     </div><!-- Color -->
@@ -308,5 +307,3 @@
         }
     </script>
 @endsection
-
-

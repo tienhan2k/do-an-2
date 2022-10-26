@@ -41,7 +41,7 @@
 	<script src="{{ asset('assets/js/jquery.flexslider.js') }}"></script>
 	<script src="{{ asset('assets/js/functions.js') }}"></script>
 	<script src="{{ asset('assets/js/jquery-ui-1.12.4.minb8ff.js') }}"></script>
-	<script src="{{ asset('assets/js/custom-cart.js') }}"></script>
+	<script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>

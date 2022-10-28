@@ -2891,6 +2891,13 @@ li.menu-item .nav-label.sale-label::before {
     line-height: 40px;
     color: #444444;
 }
+.widget .list-item {
+    font-size: 14px !important;
+    line-height: 40px;
+    color: #444444;
+}
+
+
 
 .widget ul li {
     list-style: none;

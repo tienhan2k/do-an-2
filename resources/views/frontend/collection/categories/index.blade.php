@@ -5,6 +5,14 @@
 @include('partials.breadcrumb')
 
 @section('content')
+<style>
+    .cate-img{
+        max-width: 100%;
+        height: 200px;
+        vertical-align: middle;
+        border: 0;
+    }
+</style>
     <main id="main" class="main-site">
         <div class="container">
 
@@ -25,7 +33,7 @@
                                 <div class="category-card">
                                     <a href="{{ url('/collections/' . $cateItem->slug) }}">
                                         <div class="category-card-img">
-                                            <img src="{{ asset($cateItem->image) }}" class="w-100" alt="Laptop">
+                                            <img src="{{ asset('uploads/categories/'.$cateItem->image) }}" class="cate-img"  alt="{{ $cateItem->name }}">
                                         </div>
                                         <div class="category-card-body">
                                             <h5>{{ $cateItem->name }}</h5>

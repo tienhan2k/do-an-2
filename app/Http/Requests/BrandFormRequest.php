@@ -26,11 +26,11 @@ class BrandFormRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'string'
+                'string',
             ],
             'slug'=> [
                 'required',
-                'string'
+                'string',
             ],
             'category_id' => [
                 'required',

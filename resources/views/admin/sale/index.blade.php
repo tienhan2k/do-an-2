@@ -35,8 +35,8 @@
                                 </tr>
                             @else
                                 <tr>
-                                    <td colspan="5">
-                                        Không tìm thấy
+                                    <td colspan="4" class="text-center">
+                                        Not found.
                                     </td>
                                 </tr>
                             @endif

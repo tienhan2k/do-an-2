@@ -94,7 +94,7 @@
                                     <select name="brand" class="form-control" id="">
 
                                         @forelse ($brands as $brand)
-                                            <option value="{{ $brand->name }}">{{ $brand->name }}</option>
+                                            <option value="{{ $brand->name }}">{{ $brand->slug }}</option>
                                         @empty
                                             <option value="">None</option>
                                         @endforelse
@@ -208,7 +208,7 @@
                                             </div>
                                         @empty
                                             <div class="col-md-12">
-                                                <h1>Không tìm thấy</h1>
+                                                <h6>No color found.</h6>
                                             </div>
                                         @endforelse
                                     </div>
@@ -220,7 +220,7 @@
 
 
                         <div class="col-md-12 mb-3">
-                            <button type="submit" class="btn btn-primary float-end text-white">Lưu</button>
+                            <button type="submit" class="btn btn-primary float-end text-white">Save</button>
                         </div>
                     </form>
 

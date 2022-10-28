@@ -87,6 +87,13 @@
                             font-size: 32px;
                             color: red;
                         }
+
+                        .pro-img {
+                            max-width: 100%;
+                            height: 250px;
+                            vertical-align: middle;
+                            border: 0;
+                        }
                     </style>
                     <div class="row product_data productItem">
 
@@ -100,7 +107,7 @@
                                             {{-- <input type="hidden" value="1" class="qty-input"> --}}
                                             <a href="{{ url('/collections/' . $item->category->slug . '/' . $item->slug) }}"
                                                 title="{{ $item->name }}">
-                                                <figure><img
+                                                <figure><img class="pro-img"
                                                         src="{{ asset('uploads/products/' . $item->productImages[0]->image) }}"
                                                         alt="{{ $item->name }}"></figure>
                                             </a>

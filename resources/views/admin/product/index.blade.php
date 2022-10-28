@@ -38,7 +38,7 @@
                                         @if ($product->category)
                                             {{ $product->category->name }}
                                         @else
-                                            Không có thể loại nào
+                                            No category found.
                                         @endif
                                     </td>
 
@@ -50,14 +50,14 @@
                                         <a href="{{ route('product.edit', $product->id) }}"
                                             class="btn btn-sm btn-success">Edit</a>
                                         <a href="{{ route('product.delete', $product->id) }}"
-                                            onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này không?')"
+                                            onclick="return confirm('Are you sure?')"
                                             class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5">
-                                        Không tìm thấy sản phẩm nào
+                                    <td colspan="7" class="text-center">
+                                        Products not found.
                                     </td>
                                 </tr>
                             @endforelse

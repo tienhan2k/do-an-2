@@ -41,6 +41,11 @@
                                     </td>
                                 </tr>
                             @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        No order found.
+                                    </td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

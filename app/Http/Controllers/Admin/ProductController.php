@@ -117,6 +117,7 @@ class ProductController extends Controller
 
     public function update(ProductFormRequest $request, $id)
     {
+        // dd($request);
         $request->validated();
         $product = Category::findOrFail($request->category_id)
                             ->products()

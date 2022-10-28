@@ -26,11 +26,11 @@ class ProductFormRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'string'
+                'string',
             ],
             'slug' => [
                 'required',
-                'string'
+                'string',
             ],
             'description' => [
                 'required',
@@ -60,8 +60,8 @@ class ProductFormRequest extends FormRequest
                 'integer'
             ],
             'sale_price' => [
-                'required',
-                'integer'
+                'integer',
+
             ],
             'quantity' => [
                 'required',

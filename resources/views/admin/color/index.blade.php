@@ -38,14 +38,14 @@
                                     <td>
                                         <a href="{{ route('color.edit', $color->id) }}" class="btn btn-success btn-sm">Edit</a>
                                         <a href="{{ route('color.delete', $color->id) }}"
-                                            onclick="return confirm('Bạn có chắc không?')"
+                                            onclick="return confirm('Are you sure?')"
                                             class="btn  btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5">
-                                        Không tìm thấy
+                                    <td colspan="5" class="text-center">
+                                        No color found.
                                     </td>
                                 </tr>
                             @endforelse

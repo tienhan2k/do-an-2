@@ -102,9 +102,8 @@
                                     <select name="brand" class="form-control" id="">
 
                                         @forelse ($brands as $brand)
-                                            <option value="{{ $brand->name }}"
-                                                {{ $brand->name == $product->brand ? 'selected' : '' }}>
-                                                {{ $brand->name }}
+                                            <option value="{{ $brand->name }}">
+                                                {{ $brand->slug }}
                                             </option>
                                         @empty
                                             <option value="">None</option>
@@ -227,13 +226,13 @@
                                                         style="width: 80px; height: 80px;" class="me-4 border"
                                                         alt="Img" />
                                                     <a href="{{ route('product-img.delete', $image->id) }}"
-                                                        onclick="return confirm('Bạn có chắc muốn xoá hình này không?')"
+                                                        onclick="return confirm('Are you sure?')"
                                                         class="d-block">Remove</a>
                                                 </div>
                                             @endforeach
                                         </div>
                                     @else
-                                        <h5>Không tìm thấy hình ảnh nàp</h5>
+                                        <h5>No image found.</h5>
                                     @endif
                                 </div>
                             </div>
@@ -255,8 +254,8 @@
                                                 </div>
                                             </div>
                                         @empty
-                                            <div class="col-md-12">
-                                                <h1>Không tìm thấy</h1>
+                                            <div class="col-md-12 text-center">
+                                                <h6>Not found.</h6>
                                             </div>
                                         @endforelse
                                     </div>
@@ -279,7 +278,7 @@
                                                     @if ($prodColor->color)
                                                         <td>{{ $prodColor->color->name }}</td>
                                                     @else
-                                                        Không tìm thấy màu nào
+                                                        No color found.
                                                     @endif
 
                                                     <td>
@@ -308,7 +307,7 @@
 
 
                         <div class="col-md-12 mb-3">
-                            <button type="submit" class="btn btn-primary float-end text-white">Lưu</button>
+                            <button type="submit" class="btn btn-primary float-end text-white">Save</button>
                         </div>
                     </form>
 

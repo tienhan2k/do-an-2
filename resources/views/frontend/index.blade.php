@@ -127,7 +127,7 @@
                                                     <a href="#"
                                                         class="product-name"><span>{{ $latest->name }}</span></a>
                                                     <div class="wrap-price"><span
-                                                            class="product-price">{{ number_format($latest->original_price) }}</span>
+                                                            class="product-price">{{ number_format($latest->original_price) }} VNĐ</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -165,7 +165,7 @@
                                             <div class="product-thumnail">
                                                 <a href="{{ url('/collections/' . $item->slug) }}"
                                                     title="{{ $item->name }}">
-                                                    <figure><img src="{{ asset($item->image) }}" width="800"
+                                                    <figure><img src="{{ asset('uploads/categories/'.$item->image) }}" width="800"
                                                             height="800" alt=""></figure>
                                                 </a>
                                             </div>

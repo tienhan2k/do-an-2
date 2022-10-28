@@ -21,11 +21,11 @@
 
                 <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
 
-                    <div class="banner-shop">
+                    {{-- <div class="banner-shop">
                         <a href="#" class="banner-link">
                             <figure><img src="{{ asset('assets/images/shop-banner.jpg') }}" alt=""></figure>
                         </a>
-                    </div>
+                    </div> --}}
 
                     <div class="wrap-shop-control">
 
@@ -36,15 +36,15 @@
                                 <div class="sort-item orderby">
                                     <select name="sort" class="use-chosen" id="sort">
                                         <option value="" selected="selected">Default sorting</option>
-                                        <option value="name_a_z" @if ($_GET['sort'] == 'name_a_z') selected='' @endif>Sort
+                                        <option value="name_a_z" @if (isset($_GET['sort']) && $_GET['sort'] == 'name_a_z') selected='' @endif>Sort
                                             by name: A - Z</option>
-                                        <option value="name_z_a" @if ($_GET['sort'] == 'name_z_a') selected='' @endif>Sort
+                                        <option value="name_z_a" @if (isset($_GET['sort']) && $_GET['sort'] == 'name_z_a') selected='' @endif>Sort
                                             by name: Z - A</option>
                                         <option value="product_lastest"
-                                            @if ($_GET['sort'] == 'product_lastest') selected='' @endif>Sort by lastest</option>
-                                        <option value="price_low_high" @if ($_GET['sort'] == 'price_low_high') selected='' @endif>
+                                            @if (isset($_GET['sort']) && $_GET['sort'] == 'product_lastest') selected='' @endif>Sort by lastest</option>
+                                        <option value="price_low_high" @if (isset($_GET['sort']) && $_GET['sort'] == 'price_low_high') selected='' @endif>
                                             Sort by price: low to high</option>
-                                        <option value="price_high_low" @if ($_GET['sort'] == 'price_high_low') selected='' @endif>
+                                        <option value="price_high_low" @if (isset($_GET['sort']) && $_GET['sort'] == 'price_high_low') selected='' @endif>
                                             Sort by price: high to low</option>
                                     </select>
                                 </div>
@@ -83,6 +83,13 @@
                             font-size: 32px;
                             color: red;
                         }
+
+                        .pro-img {
+                            max-width: 100%;
+                            height: 250px;
+                            vertical-align: middle;
+                            border: 0;
+                        }
                     </style>
                     <div class="row product_data productItem">
 
@@ -95,7 +102,7 @@
                                             <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
                                             <a href="{{ url('/collections/' . $category->slug . '/' . $item->slug) }}"
                                                 title="{{ $item->name }}">
-                                                <figure><img
+                                                <figure><img class="pro-img"
                                                         src="{{ asset('uploads/products/' . $item->productImages[0]->image) }}"
                                                         alt="{{ $item->name }}"></figure>
                                             </a>
@@ -134,7 +141,7 @@
                     <div class="wrap-pagination-info">
                         <ul class="page-numbers text-center">
                             @if (isset($_GET['sort']))
-                                {{ $products->appends(['sort' => $_GET['sort']])->links() }}
+                                {{ $products->appends(['sort'=> $_GET['sort']])->links() }}
                             @else
                                 {{ $products->links() }}
                             @endif
@@ -158,64 +165,102 @@
                             </ul>
                         </div>
                     </div><!-- Categories widget-->
-
-                    <div class="widget mercado-widget filter-widget brand-widget">
-                        <h2 class="widget-title">Brand</h2>
-                        <div class="widget-content">
-                            <ul class="list-style vertical-list list-limited" data-show="6">
-                                @foreach ($brands_filters as $brand)
-                                    <li class="list-item">
-                                        <a class="filter-link" href="#">{{ $brand->name }}</a>
-                                    </li>
-                                @endforeach
-
-                            </ul>
-                        </div>
-                    </div><!-- brand widget-->
-
                     {{-- <div class="widget mercado-widget filter-widget price-filter">
-                        <h2 class="widget-title">Price</h2>
-                        <div class="widget-content">
-                            <form action="">
-                                @csrf
-                                <div id="slider-range"></div>
-                                <p>
-                                    <label for="amount">Price:</label>
-                                    <input type="text" id="amount" readonly>
-                                    <button class="filter-submit">Filter</button>
-                                </p>
-                            </form>
-                        </div>
-                    </div><!-- Price--> --}}
+						<h2 class="widget-title">Price</h2>
+						<div class="widget-content">
+							<div id="slider-range"></div>
+							<p>
+								<label for="amount">Price:</label>
+								<input type="text" id="amount" readonly>
+								<button class="filter-submit">Filter</button>
+							</p>
+						</div>
+					</div><!-- Price--> --}}
+                    <style>
+                        .button-filter {
+                            font-size: 14px;
+                            color: white;
+                            line-height: 30px;
+                            margin: 0;
+                            float: right;
+                            background: #ff2832;
+                            padding: 10px 15px 10px 15px;
+                        }
+                    </style>
+                    <form action="{{ URL::current() }}" method="GET">
+                        <div class="widget mercado-widget filter-widget brand-widget">
 
-                    <div class="widget mercado-widget filter-widget">
-                        <h2 class="widget-title">Color</h2>
-                        <div class="widget-content">
-                            <ul class="list-style vertical-list has-count-index">
-                                @foreach ($colors as $color)
+                            <h2 class="widget-title">Brand <button type="submit"
+                                    class="btn add-to-cart button-filter">Filter</button></h2>
+                            <div class="widget-content">
+                                <ul class="list-style vertical-list list-limited" data-show="6">
+                                    @foreach ($category->brands as $brand)
+                                        @php
+                                            $checked = [];
+                                            if (isset($_GET['brand'])) {
+                                                $checked = $_GET['brand'];
+                                            }
+                                        @endphp
+                                        <li class="list-item">
+                                            <input type="checkbox" @if (in_array($brand->slug, $checked)) checked @endif
+                                                name="brand[]" value="{{ $brand->name }}">
+                                            {{ $brand->name }}
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            </div>
+                        </div><!-- brand widget-->
+
+                        <div class="widget mercado-widget filter-widget">
+                            <h2 class="widget-title">Color</h2>
+                            <div class="widget-content">
+                                <ul class="list-style vertical-list has-count-index">
+                                    @foreach ($colors as $color)
+                                        @php
+                                            $checked = [];
+                                            if (isset($_GET['color'])) {
+                                                $checked = $_GET['color'];
+                                            }
+                                        @endphp
+                                        <li class="list-item">
+                                            <input type="checkbox" @if (in_array($color->id, $checked)) checked @endif
+                                                name="color[]" value="{{ $color->id }}" />
+                                            {{ $color->name }}
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            </div>
+                        </div><!-- Color -->
+
+                        <div class="widget mercado-widget filter-widget">
+                            <h2 class="widget-title">Size</h2>
+                            <div class="widget-content">
+                                <ul class="list-style vertical-list has-count-index">
                                     <li class="list-item">
-                                        <a class="filter-link " href="#">{{ $color->name }} <span>(217)</span></a>
+                                        <input type="checkbox" />
+                                        S
                                     </li>
-                                @endforeach
+                                    <li class="list-item">
+                                        <input type="checkbox" />
+                                        M
+                                    </li>
+                                    <li class="list-item">
+                                        <input type="checkbox" />
+                                        L
+                                    </li>
+                                    <li class="list-item">
+                                        <input type="checkbox" />
+                                        XL
+                                    </li>
 
-                            </ul>
-                        </div>
-                    </div><!-- Color -->
+                                </ul>
+                            </div>
+                        </div><!-- size -->
+                    </form>
 
-                    <div class="widget mercado-widget filter-widget">
-                        <h2 class="widget-title">Size</h2>
-                        <div class="widget-content">
-                            <ul class="list-style inline-round ">
-                                <li class="list-item"><a class="filter-link active" href="#">s</a></li>
-                                <li class="list-item"><a class="filter-link " href="#">M</a></li>
-                                <li class="list-item"><a class="filter-link " href="#">l</a></li>
-                                <li class="list-item"><a class="filter-link " href="#">xl</a></li>
-                            </ul>
-                            {{-- <div class="widget-banner">
-                                <figure><img src="assets/images/size-banner-widget.jpg" width="270" height="331" alt=""></figure>
-                            </div> --}}
-                        </div>
-                    </div><!-- Size -->
+
 
                     <div class="widget mercado-widget widget-product">
                         <h2 class="widget-title">Popular Products</h2>

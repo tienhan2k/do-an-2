@@ -37,14 +37,14 @@
                                         <a href="{{ route('category.edit', $category->id) }}"
                                             class="btn btn-success">Edit</a>
                                         <a href="{{ route('category.delete', $category->id) }}"
-                                            onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này không?')"
+                                            onclick="return confirm('Are you sure?')"
                                             class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5">
-                                        Không tìm thấy thương hiệu
+                                    <td colspan="5" class="text-center">
+                                        No category found
                                     </td>
                                 </tr>
                             @endforelse

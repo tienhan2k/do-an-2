@@ -39,7 +39,7 @@ class CategoryController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('category.index'))->with('message', 'Thêm thành công.');
+        return redirect(route('category.index'))->with('message', 'Add successful.');
     }
 
     public function storeImage($request)
@@ -50,11 +50,6 @@ class CategoryController extends Controller
 
         $file->move('uploads/categories/', $fileName);
         return $fileName;
-    }
-
-    public function show($id)
-    {
-        //
     }
 
     public function edit($id)
@@ -81,7 +76,7 @@ class CategoryController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('category.index'))->with('message', 'Cập nhật thành công.');
+        return redirect(route('category.index'))->with('message', 'Update successful.');
     }
 
     public function updateImage( $request, $id )
@@ -113,7 +108,7 @@ class CategoryController extends Controller
                 File::delete($destination);
             }
             $category->delete();
-            return redirect(route('category.index'))->with('message', 'Xoá thành công');
+            return redirect(route('category.index'))->with('message', 'Delete successful.');
         } else {
             return redirect(route('category.index'))->with('message', 'Xoá thất bại');
         }

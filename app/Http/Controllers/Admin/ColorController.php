@@ -33,7 +33,7 @@ class ColorController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('color.index'))->with('message', 'Thêm thành công.');
+        return redirect(route('color.index'))->with('message', 'Add successful.');
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class ColorController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('color.index'))->with('message', 'Cập nhật thành công.');
+        return redirect(route('color.index'))->with('message', 'Update successful.');
     }
 
 

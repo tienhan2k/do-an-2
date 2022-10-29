@@ -59,7 +59,7 @@
                                         </li>
                                         <li>
                                             <i class="fa fa-phone" aria-hidden="true"></i>
-                                            <p class="contact-txt">(+123) 456 789 - (+123) 666 888</p>
+                                            <p class="contact-txt">(+84) 123 456 789 - (+84) 123 666 888</p>
                                         </li>
                                         <li>
                                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -234,7 +234,7 @@
         <div class="coppy-right-box">
             <div class="container">
                 <div class="coppy-right-item item-left">
-                    <p class="coppy-right-text">Copyright © 2020 Surfside Media. All rights reserved</p>
+                    <p class="coppy-right-text">All rights reserved</p>
                 </div>
                 <div class="coppy-right-item item-right">
                     <div class="wrap-nav horizontal-nav">

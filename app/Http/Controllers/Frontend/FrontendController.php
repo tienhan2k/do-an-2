@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use DB;
 use App\Models\Sale;
 use App\Models\Brand;
 use App\Models\Color;
@@ -10,6 +11,7 @@ use App\Models\Slider;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Wishlist;
+use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -75,7 +77,21 @@ class FrontendController extends Controller
                 $products = $category->products()->where('status', '0')->whereIn('brand', $checked)->paginate(9);
             } elseif ($request->get('color')) {
                 $checked = $_GET['color'];
-                $products = $category->products()->where('status', '0')->orderBy('original_price', 'desc')->paginate(9);
+                $product_colors = ProductColor::where(function ($q) use ($checked) {
+                    foreach ($checked as $value) {
+                        $q->orWhere('color_id', $value);
+                    }
+                })
+                    ->pluck('product_id')
+                    ->toArray();
+                $products = $category->products()
+                    ->where('status', '0')
+                    ->where(function ($q) use ($product_colors) {
+                        foreach ($product_colors as $value) {
+                            $q->orWhere('id', $value);
+                        }
+                    })
+                    ->paginate(9);
             } else {
                 $products = $category->products()->where('status', '0')->paginate(9);
             }

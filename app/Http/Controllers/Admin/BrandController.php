@@ -20,7 +20,6 @@ class BrandController extends Controller
         ]);
     }
 
-
     public function create()
     {
         return view('admin.brand.create', [
@@ -40,15 +39,8 @@ class BrandController extends Controller
             'category_id' => $request->category_id,
         ]);
 
-        return redirect(route('brand.index'))->with('message', 'Thêm thành công.');
+        return redirect(route('brand.index'))->with('message', 'Add successful.');
     }
-
-
-    public function show($id)
-    {
-        //
-    }
-
 
     public function edit($id)
     {
@@ -71,7 +63,7 @@ class BrandController extends Controller
             'category_id' => $request->category_id,
         ]);
 
-        return redirect(route('brand.index'))->with('message', 'Cập nhật thành công.');
+        return redirect(route('brand.index'))->with('message', 'Update successful.');
     }
 
 

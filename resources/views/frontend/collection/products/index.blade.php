@@ -202,7 +202,7 @@
                                             }
                                         @endphp
                                         <li class="list-item">
-                                            <input type="checkbox" @if (in_array($brand->slug, $checked)) checked @endif
+                                            <input type="checkbox" @if (in_array($brand->name, $checked)) checked @endif
                                                 name="brand[]" value="{{ $brand->name }}">
                                             {{ $brand->name }}
                                         </li>

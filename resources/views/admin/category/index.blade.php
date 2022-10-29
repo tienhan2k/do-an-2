@@ -23,6 +23,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Slug</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -32,6 +33,7 @@
                                 <tr>
                                     <td>{{$index + $categories->firstItem()}}</td>
                                     <td>{{ $category->name }}</td>
+                                    <td>{{ $category->slug }}</td>
                                     <td>{{ $category->status == '1' ? 'Hidden' : 'Visible' }}</td>
                                     <td>
                                         <a href="{{ route('category.edit', $category->id) }}"
@@ -43,7 +45,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">
+                                    <td colspan="6" class="text-center">
                                         No category found
                                     </td>
                                 </tr>

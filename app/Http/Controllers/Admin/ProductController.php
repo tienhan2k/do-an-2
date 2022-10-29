@@ -35,8 +35,6 @@ class ProductController extends Controller
         ]);
     }
 
-
-
     public function store(ProductFormRequest $request)
     {
         $request->validated();
@@ -85,15 +83,8 @@ class ProductController extends Controller
             }
         }
 
-        return redirect(route('product.index'))->with('message', 'Thêm thành công.');
+        return redirect(route('product.index'))->with('message', 'Add successful.');
     }
-
-
-    public function show($id)
-    {
-        return 'meow';
-    }
-
 
     public function edit($id)
     {
@@ -165,14 +156,14 @@ class ProductController extends Controller
                     $product->productColor()->create([
                         'product_id' => $product->id,
                         'color_id' => $color,
-                        'quantity' => $request->color_quantity[$key] ?? 0,
+                        'quantity' => $request->color_quantity[$key] ?? 1,
                     ]);
                 }
             }
 
-            return redirect(route('product.index'))->with('message', 'Cập nhật thành công.');
+            return redirect(route('product.index'))->with('message', 'Update successful.');
         } else {
-            return redirect(route('product.index'))->with('message', 'Không tìm thấy sản phẩm');
+            return redirect(route('product.index'))->with('message', 'Product not found.');
         }
     }
 
@@ -190,7 +181,7 @@ class ProductController extends Controller
             }
         }
         $product->delete();
-        return redirect()->back()->with('message', 'Xoá sản phẩm thành công.');
+        return redirect()->back()->with('message', 'Deleted product.');
     }
 
     public function destroyProductImages($id)
@@ -204,7 +195,7 @@ class ProductController extends Controller
         }
         $productImg->delete();
 
-        return redirect()->back()->with('message', 'Xoá hình thành công');
+        return redirect()->back()->with('message', 'Deleted!');
     }
 
     public function updateProductColorQty(Request $request, $prod_color_id)
@@ -218,7 +209,7 @@ class ProductController extends Controller
         $productColorData->update([
             'quantity' => $request->qty
         ]);
-        return response()->json(['message' => 'Số lượng màu sản phẩm đã được cập nhật']);
+        return response()->json(['message' => 'Product colors quantity updated!']);
 
     }
 
@@ -228,7 +219,7 @@ class ProductController extends Controller
         $prodColor = ProductColor::findOrFail($prod_color_id);
         $prodColor->delete();
 
-        return response()->json(['message'=>'Đã xoá']);
+        return response()->json(['message'=>'Deleted!']);
 
     }
 }

@@ -24,7 +24,9 @@
                                 <th>ID</th>
                                 <th>Category</th>
                                 <th>Product</th>
+                                <th>Brand</th>
                                 <th>Price</th>
+                                <th>Sale price</th>
                                 <th>Quantity</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -43,7 +45,9 @@
                                     </td>
 
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->original_price }}</td>
+                                    <td>{{ $product->brand }}</td>
+                                    <td><strong>{{ number_format($product->original_price) }}</strong>đ</td>
+                                    <td><strong>{{ number_format($product->sale_price) }}</strong>đ</td>
                                     <td>{{ $product->quantity }}</td>
                                     <td>{{ $product->status == '1' ? 'Hidden' : 'Visible' }}</td>
                                     <td>
@@ -56,7 +60,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">
+                                    <td colspan="9" class="text-center">
                                         Products not found.
                                     </td>
                                 </tr>

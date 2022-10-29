@@ -29,6 +29,6 @@ class SaleController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect(route('sale.index'))->with('message', 'Cập nhật thành công.');
+        return redirect(route('sale.index'))->with('message', 'Update successful.');
     }
 }

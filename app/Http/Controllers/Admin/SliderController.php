@@ -35,7 +35,7 @@ class SliderController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('slider.index'))->with('message', 'Thêm thành công.');
+        return redirect(route('slider.index'))->with('message', 'Add successful.');
     }
 
 
@@ -48,13 +48,6 @@ class SliderController extends Controller
         $file->move('uploads/sliders/', $fileName);
         return $fileName;
     }
-
-
-    public function show($id)
-    {
-        //
-    }
-
 
     public function edit($id)
     {
@@ -77,7 +70,7 @@ class SliderController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('slider.index'))->with('message', 'Cập nhật thành công.');
+        return redirect(route('slider.index'))->with('message', 'Update successful.');
     }
 
 
@@ -87,7 +80,7 @@ class SliderController extends Controller
 
         if ($request->hasFile('image')) {
             $image_path = public_path('uploads/sliders/'). $slider->image;
-            
+
             if(File::exists($image_path)) {
                 File::delete($image_path);
             }
@@ -112,9 +105,9 @@ class SliderController extends Controller
                 File::delete($destination);
             }
             $slider->delete();
-            return redirect(route('slider.index'))->with('message', 'Xoá thành công');
+            return redirect(route('slider.index'))->with('message', 'Delete successful');
         } else {
-            return redirect(route('slider.index'))->with('message', 'Xoá that bai');
+            return redirect(route('slider.index'))->with('message', 'There is something wrong.');
         }
     }
 }

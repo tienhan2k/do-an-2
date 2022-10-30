@@ -44,6 +44,7 @@
                                 <label>Category</label>
                                 <select name="parent_category_id" class="form-control">
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="">--Select No Category--</option>
                                     @foreach ($all_cate as $categoryItem)
                                             <option value="{{ $categoryItem->id }}">
                                                 {{ $categoryItem->name }}

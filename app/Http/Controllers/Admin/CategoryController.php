@@ -71,8 +71,8 @@ class CategoryController extends Controller
 
     public function edit($id, $s_id = null)
     {
-        if ($s_id) {
-            return view('admin.category.edit-sub-cate',[
+        if ($s_id != null) {
+            return view('admin.category.edit-sub-cate', [
                 's_cate' => SubCategory::findOrFail($s_id),
                 'p_cate' => Category::where('status', '0')->get(),
             ]);
@@ -82,18 +82,16 @@ class CategoryController extends Controller
                 'all_cate' => Category::where('status', '0')->get(),
             ]);
         }
-
     }
 
-    public function update(CategoryFormRequest $request, $id, $s_id = null)
+    public function update(Request $request, $id, $s_id = null)
     {
-        $request->validated();
         if ($request->s_id) {
             SubCategory::findOrFail($s_id)->update([
                 'category_id' => $request->parent_category_id,
                 'name' => $request->name,
                 'slug' => Str::slug($request->slug),
-                'image' => $this->updateImage($request, $request->id),
+                'image' => $this->updateSubCateImage($request, $request->s_id),
                 'meta_title' => $request->meta_title,
                 'meta_keyword' => $request->meta_keyword,
                 'meta_description' => $request->meta_description,
@@ -112,6 +110,27 @@ class CategoryController extends Controller
         }
 
         return redirect(route('category.index'))->with('message', 'Update successful.');
+    }
+
+    public function updateSubCateImage($request, $s_id)
+    {
+        $category = SubCategory::find($s_id);
+        if ($request->hasFile('image')) {
+            $image_path = public_path('uploads/categories/') . $category->image;
+            if (File::exists($image_path)) {
+                File::delete($image_path);
+
+                $file = $request->file('image');
+                $ext = $file->getClientOriginalExtension();
+                $fileName = time() . '.' . $ext;
+                $file->move('uploads/categories/', $fileName);
+
+                return $fileName;
+            }
+        } else {
+            $fileName = $category->image;
+            return $fileName;
+        }
     }
 
     public function updateImage($request, $id)
@@ -133,22 +152,38 @@ class CategoryController extends Controller
             $fileName = $category->image;
             return $fileName;
         }
-
     }
 
-    public function destroy($id)
+    public function destroy($id, $s_id = null)
     {
-        if ($category = Category::findOrFail($id)) {
+        if ($s_id != null) {
+            if ($category = SubCategory::findOrFail($s_id)) {
 
-            $destination = public_path('uploads/categories/') . $category->image;
+                $destination = public_path('uploads/categories/') . $category->image;
 
-            if (File::exists($destination)) {
-                File::delete($destination);
+                if (File::exists($destination)) {
+                    File::delete($destination);
+                }
+                $category->delete();
+                return redirect(route('category.index'))->with('message', 'Delete successful.');
+            } else {
+                return redirect(route('category.index'))->with('message', 'Delete failure.');
             }
-            $category->delete();
-            return redirect(route('category.index'))->with('message', 'Delete successful.');
         } else {
-            return redirect(route('category.index'))->with('message', 'Delete failure.');
+            if ($category = Category::findOrFail($id)) {
+
+                $destination = public_path('uploads/categories/') . $category->image;
+
+                if (File::exists($destination)) {
+                    File::delete($destination);
+                }
+                $category->delete();
+                return redirect(route('category.index'))->with('message', 'Delete successful.');
+            } else {
+                return redirect(route('category.index'))->with('message', 'Delete failure.');
+            }
         }
+
+
     }
 }

@@ -5,6 +5,15 @@
     .slist {
         list-style: none;
     }
+    .slist li{
+        line-height: 33px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .slink i{
+        font-size: 16px;
+        margin-left: 12px;
+    }
 </style>
     <div class="row">
         <div class="col-md-12">
@@ -29,8 +38,8 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Slug</th>
-                                <th>Sub categories</th>
                                 <th>Status</th>
+                                <th>Sub categories</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -40,22 +49,30 @@
                                     <td>{{$index + $categories->firstItem()}}</td>
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->slug }}</td>
+                                    <td>{{ $category->status == '1' ? 'Hidden' : 'Visible' }}</td>
+
                                     <td>
                                         <ul class="slist">
-                                            @foreach ($category->subCategories as $subCategory)
+                                            @forelse ($category->subCategories as $subCategory)
                                                 <li><i class="fa fa-caret-right"></i> {{ $subCategory->name }}
-                                                    <a href="{{ route('category.edit', ['id' => $category->id, 's_id' => $subCategory->id]) }}"> <i class="fa fa-edit"> </i> </a>
+                                                    <a class="slink" href="{{ route('category.edit', ['id' => $category->id, 's_id' => $subCategory->id]) }}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <a class="slink" onclick="return confirm('Are you sure?')" href="{{ route('category.delete', ['id' => $category->id, 's_id' => $subCategory->id]) }}">
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    </a>
                                                 </li>
-                                            @endforeach
+                                            @empty
+                                                <p>No sub categories found.</p>
+                                            @endforelse
                                         </ul>
                                     </td>
-                                    <td>{{ $category->status == '1' ? 'Hidden' : 'Visible' }}</td>
                                     <td>
                                         <a href="{{ route('category.edit', $category->id) }}"
-                                            class="btn btn-success">Edit</a>
+                                            class="btn btn-sm btn-success">Edit</a>
                                         <a href="{{ route('category.delete', $category->id) }}"
                                             onclick="return confirm('Are you sure?')"
-                                            class="btn btn-danger">Delete</a>
+                                            class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             @empty

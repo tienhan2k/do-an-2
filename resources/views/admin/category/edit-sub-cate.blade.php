@@ -23,7 +23,7 @@
 
 
 
-                    <form action="{{ route('category.update',['id' => $s_cate->category->id, 's_id?' => $s_cate->id])  }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('category.update', ['id' => $s_cate->category->id, 's_id' => $s_cate->id])  }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="row">
@@ -44,6 +44,7 @@
                                 <label>Parent Category</label>
                                 <select name="parent_category_id" class="form-control">
                                     <option value="{{$s_cate->category->id}}">{{$s_cate->category->name}}</option>
+                                    <option value="">--Select No Category--</option>
                                         @foreach ($p_cate as $categoryItem)
                                             <option value="{{ $categoryItem->id }}">
                                                 {{ $categoryItem->name }}

@@ -32,7 +32,7 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::post('category', 'store')->name('category.store');
         Route::get('category/edit/{id}/{s_id?}', 'edit')->name('category.edit');
         Route::patch('/category/{id}/{s_id?}', 'update')->name('category.update');
-        Route::get('/category/{id}', 'destroy')->name('category.delete');
+        Route::get('/category/{id}/{s_id?}', 'destroy')->name('category.delete');
     });
 
 

@@ -14,13 +14,14 @@ use App\Models\Wishlist;
 use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SubCategory;
 
 class FrontendController extends Controller
 {
     public function index()
     {
 
-        $category = Category::where('status', '0')
+        $category = SubCategory::where('status', '0')
             ->inRandomOrder()
             ->firstOrFail();
         $sliders = Slider::where('status', '0')->get();
@@ -33,7 +34,7 @@ class FrontendController extends Controller
             ->get();
         $sale_time = Sale::first();
         $latest_products = $category->products()->latest()->get();
-        $categories = Category::where('status', '0')->get();
+        $categories = SubCategory::where('status', '0')->get();
 
         return view('frontend.index', compact('sliders',  'products', 'latest_products', 'category', 'categories', 'sale_products', 'sale_time'));
     }
@@ -49,14 +50,14 @@ class FrontendController extends Controller
     public function categories()
     {
         return view('frontend.collection.categories.index', [
-            'categories' => Category::where('status', '0')->get(),
+            'categories' => SubCategory::where('status', '0')->get(),
         ]);
     }
 
     public function products(Request $request, $category_slug)
     {
-        $category = Category::where('slug', $category_slug)->first();
-        $cate_filters = Category::where('status', '0')->get();
+        $category = SubCategory::where('slug', $category_slug)->first();
+        $cate_filters = SubCategory::where('status', '0')->get();
         $brands_filters = Brand::where('status', '0')->get();
         $wishlist = Wishlist::get();
         $colors = Color::where('status', 0)->get();
@@ -103,7 +104,7 @@ class FrontendController extends Controller
 
     public function productDetails($category_slug, $product_slug)
     {
-        $category = Category::where('slug', $category_slug)->first();
+        $category = SubCategory::where('slug', $category_slug)->first();
         $product_details = Product::where('slug', $product_slug)->first();
         $reviews = Review::where('product_id', $product_details->id)->get();
         $products = $category->products()->get();

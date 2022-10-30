@@ -18,8 +18,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SaleController;
-
-
+use App\Http\Controllers\Admin\SizeController;
 
 Auth::routes();
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
@@ -61,6 +60,8 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
 
         Route::post('product-color/{prod_color_id}', 'updateProductColorQty');
         Route::get('product-color/{prod_color_id}/delete', 'deleteProductColorQty');
+        Route::post('product-size/{prod_size_id}', 'updateProductSizeQty');
+        Route::get('product-size/{prod_size_id}/delete', 'deleteProductSizeQty');
 
     });
 
@@ -73,6 +74,16 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::get('color/edit/{id}', 'edit')->name('color.edit');
         Route::patch('/color/{id}', 'update')->name('color.update');
         Route::get('/color/{id}', 'destroy')->name('color.delete');
+    });
+
+    Route::controller(SizeController::class)->group(function ()
+    {
+        Route::get('size', 'index')->name('size.index');
+        Route::get('size/create', 'create')->name('size.create');
+        Route::post('size', 'store')->name('size.store');
+        Route::get('size/edit/{id}', 'edit')->name('size.edit');
+        Route::patch('/size/{id}', 'update')->name('size.update');
+        Route::get('/size/{id}', 'destroy')->name('size.delete');
     });
 
 

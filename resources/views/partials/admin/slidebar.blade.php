@@ -78,6 +78,21 @@
             </div>
         </li>
 
+        <li class="nav-item {{ Request::is('admin/size', 'admin/size/create') ? 'active' : '' }}"">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-size" aria-expanded="{{ Request::is('admin/size') ? 'true' : '' }}"
+                aria-controls="ui-size">
+                <i class="mdi mdi-tag-multiple menu-icon"></i>
+                <span class="menu-title">Sizes</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse {{ Request::is('admin/size', 'admin/size/create') ? 'show' : '' }}" id="ui-size">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/size') ? 'active' : '' }}" href="{{ route('size.index') }}">View size</a></li>
+                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/size/create') ? 'active' : '' }}" href="{{ route('size.create') }}">Add size</a></li>
+                </ul>
+            </div>
+        </li>
+
         <li class="nav-item {{ Request::is('admin/slider', 'admin/slider/create') ? 'active' : '' }}"">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-slider" aria-expanded="{{ Request::is('admin/slider') ? 'true' : '' }}"
                 aria-controls="ui-slider">

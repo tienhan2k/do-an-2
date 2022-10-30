@@ -58,6 +58,11 @@
                                     data-bs-target="#colors-tab-pane" type="button" role="tab"
                                     aria-controls="colors-tab-pane" aria-selected="false">Product colors</button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="sizes-tab" data-bs-toggle="tab"
+                                    data-bs-target="#sizes-tab-pane" type="button" role="tab"
+                                    aria-controls="sizes-tab-pane" aria-selected="false">Product sizes</button>
+                            </li>
 
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -209,6 +214,28 @@
                                         @empty
                                             <div class="col-md-12">
                                                 <h6>No color found.</h6>
+                                            </div>
+                                        @endforelse
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade border p-3" id="sizes-tab-pane" role="tabpanel"
+                                aria-labelledby="sizes-tab" tabindex="0">
+                                <div class="md-3">
+                                    <label>Select sizes</label>
+                                    <div class="row">
+                                        @forelse ($sizes as $size)
+                                            <div class="col-md-3">
+                                                <div class="p-2 border">
+                                                    Size: <input type="checkbox" name="sizes[{{ $size->id }}]" value="{{ $size->id }}"/>{{ $size->name }}<br>
+                                                    Quantity: <input type="number" name="size_quantity[{{ $size->id }}]" style="width: 70px; border: 1px solid"/>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-md-12">
+                                                <h6>No size found.</h6>
                                             </div>
                                         @endforelse
                                     </div>

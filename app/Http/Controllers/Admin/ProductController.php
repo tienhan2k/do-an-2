@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Size;
 use App\Models\Brand;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\ProductImage;
 use App\Models\ProductColor;
+use App\Models\ProductImage;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\ProductFormRequest;
-use App\Models\Color;
 
 class ProductController extends Controller
 {
@@ -32,6 +33,7 @@ class ProductController extends Controller
             'products' => Product::get(),
             'brands' => Brand::get(),
             'colors' => Color::where('status', '0')->get(),
+            'sizes' => Size::where('status', '0')->get(),
         ]);
     }
 
@@ -83,6 +85,16 @@ class ProductController extends Controller
             }
         }
 
+        if ($request->sizes) {
+            foreach ($request->sizes as $key => $size) {
+                $product->productColor()->create([
+                    'product_id' => $product->id,
+                    'size_id' => $size,
+                    'quantity' => $request->size_quantity[$key] ?? 0,
+                ]);
+            }
+        }
+
         return redirect(route('product.index'))->with('message', 'Add successful.');
     }
 
@@ -97,11 +109,18 @@ class ProductController extends Controller
                         ->toArray();
         $colors = Color::whereNotIn('id', $product_color)->get();
 
+        $product_size = $product->productSize
+                        ->pluck('size_id')
+                        ->toArray();
+        $sizes = Size::whereNotIn('id', $product_size)->get();
+
+
         return view('admin.product.edit', compact(
             'product',
             'categories',
             'brands',
-            'colors'
+            'colors',
+            'sizes'
         ));
     }
 
@@ -157,6 +176,16 @@ class ProductController extends Controller
                         'product_id' => $product->id,
                         'color_id' => $color,
                         'quantity' => $request->color_quantity[$key] ?? 1,
+                    ]);
+                }
+            }
+
+            if ($request->sizes) {
+                foreach ($request->sizes as $key => $size) {
+                    $product->productSize()->create([
+                        'product_id' => $product->id,
+                        'size_id' => $size,
+                        'quantity' => $request->size_quantity[$key] ?? 1,
                     ]);
                 }
             }

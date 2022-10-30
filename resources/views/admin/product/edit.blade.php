@@ -63,6 +63,12 @@
                                     aria-controls="colors-tab-pane" aria-selected="false">Product colors</button>
                             </li>
 
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="sizes-tab" data-bs-toggle="tab"
+                                    data-bs-target="#sizes-tab-pane" type="button" role="tab"
+                                    aria-controls="sizes-tab-pane" aria-selected="false">Product sizes</button>
+                            </li>
+
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel"
@@ -299,6 +305,70 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+
+                            <div class="tab-pane fade border p-3" id="sizes-tab-pane" role="tabpanel"
+                                aria-labelledby="sizes-tab" tabindex="0">
+                                <div class="md-3">
+                                    <h4>Edit product sizes</h4>
+                                    <label>Select sizes</label>
+                                    <div class="row">
+                                        @forelse ($sizes as $size)
+                                            <div class="col-md-3">
+                                                <div class="p-2 border">
+                                                    Size: <input type="checkbox" name="sizes[{{ $size->id }}]"
+                                                        value="{{ $size->id }}" />{{ $size->name }}<br>
+                                                    Quantity: <input type="number"
+                                                        name="color_quantity[{{ $size->id }}]"
+                                                        style="width: 70px; border: 1px solid" />
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-md-12 text-center">
+                                                <h6>Not found.</h6>
+                                            </div>
+                                        @endforelse
+                                    </div>
+
+                                </div>
+                                <br>
+
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Size name</th>
+                                                <th>Quantity</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($product->productSize as $prodSize)
+                                                <tr class="prod-size-tr">
+                                                    @if ($prodSize->size)
+                                                        <td>{{ $prodSize->size->name }}</td>
+                                                    @else
+                                                        No size found.
+                                                    @endif
+
+                                                    <td>
+                                                        <div class="input-group mb-3" style="width: 150px">
+                                                            <input type="text" value="{{ $prodSize->quantity }}"
+                                                                class=" productSizeQuantity form-control form-control-sm" />
+                                                            <button type="button" value="{{ $prodSize->id }}"
+                                                                class=" updateProductSizeBtn btn btn-primary btn-sm text-white">Update</button>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" value="{{ $prodSize->id }}"
+                                                            class=" deleteProductSizeBtn btn btn-danger btn-sm text-white">Delete</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
 
 
                             </div>
@@ -370,6 +440,53 @@
                     url: "/admin/product-color/" + prod_color_id + "/delete",
                     success: function(response) {
                         thisClick.closest('.prod-color-tr').remove();
+                        alert(response.message);
+                    }
+                });
+
+            });
+
+
+            $(document).on('click', '.updateProductSizeBtn', function() {
+
+                var product_id = '{{ $product->id }}';
+                var prod_size_id = $(this).val();
+                var qty = $(this).closest('.prod-size-tr').find('.productSizeQuantity').val();
+                // alert(prod_color_id);
+
+                if (qty <= 0) {
+
+                    alert('Please add quantity.');
+                    return false;
+
+                }
+
+                var data = {
+                    'product_id': product_id,
+                    'qty': qty
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/product-size/" + prod_size_id,
+                    data: data,
+                    success: function(response) {
+                        alert(response.message)
+                    }
+                });
+            });
+
+
+            $(document).on('click', '.deleteProductSizeBtn', function() {
+
+                var prod_size_id = $(this).val();
+                var thisClick = $(this);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/admin/product-size/" + prod_size_id + "/delete",
+                    success: function(response) {
+                        thisClick.closest('.prod-size-tr').remove();
                         alert(response.message);
                     }
                 });

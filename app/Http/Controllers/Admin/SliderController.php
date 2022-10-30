@@ -43,7 +43,7 @@ class SliderController extends Controller
     {
         $file = $request->file('image');
         $ext = $file->getClientOriginalExtension();
-        $fileName = time(). '.' . $ext;
+        $fileName = time() . '.' . $ext;
 
         $file->move('uploads/sliders/', $fileName);
         return $fileName;
@@ -74,22 +74,25 @@ class SliderController extends Controller
     }
 
 
-    public function updateImage( $request, $id )
+    public function updateImage($request, $id)
     {
-        $slider = Slider::find($id);
+        $slider = Slider::findOrFail($id);
 
         if ($request->hasFile('image')) {
-            $image_path = public_path('uploads/sliders/'). $slider->image;
+            $image_path = public_path('uploads/sliders/') . $slider->image;
 
-            if(File::exists($image_path)) {
+            if (File::exists($image_path)) {
                 File::delete($image_path);
             }
 
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
-            $fileName = time(). '.' . $ext;
+            $fileName = time() . '.' . $ext;
             $file->move('uploads/sliders/', $fileName);
 
+            return $fileName;
+        } else {
+            $fileName = $slider->image;
             return $fileName;
         }
     }
@@ -99,9 +102,9 @@ class SliderController extends Controller
     {
         if ($slider = Slider::findOrFail($id)) {
 
-            $destination = public_path('uploads/sliders/'). $slider->image;
+            $destination = public_path('uploads/sliders/') . $slider->image;
 
-            if(File::exists($destination)){
+            if (File::exists($destination)) {
                 File::delete($destination);
             }
             $slider->delete();

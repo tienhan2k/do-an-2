@@ -27,32 +27,15 @@ class CategoryFormRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'unique:categories'
             ],
             'slug'=> [
                 'required',
                 'string',
-                'unique:categories'
-            ],
-            'description'=> [
-                'required',
             ],
             'image'=> [
                 'nullable',
                 'mimes:png,jpg',
             ],
-            'meta_title'=> [
-                'required',
-                'string'
-            ],
-            'meta_keyword'=> [
-                'required',
-                'string'
-            ],
-            'meta_description'=> [
-                'required',
-                'string'
-            ]
         ];
     }
 }

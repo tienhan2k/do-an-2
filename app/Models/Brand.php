@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,9 +22,9 @@ class Brand extends Model
 
     public function category()
     {
-       return $this->belongsTo(Category::class, 'category_id', 'id');
+       return $this->belongsTo(SubCategory::class, 'category_id', 'id');
     }
 
-    
+
 
 }

@@ -30,8 +30,8 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::get('category', 'index')->name('category.index');
         Route::get('category/create', 'create')->name('category.create');
         Route::post('category', 'store')->name('category.store');
-        Route::get('category/edit/{id}', 'edit')->name('category.edit');
-        Route::patch('/category/{id}', 'update')->name('category.update');
+        Route::get('category/edit/{id}/{s_id?}', 'edit')->name('category.edit');
+        Route::patch('/category/{id}/{s_id?}', 'update')->name('category.update');
         Route::get('/category/{id}', 'destroy')->name('category.delete');
     });
 

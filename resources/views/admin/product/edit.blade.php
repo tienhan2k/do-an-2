@@ -343,7 +343,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($product->productSize as $prodSize)
+                                            @foreach ($product->productSizes as $prodSize)
                                                 <tr class="prod-size-tr">
                                                     @if ($prodSize->size)
                                                         <td>{{ $prodSize->size->name }}</td>

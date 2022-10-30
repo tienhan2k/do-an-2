@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Brand;
-use App\Models\Category;
+use App\Models\ProductSize;
+use App\Models\SubCategory;
 use App\Models\ProductColor;
 use App\Models\ProductImage;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +35,7 @@ class Product extends Model
 
     public function category()
     {
-       return $this->belongsTo(Category::class, 'category_id', 'id');
+       return $this->belongsTo(SubCategory::class, 'category_id', 'id');
     }
 
     public function productImages()

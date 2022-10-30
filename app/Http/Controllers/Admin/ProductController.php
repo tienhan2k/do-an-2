@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductSize;
 use Illuminate\Support\Str;
 use App\Models\ProductColor;
 use App\Models\ProductImage;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\ProductFormRequest;
+use App\Models\SubCategory;
 
 class ProductController extends Controller
 {
@@ -29,7 +31,7 @@ class ProductController extends Controller
     public function create()
     {
         return view('admin.product.create', [
-            'categories' => Category::get(),
+            'categories' => SubCategory::get(),
             'products' => Product::get(),
             'brands' => Brand::get(),
             'colors' => Color::where('status', '0')->get(),
@@ -40,7 +42,7 @@ class ProductController extends Controller
     public function store(ProductFormRequest $request)
     {
         $request->validated();
-        $category = Category::findOrFail($request->category_id);
+        $category = SubCategory::findOrFail($request->category_id);
 
         $product = $category->products()->create([
             'category_id' => $request->category_id,
@@ -87,7 +89,7 @@ class ProductController extends Controller
 
         if ($request->sizes) {
             foreach ($request->sizes as $key => $size) {
-                $product->productColor()->create([
+                $product->productSizes()->create([
                     'product_id' => $product->id,
                     'size_id' => $size,
                     'quantity' => $request->size_quantity[$key] ?? 0,
@@ -101,7 +103,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        $categories = Category::get();
+        $categories = SubCategory::get();
         $brands = Brand::get();
 
         $product_color = $product->productColor
@@ -109,11 +111,10 @@ class ProductController extends Controller
                         ->toArray();
         $colors = Color::whereNotIn('id', $product_color)->get();
 
-        $product_size = $product->productSize
+        $product_size = $product->productSizes()
                         ->pluck('size_id')
                         ->toArray();
         $sizes = Size::whereNotIn('id', $product_size)->get();
-
 
         return view('admin.product.edit', compact(
             'product',
@@ -129,7 +130,7 @@ class ProductController extends Controller
     {
         // dd($request);
         $request->validated();
-        $product = Category::findOrFail($request->category_id)
+        $product = SubCategory::findOrFail($request->category_id)
                             ->products()
                             ->where('id', $id)
                             ->first();
@@ -247,6 +248,31 @@ class ProductController extends Controller
 
         $prodColor = ProductColor::findOrFail($prod_color_id);
         $prodColor->delete();
+
+        return response()->json(['message'=>'Deleted!']);
+
+    }
+
+    public function updateProductSizeQty(Request $request, $prod_size_id)
+    {
+
+        $productSizeData = Product::findOrFail($request->product_id)
+                                    ->productSize()
+                                    ->where('id', $prod_size_id)
+                                    ->first();
+
+        $productSizeData->update([
+            'quantity' => $request->qty
+        ]);
+        return response()->json(['message' => 'Product sizes quantity updated!']);
+
+    }
+
+    public function deleteProductSizeQty($prod_size_id)
+    {
+
+        $prodSize = ProductSize::findOrFail($prod_size_id);
+        $prodSize->delete();
 
         return response()->json(['message'=>'Deleted!']);
 

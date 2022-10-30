@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandFormRequest;
-use App\Models\Category;
+use App\Models\SubCategory;
 
 class BrandController extends Controller
 {
@@ -23,7 +23,7 @@ class BrandController extends Controller
     public function create()
     {
         return view('admin.brand.create', [
-            'categories' => Category::where('status', '0')->get(),
+            'categories' => SubCategory::where('status', '0')->get(),
         ]);
     }
 
@@ -47,7 +47,7 @@ class BrandController extends Controller
 
         return view('admin.brand.edit', [
             'brand' => Brand::findOrFail($id),
-            'category' => Category::where('status', '0')->get(),
+            'category' => SubCategory::where('status', '0')->get(),
         ]);
     }
 
@@ -71,6 +71,6 @@ class BrandController extends Controller
     {
         $brand = Brand::findOrFail($id)->first();
         $brand->delete();
-        return redirect(route('brand.index'));
+        return redirect(route('brand.index'))->with('message', 'Delete successful.');
     }
 }

@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Category</th>
+                                {{-- <th>Category</th> --}}
                                 <th>Product</th>
                                 <th>Brand</th>
                                 <th>Price</th>
@@ -36,13 +36,13 @@
                             @forelse ($products as $index => $product)
                                 <tr>
                                     <td>{{$index + $products->firstItem()}}</td>
-                                    <td>
+                                    {{-- <td>
                                         @if ($product->category)
                                             {{ $product->category->name }}
                                         @else
                                             No category found.
                                         @endif
-                                    </td>
+                                    </td> --}}
 
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->brand }}</td>

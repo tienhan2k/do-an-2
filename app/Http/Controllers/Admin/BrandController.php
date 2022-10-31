@@ -22,9 +22,7 @@ class BrandController extends Controller
 
     public function create()
     {
-        return view('admin.brand.create', [
-            'categories' => SubCategory::where('status', '0')->get(),
-        ]);
+        return view('admin.brand.create');
     }
 
 
@@ -34,9 +32,7 @@ class BrandController extends Controller
 
         Brand::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->slug),
             'status' => $request->status == true ? '1' : '0',
-            'category_id' => $request->category_id,
         ]);
 
         return redirect(route('brand.index'))->with('message', 'Add successful.');
@@ -47,7 +43,7 @@ class BrandController extends Controller
 
         return view('admin.brand.edit', [
             'brand' => Brand::findOrFail($id),
-            'category' => SubCategory::where('status', '0')->get(),
+
         ]);
     }
 
@@ -58,9 +54,7 @@ class BrandController extends Controller
 
         Brand::findOrFail($id)->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->slug),
             'status' => $request->status == true ? '1' : '0',
-            'category_id' => $request->category_id,
         ]);
 
         return redirect(route('brand.index'))->with('message', 'Update successful.');

@@ -185,7 +185,7 @@
                                 <a href="about-us.html" class="link-term mercado-item-title">About Us</a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{ route('frontend.categories')}}" class="link-term mercado-item-title">Shop</a>
+                                <a href="{{ route('frontend.products')}}" class="link-term mercado-item-title">Shop</a>
                             </li>
                             <li class="menu-item">
                                 <a href="cart.html" class="link-term mercado-item-title">Cart</a>

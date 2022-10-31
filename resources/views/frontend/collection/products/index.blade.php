@@ -14,7 +14,7 @@
             <div class="wrap-breadcrumb">
                 <ul>
                     <li class="item-link"><a href="#" class="link">home</a></li>
-                    <li class="item-link"><span>{{ $category->name }}</span></li>
+                    <li class="item-link"><span>{{ $sub_cate->name }}</span></li>
                 </ul>
             </div>
             <div class="row">
@@ -29,7 +29,7 @@
 
                     <div class="wrap-shop-control">
 
-                        <h1 class="shop-title">{{ $category->name }}</h1>
+                        <h1 class="shop-title">{{ $sub_cate->name }}</h1>
 
                         <div class="wrap-right">
                             <form>
@@ -100,7 +100,7 @@
                                         <div class="product-thumnail">
                                             {{-- <input type="hidden" value="1" class="qty-input">
                                             <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
-                                            <a href="{{ url('/collections/' . $category->slug . '/' . $item->slug) }}"
+                                            <a href="{{ url('/collections/' . $category->slug . '/' . $sub_cate->slug . '/' . $item->slug) }}"
                                                 title="{{ $item->name }}">
                                                 <figure><img class="pro-img"
                                                         src="{{ asset('uploads/products/' . $item->productImages[0]->image) }}"
@@ -108,7 +108,7 @@
                                             </a>
                                         </div>
                                         <div class="product-info">
-                                            <a href="{{ url('/collections/' . $category->slug . '/' . $item->slug) }}"
+                                            <a href="{{ url('/collections/' . $category->slug . '/' . $sub_cate->slug . '/' . $item->slug) }}"
                                                 class="product-name"><span>{{ $item->name }}</span></a>
                                             <div class="wrap-price"><span
                                                     class="product-price">{{ number_format($item->original_price) }}
@@ -141,7 +141,7 @@
                     <div class="wrap-pagination-info">
                         <ul class="page-numbers text-center">
                             @if (isset($_GET['sort']))
-                                {{ $products->appends(['sort'=> $_GET['sort']])->links() }}
+                                {{ $products->appends(['sort' => $_GET['sort']])->links() }}
                             @else
                                 {{ $products->links() }}
                             @endif
@@ -156,10 +156,22 @@
                         <h2 class="widget-title">All Categories</h2>
                         <div class="widget-content">
                             <ul class="list-category vertical-list" data-show="6">
-                                @foreach ($cate_filters as $category_item)
-                                    <li class="category-item">
+                                @foreach ($category as $category_item)
+                                    <li
+                                        class="category-item {{ count($category_item->subCategories) > 0 ? 'has-child-cate' : '' }}">
                                         <a href="{{ $category_item->slug }}"
                                             class="cate-link {{ Request::is('collections/' . $category_item->slug) ? 'active' : '' }}">{{ $category_item->name }}</a>
+                                        @if (count($category_item->subCategories) > 0)
+                                            <span class="toggle-control">+</span>
+                                            <ul class="sub-cate">
+                                                @foreach ($category_item->subCategories as $s_cate)
+                                                    <li class="category-item">
+                                                        <a href="" class="cat-link"><i class="fa fa-caret-right"></i>
+                                                            {{ $s_cate->name }}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>
@@ -194,7 +206,7 @@
                                     class="btn add-to-cart button-filter">Filter</button></h2>
                             <div class="widget-content">
                                 <ul class="list-style vertical-list list-limited" data-show="6">
-                                    @foreach ($category->brands as $brand)
+                                    @forelse ($brands as $brand)
                                         @php
                                             $checked = [];
                                             if (isset($_GET['brand'])) {
@@ -206,7 +218,8 @@
                                                 name="brand[]" value="{{ $brand->name }}">
                                             {{ $brand->name }}
                                         </li>
-                                    @endforeach
+                                    @empty
+                                    @endforelse
 
                                 </ul>
                             </div>
@@ -216,7 +229,7 @@
                             <h2 class="widget-title">Color</h2>
                             <div class="widget-content">
                                 <ul class="list-style vertical-list has-count-index">
-                                    @foreach ($colors as $color)
+                                    @forelse ($colors as $color)
                                         @php
                                             $checked = [];
                                             if (isset($_GET['color'])) {
@@ -228,8 +241,8 @@
                                                 name="color[]" value="{{ $color->id }}" />
                                             {{ $color->name }}
                                         </li>
-                                    @endforeach
-
+                                    @empty
+                                    @endforelse
                                 </ul>
                             </div>
                         </div><!-- Color -->

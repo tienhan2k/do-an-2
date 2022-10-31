@@ -25,7 +25,7 @@
                         @csrf
                         <div class="row">
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label>Select Category</label>
                                 <select name="category_id" required class="form-control">
                                     <option value="">--Select Category--</option>
@@ -36,7 +36,7 @@
                                         @endforeach
                                 </select>
                                 @error("category_id") <small class="text-danger">{{ $message }}</small> @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="">Brand name</label>
@@ -46,10 +46,10 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="">Brand slug</label>
                                 <input type="text" name="slug" class="form-control"/>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="">Brand status</label><br>

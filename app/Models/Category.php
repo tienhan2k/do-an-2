@@ -28,4 +28,14 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class, 'category_id', 'id');
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+
+    // public function brands()
+    // {
+    //    return $this->hasMany(Brand::class, 'category_id', 'id')->where('status', '0');
+    // }
 }

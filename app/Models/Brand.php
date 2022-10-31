@@ -15,15 +15,15 @@ class Brand extends Model
 
     protected $fillable = [
         'name',
-        'slug',
+        // 'slug',
         'status',
-        'category_id'
+        // 'category_id'
     ];
 
-    public function category()
-    {
-       return $this->belongsTo(SubCategory::class, 'category_id', 'id');
-    }
+    // public function category()
+    // {
+    //    return $this->belongsTo(SubCategory::class, 'category_id', 'id');
+    // }
 
 
 

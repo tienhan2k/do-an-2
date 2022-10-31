@@ -30,7 +30,7 @@
                         @method('PATCH')
                         <div class="row">
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label>Select Category</label>
                                 <select name="category_id" required class="form-control">
 
@@ -45,7 +45,7 @@
                                 </select>
 
                                 @error("category_id") <small class="text-danger">{{ $message }}</small> @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="">Name</label>
@@ -55,10 +55,10 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="">Slug</label>
                                 <input type="text" name="slug" value="{{ $brand->slug }}" class="form-control"/>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="">Status</label><br>

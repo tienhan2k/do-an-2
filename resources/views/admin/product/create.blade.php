@@ -71,13 +71,20 @@
 
                                 <div class="mb-3">
                                     <label>Category</label>
-                                    <select name="category_id" class="form-control" id="">
+                                    <select name="category_id" class="form-control" id="category_id">
 
                                         @forelse ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @empty
                                             <option value="">None</option>
                                         @endforelse
+
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Sub Category</label>
+                                    <select name="sub_category_id" class="form-control" id="sub_category_id">
 
                                     </select>
                                 </div>
@@ -97,9 +104,9 @@
                                 <div class="mb-3">
                                     <label>Select brand</label>
                                     <select name="brand" class="form-control" id="">
-
+                                        <option value="">None</option>
                                         @forelse ($brands as $brand)
-                                            <option value="{{ $brand->name }}">{{ $brand->slug }}</option>
+                                            <option value="{{ $brand->name }}">{{ $brand->name }}</option>
                                         @empty
                                             <option value="">None</option>
                                         @endforelse
@@ -120,8 +127,8 @@
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade border p-3" id="seotag-tab-pane" role="tabpanel" aria-labelledby="seotag-tab"
-                                tabindex="0">
+                            <div class="tab-pane fade border p-3" id="seotag-tab-pane" role="tabpanel"
+                                aria-labelledby="seotag-tab" tabindex="0">
 
                                 <div class="mb-3">
                                     <label>Meta title</label>
@@ -207,8 +214,11 @@
                                         @forelse ($colors as $color_item)
                                             <div class="col-md-3">
                                                 <div class="p-2 border">
-                                                    Color: <input type="checkbox" name="colors[{{ $color_item->id }}]" value="{{ $color_item->id }}"/>{{ $color_item->name }}<br>
-                                                    Quantity: <input type="number" name="color_quantity[{{ $color_item->id }}]" style="width: 70px; border: 1px solid"/>
+                                                    Color: <input type="checkbox" name="colors[{{ $color_item->id }}]"
+                                                        value="{{ $color_item->id }}" />{{ $color_item->name }}<br>
+                                                    Quantity: <input type="number"
+                                                        name="color_quantity[{{ $color_item->id }}]"
+                                                        style="width: 70px; border: 1px solid" />
                                                 </div>
                                             </div>
                                         @empty
@@ -229,8 +239,11 @@
                                         @forelse ($sizes as $size)
                                             <div class="col-md-3">
                                                 <div class="p-2 border">
-                                                    Size: <input type="checkbox" name="sizes[{{ $size->id }}]" value="{{ $size->id }}"/>{{ $size->name }}<br>
-                                                    Quantity: <input type="number" name="size_quantity[{{ $size->id }}]" style="width: 70px; border: 1px solid"/>
+                                                    Size: <input type="checkbox" name="sizes[{{ $size->id }}]"
+                                                        value="{{ $size->id }}" />{{ $size->name }}<br>
+                                                    Quantity: <input type="number"
+                                                        name="size_quantity[{{ $size->id }}]"
+                                                        style="width: 70px; border: 1px solid" />
                                                 </div>
                                             </div>
                                         @empty
@@ -257,4 +270,33 @@
 
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#category_id').on('change', function () {
+                var category_id = this.value;
+                $('#sub_category_id').html('');
+                $.ajax({
+                    url: '{{ route('getSubCate') }}?category_id='+category_id,
+                    type: 'get',
+                    success: function (res) {
+                        $('#sub_category_id').html('<option value="">Select Sub category</option>');
+                        $.each(res, function (key, value) {
+                            $('#sub_category_id').append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

@@ -28,14 +28,6 @@ class BrandFormRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'slug'=> [
-                'required',
-                'string',
-            ],
-            'category_id' => [
-                'required',
-                'integer'
-            ],
             'status'=> [
                 'nullable'
             ],

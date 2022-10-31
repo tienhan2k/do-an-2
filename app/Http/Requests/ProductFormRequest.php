@@ -45,6 +45,11 @@ class ProductFormRequest extends FormRequest
                 'required',
                 'integer'
             ],
+
+            'sub_category_id' => [
+                'required',
+                'integer'
+            ],
             'brand' => [
                 'required',
                 'string',
@@ -77,18 +82,17 @@ class ProductFormRequest extends FormRequest
                 'nullable'
             ],
 
-
             'meta_title' => [
-                'required',
+                'nullable',
                 'string',
                 'max: 255'
             ],
             'meta_keyword' => [
-                'required',
+                'nullable',
                 'string'
             ],
             'meta_description' => [
-                'required',
+                'nullable',
                 'string'
             ]
         ];

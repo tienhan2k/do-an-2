@@ -63,6 +63,7 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::post('product-size/{prod_size_id}', 'updateProductSizeQty');
         Route::get('product-size/{prod_size_id}/delete', 'deleteProductSizeQty');
 
+        Route::get('fetch-sub-cate',  'fetchSubCate')->name('getSubCate');
     });
 
 
@@ -130,10 +131,11 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
-Route::get('/all-products', [FrontendController::class, 'getAllProducts'])->name('frontend.all_products');
-Route::get('/collections', [FrontendController::class, 'categories'])->name('frontend.categories');
-Route::get('/collections/{category_slug}', [FrontendController::class, 'products'])->name('frontend.products');
-Route::get('/collections/{category_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
+// Route::get('/all-products', [FrontendController::class, 'getAllProducts'])->name('frontend.all-products');
+// // Route::get('/collections', [FrontendController::class, 'categories'])->name('frontend.categories');
+// Route::get('/collections/{category_slug}', [FrontendController::class, 'cateProducts'])->name('frontend.products');
+Route::get('/shop/{category_slug?}/{sub_cate_slug?}', [FrontendController::class, 'products'])->name('frontend.products');
+Route::get('/shop/{category_slug}/{sub_cate_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
 Route::get('/product-list', [FrontendController::class, 'getProductListAjax']);
 Route::post('/search-product', [FrontendController::class, 'searchProduct']);
 

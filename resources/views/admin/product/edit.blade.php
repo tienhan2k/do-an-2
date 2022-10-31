@@ -76,7 +76,7 @@
 
                                 <div class="mb-3">
                                     <label>Category</label>
-                                    <select name="category_id" class="form-control" id="">
+                                    <select name="category_id" class="form-control" id="category_id">
 
                                         @forelse ($categories as $category)
                                             <option value="{{ $category->id }}"
@@ -85,6 +85,12 @@
                                         @empty
                                             <option value="">None</option>
                                         @endforelse
+
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label>Sub Category</label>
+                                    <select name="sub_category_id" class="form-control" id="sub_category_id">
 
                                     </select>
                                 </div>
@@ -106,10 +112,10 @@
                                 <div class="mb-3">
                                     <label>Select brand</label>
                                     <select name="brand" class="form-control" id="">
-
+                                        <option value="">None</option>
                                         @forelse ($brands as $brand)
                                             <option value="{{ $brand->name }}">
-                                                {{ $brand->slug }}
+                                                {{ $brand->name }}
                                             </option>
                                         @empty
                                             <option value="">None</option>
@@ -493,6 +499,22 @@
 
             });
 
+
+            $('#category_id').on('change', function () {
+                var category_id = this.value;
+                $('#sub_category_id').html('');
+                $.ajax({
+                    url: '{{ route('getSubCate') }}?category_id='+category_id,
+                    type: 'get',
+                    success: function (res) {
+                        $('#sub_category_id').html('<option value="">Select Sub category</option>');
+                        $.each(res, function (key, value) {
+                            $('#sub_category_id').append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            });
         });
     </script>
 @endsection

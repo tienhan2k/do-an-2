@@ -61,7 +61,7 @@
                             </li>
 
                         @empty
-                            <h4 style="text-align: center">Không có sản phẩm nào trong giỏ hàng.</h4>
+                            <h4 style="text-align: center">No products found.</h4>
                         @endforelse
 
 					</ul>
@@ -79,7 +79,7 @@
 							<input class="frm-input " name="have-code" id="have-code" value="" type="checkbox"><span>I have promo code</span>
 						</label>
 						<a class="btn btn-checkout" href="{{ route('frontend.checkout.view') }}">Check out</a>
-						<a class="link-to-shop" href="{{ route('frontend.categories') }}">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+						<a class="link-to-shop" href="{{ route('frontend.products') }}">Continue Shopping<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
 					</div>
 				</div>
 

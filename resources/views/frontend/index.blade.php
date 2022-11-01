@@ -63,7 +63,7 @@
                         @foreach ($sale_products as $s_item)
                             <div class="product product-style-2 equal-elem ">
                                 <div class="product-thumnail">
-                                    <a href="{{ url('/collections/' . $s_item->category->slug . '/' . $s_item->slug) }}"
+                                    <a href="{{ url('/shop/' . $s_item->category->slug . '/' . $s_item->sCategory->slug . '/' . $s_item->slug) }}"
                                         title="{{ $s_item->name }}">
                                         <figure><img
                                                 src="{{ asset('uploads/products/' . $s_item->productImages[0]->image) }}"
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="product-info">
-                                    <a href="{{ url('/collections/' . $s_item->category->slug . '/' . $s_item->slug) }}"
+                                    <a href="{{ url('/shop/' . $s_item->category->slug . '/' . $s_item->sCategory->slug . '/' . $s_item->slug) }}"
                                         class="product-name"><span>{{ $s_item->name }}</span></a>
                                     <div class="wrap-price"><ins>
                                             <p class="product-price">{{ number_format($s_item->sale_price) }} đ</p>

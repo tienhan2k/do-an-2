@@ -27,10 +27,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="">Size name</label>
-                                <input type="text" name="name" class="form-control"/>
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                <input type="text" value="{{ old('name') }}" name="name" class="form-control"/>
                             </div>
 
                             <div class="col-md-6 mb-3">

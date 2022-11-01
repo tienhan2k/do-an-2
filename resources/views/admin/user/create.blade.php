@@ -27,17 +27,17 @@
 
                             <div class="mb-3 col-md-6">
                                 <label for="">Name</label>
-                                <input type="text"  name="name" class="form-control"/>
+                                <input type="text" value="{{ old('name') }}" name="name" class="form-control"/>
                             </div>
 
                             <div class="mb-3 col-md-6">
                                 <label for="">Email</label>
-                                <textarea id="" type="email" name="email" class="form-control" rows="3"></textarea>
+                                <input id="" value="{{ old('email') }}" type="email" name="email" class="form-control" rows="3"/>
                             </div>
 
                             <div class="mb-3 col-md-6">
                                 <label for="">Phone</label>
-                                <input type="text" name="phone" class="form-control"/>
+                                <input type="text" value="{{ old('phone') }}" name="phone" class="form-control"/>
                             </div>
 
                             <div class="mb-3 col-md-6">

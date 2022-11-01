@@ -27,19 +27,16 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="">Color name</label>
-                                <input type="text" name="name" class="form-control"/>
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                <input type="text" value="{{ old('name') }}" name="name" class="form-control"/>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label for="">Color code</label>
-                                <input type="text" name="code" class="form-control"/>
+                                <input type="text" value="{{ old('code') }}" name="code" class="form-control"/>
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label for="">Color status</label><br>
+                                <label for="">Status</label><br>
                                 <input type="checkbox" name="status" style="width: 20px; height: 20px"/> Check = Hidden, Uncheck = Visible
                             </div>
 

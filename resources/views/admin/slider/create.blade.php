@@ -25,12 +25,12 @@
                         @csrf
                             <div class="mb-3">
                                 <label for="">Title</label>
-                                <input type="text"  name="title" class="form-control"/>
+                                <input type="text" value="{{ old('title') }}" name="title" class="form-control"/>
                             </div>
 
                             <div class="mb-3">
                                 <label for="">Description</label>
-                                <textarea id="summernote" type="text" name="description" class="form-control" rows="3"></textarea>
+                                <textarea id="summernote" type="text" name="description" class="form-control" rows="3">{{ old('description') }}</textarea>
                             </div>
 
                             <div class="mb-3">

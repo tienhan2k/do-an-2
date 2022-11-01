@@ -91,13 +91,13 @@
 
                                 <div class="mb-3">
                                     <label>Product name</label>
-                                    <input type="text" name="name" class="form-control" />
+                                    <input value="{{ old('name') }}" type="text" name="name" class="form-control" />
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label>Product slug</label>
-                                    <input type="text" name="slug" class="form-control" />
+                                    <input type="text" value="{{ old('slug') }}" name="slug" class="form-control" />
 
                                 </div>
 
@@ -116,13 +116,13 @@
 
                                 <div class="mb-3">
                                     <label>Description</label>
-                                    <textarea name="description" class="form-control" rows="4"></textarea>
+                                    <textarea name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label>Small description</label>
-                                    <textarea name="small_description" class="form-control" rows="4"></textarea>
+                                    <textarea name="small_description" class="form-control" rows="4">{{ old('small_description') }}</textarea>
 
                                 </div>
 
@@ -132,19 +132,19 @@
 
                                 <div class="mb-3">
                                     <label>Meta title</label>
-                                    <input type="text" name="meta_title" class="form-control" />
+                                    <input type="text" value="{{ old('meta_title') }}" name="meta_title" class="form-control" />
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label>Meta description</label>
-                                    <textarea type="text" name="meta_description" class="form-control" rows="4"></textarea>
+                                    <textarea type="text" name="meta_description" class="form-control" rows="4">{{ old('meta_description') }}</textarea>
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label>Meta keyword</label>
-                                    <textarea name="meta_keyword" class="form-control" rows="4"></textarea>
+                                    <textarea name="meta_keyword" class="form-control" rows="4">{{ old('meta_keyword') }}</textarea>
 
                                 </div>
 
@@ -156,21 +156,21 @@
                                     <div class="col-md-4">
                                         <div class="md-3">
                                             <label>Original price</label>
-                                            <input type="text" name="original_price" class="form-control" />
+                                            <input type="text" value="{{ old('original_price') }}" name="original_price" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="md-3">
                                             <label>Sale price</label>
-                                            <input type="text" name="sale_price" class="form-control" />
+                                            <input type="text" value="{{ old('sale_price') }}" name="sale_price" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="md-3">
                                             <label>Quantity</label>
-                                            <input type="number" name="quantity" class="form-control" />
+                                            <input type="number" value="{{ old('quantity') }}" name="quantity" class="form-control" />
                                         </div>
                                     </div>
 
@@ -216,7 +216,7 @@
                                                 <div class="p-2 border">
                                                     Color: <input type="checkbox" name="colors[{{ $color_item->id }}]"
                                                         value="{{ $color_item->id }}" />{{ $color_item->name }}<br>
-                                                    Quantity: <input type="number"
+                                                    Quantity: <input type="number" value="{{ old('color_quantity') }}"
                                                         name="color_quantity[{{ $color_item->id }}]"
                                                         style="width: 70px; border: 1px solid" />
                                                 </div>
@@ -241,7 +241,7 @@
                                                 <div class="p-2 border">
                                                     Size: <input type="checkbox" name="sizes[{{ $size->id }}]"
                                                         value="{{ $size->id }}" />{{ $size->name }}<br>
-                                                    Quantity: <input type="number"
+                                                    Quantity: <input type="number" value="{{ old('size_quantity') }}"
                                                         name="size_quantity[{{ $size->id }}]"
                                                         style="width: 70px; border: 1px solid" />
                                                 </div>

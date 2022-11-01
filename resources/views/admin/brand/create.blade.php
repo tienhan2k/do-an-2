@@ -25,31 +25,10 @@
                         @csrf
                         <div class="row">
 
-                            {{-- <div class="mb-3">
-                                <label>Select Category</label>
-                                <select name="category_id" required class="form-control">
-                                    <option value="">--Select Category--</option>
-                                        @foreach ($categories as $categoryItem)
-                                            <option value="{{ $categoryItem->id }}">
-                                                {{ $categoryItem->name }}
-                                            </option>
-                                        @endforeach
-                                </select>
-                                @error("category_id") <small class="text-danger">{{ $message }}</small> @enderror
-                            </div> --}}
-
                             <div class="mb-3">
                                 <label for="">Brand name</label>
-                                <input type="text" name="name" class="form-control"/>
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                <input type="text" value="{{ old('name') }}" name="name" class="form-control"/>
                             </div>
-
-                            {{-- <div class="mb-3">
-                                <label for="">Brand slug</label>
-                                <input type="text" name="slug" class="form-control"/>
-                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="">Brand status</label><br>

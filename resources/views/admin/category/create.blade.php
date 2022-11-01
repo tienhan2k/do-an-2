@@ -27,18 +27,12 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="">Name</label>
-                                <input type="text" name="name" class="form-control"/>
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                <input type="text" value="{{ old('name') }}" name="name" class="form-control"/>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label for="">Slug</label>
-                                <input type="text" name="slug" class="form-control"/>
-                                @error('slug')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                                <input type="text" value="{{ old('slug') }}" name="slug" class="form-control"/>
                             </div>
 
                             <div class="mb-3">
@@ -69,19 +63,19 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="">Meta title</label>
-                                <input type="text" name="meta_title" class="form-control"/>
+                                <input type="text" value="{{ old('meta_title') }}" name="meta_title" class="form-control"/>
                             </div>
 
 
                             <div class="col-md-12 mb-3">
                                 <label for="">Meta keyword</label>
-                                <textarea name="meta_keyword" class="form-control" rows="3"></textarea>
+                                <textarea name="meta_keyword" class="form-control" rows="3">{{ old('meta_keyword') }}</textarea>
                             </div>
 
 
                             <div class="col-md-12 mb-3">
                                 <label for="">Meta description</label>
-                                <textarea name="meta_description" class="form-control" rows="3"></textarea>
+                                <textarea name="meta_description" class="form-control" rows="3">{{ old('meta_description') }}</textarea>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <button type="submit" class="btn btn-primary float-end text-white">Save</button>

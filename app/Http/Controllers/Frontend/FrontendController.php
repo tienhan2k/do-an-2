@@ -12,6 +12,7 @@ use App\Models\Slider;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Wishlist;
+use App\Models\ProductSize;
 use App\Models\SubCategory;
 use App\Models\ProductColor;
 use Illuminate\Http\Request;
@@ -89,6 +90,20 @@ class FrontendController extends Controller
                         ->whereIn('id', $product_colors_id)
                         ->where('status', '0')
                         ->paginate(9);
+                } elseif ($request->get('size')) {
+                    $checked = $_GET['size'];
+                    $product_sizes_id = ProductSize::where(function ($q) use ($checked) {
+                        foreach ($checked as $value) {
+                            $q->orWhere('size_id', $value);
+                        }
+                    })
+                        ->pluck('product_id')
+                        ->toArray();
+
+                    $products = $category->products()
+                        ->whereIn('id', $product_sizes_id)
+                        ->where('status', '0')
+                        ->paginate(9);
                 } else {
                     $products = $category->products()->where('status', '0')->paginate(9);
                 }
@@ -131,6 +146,19 @@ class FrontendController extends Controller
                         ->whereIn('id', $product_colors_id)
                         ->where('status', '0')
                         ->paginate(9);
+                } elseif ($request->get('size')) {
+                    $checked = $_GET['size'];
+                    $product_sizes_id = ProductSize::where(function ($q) use ($checked) {
+                        foreach ($checked as $value) {
+                            $q->orWhere('size_id', $value);
+                        }
+                    })
+                        ->pluck('product_id')
+                        ->toArray();
+                    $products = $sub_cate->products()
+                        ->whereIn('id', $product_sizes_id)
+                        ->where('status', '0')
+                        ->paginate(9);
                 } else {
                     $products = $sub_cate->products()->where('status', '0')->paginate(9);
                 }
@@ -171,6 +199,19 @@ class FrontendController extends Controller
                 $products = Product::whereIn('id', $product_colors_id)
                                     ->where('status', '0')
                                     ->paginate(9);
+            } elseif ($request->get('size')) {
+                $checked = $_GET['size'];
+                $product_sizes_id = ProductSize::where(function ($q) use ($checked) {
+                    foreach ($checked as $value) {
+                        $q->orWhere('size_id', $value);
+                    }
+                })
+                    ->pluck('product_id')
+                    ->toArray();
+
+                $products = Product::whereIn('id', $product_sizes_id)
+                                    ->where('status', '0')
+                                    ->paginate(9);
             } else {
                 $products = Product::where('status', '0')->paginate(9);
             }
@@ -180,10 +221,11 @@ class FrontendController extends Controller
 
     public function productDetails($category_slug, $sub_cate_slug, $product_slug)
     {
-        $sub_cate = SubCategory::where('slug', $sub_cate_slug)->first();
+        $cate = Category::where('slug', $category_slug)->first();
         $product_details = Product::where('slug', $product_slug)->first();
         $reviews = Review::where('product_id', $product_details->id)->get();
-        $r_products = $sub_cate->products()->get();
+        $sub_cate = $cate->subCategories()->where('slug', $sub_cate_slug)->first();
+        $r_products = $sub_cate->products()->where('status', 0)->get();
         $sale_time = Sale::find(1);
         $review_count_star = $reviews->avg('rating');
         if ($product_details) {

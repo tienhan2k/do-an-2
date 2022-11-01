@@ -216,7 +216,7 @@
                                                 <div class="p-2 border">
                                                     Color: <input type="checkbox" name="colors[{{ $color_item->id }}]"
                                                         value="{{ $color_item->id }}" />{{ $color_item->name }}<br>
-                                                    Quantity: <input type="number" value="{{ old('color_quantity') }}"
+                                                    Quantity: <input type="number"
                                                         name="color_quantity[{{ $color_item->id }}]"
                                                         style="width: 70px; border: 1px solid" />
                                                 </div>
@@ -241,7 +241,7 @@
                                                 <div class="p-2 border">
                                                     Size: <input type="checkbox" name="sizes[{{ $size->id }}]"
                                                         value="{{ $size->id }}" />{{ $size->name }}<br>
-                                                    Quantity: <input type="number" value="{{ old('size_quantity') }}"
+                                                    Quantity: <input type="number"
                                                         name="size_quantity[{{ $size->id }}]"
                                                         style="width: 70px; border: 1px solid" />
                                                 </div>

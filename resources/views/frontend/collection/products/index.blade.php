@@ -263,22 +263,20 @@
                             <h2 class="widget-title">Size</h2>
                             <div class="widget-content">
                                 <ul class="list-style vertical-list has-count-index">
-                                    <li class="list-item">
-                                        <input type="checkbox" />
-                                        S
-                                    </li>
-                                    <li class="list-item">
-                                        <input type="checkbox" />
-                                        M
-                                    </li>
-                                    <li class="list-item">
-                                        <input type="checkbox" />
-                                        L
-                                    </li>
-                                    <li class="list-item">
-                                        <input type="checkbox" />
-                                        XL
-                                    </li>
+                                    @forelse ($sizes as $size)
+                                        @php
+                                            $checked = [];
+                                            if (isset($_GET['size'])) {
+                                                $checked = $_GET['size'];
+                                            }
+                                        @endphp
+                                        <li class="list-item">
+                                            <input type="checkbox" @if (in_array($size->id, $checked)) checked @endif
+                                                name="size[]" value="{{ $size->id }}" />
+                                            {{ $size->name }}
+                                        </li>
+                                    @empty
+                                    @endforelse
 
                                 </ul>
                             </div>

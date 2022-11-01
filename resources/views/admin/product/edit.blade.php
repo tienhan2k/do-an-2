@@ -109,7 +109,7 @@
                                 <div class="mb-3">
                                     <label>Select brand</label>
                                     <select name="brand" class="form-control" id="">
-                                        <option value="">None</option>
+                                        {{-- <option value="">None</option> --}}
                                         @forelse ($brands as $brand)
                                             <option value="{{ $brand->name }}">
                                                 {{ $brand->name }}

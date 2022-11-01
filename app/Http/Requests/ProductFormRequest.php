@@ -38,7 +38,7 @@ class ProductFormRequest extends FormRequest
             ],
             'image'=> [
                 'nullable',
-                'mimes:png,jpg',
+                // 'mimes:png,jpg',
                 // 'mimetypes:image/jpeg,image/png',
             ],
 

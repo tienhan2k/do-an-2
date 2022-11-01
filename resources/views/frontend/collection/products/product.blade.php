@@ -283,10 +283,10 @@
                                 data-loop="false" data-nav="true" data-dots="false"
                                 >
 
-                                @forelse ($products as $related_pro)
+                                @forelse ($r_products as $related_pro)
                                     <div class="product product-style-2 equal-elem ">
                                         <div class="product-thumnail">
-                                            <a href="{{ url('/collections/' . $category->slug . '/' . $related_pro->slug) }}"
+                                            <a href="{{ url('/shop/' . $related_pro->category->slug . '/' . $related_pro->sCategory->slug . '/' . $related_pro->slug) }}"
                                                 title="{{ $related_pro->name }}">
                                                 <figure><img
                                                         src="{{ asset('uploads/products/' . $related_pro->productImages[0]->image) }}"
@@ -301,7 +301,7 @@
                                         </div> --}}
                                         </div>
                                         <div class="product-info">
-                                            <a href="{{ url($category->slug . '/' . $related_pro->slug) }}"
+                                            <a href="{{ url('/shop/' . $related_pro->category->slug . '/' . $related_pro->sCategory->slug . '/' . $related_pro->slug) }}"
                                                 class="product-name"><span>{{ $related_pro->name }}</span></a>
                                             <div class="wrap-price"><span
                                                     class="product-price">{{ number_format($related_pro->original_price) }}

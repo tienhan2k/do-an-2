@@ -42,13 +42,13 @@ class FrontendController extends Controller
         return view('frontend.index', compact('categories', 'sliders',  'products', 'latest_products', 'category',  'sale_products', 'sale_time'));
     }
 
-    public function getAllProducts()
-    {
-        return view('frontend.collection.products.all-products', [
-            'products' => Product::where('status', '0')->paginate(9),
-            'wishlist' => Wishlist::get(),
-        ]);
-    }
+    // public function getAllProducts()
+    // {
+    //     return view('frontend.collection.products.all-products', [
+    //         'products' => Product::where('status', '0')->paginate(9),
+    //         'wishlist' => Wishlist::get(),
+    //     ]);
+    // }
 
     // public function categories()
     // {
@@ -59,9 +59,13 @@ class FrontendController extends Controller
 
     public function products(Request $request, $category_slug = null, $sub_cate_slug = null)
     {
-
-        if ($category_slug != null && $sub_cate_slug = null) {
+        if (isset($category_slug) and empty($sub_cate_slug)) {
             $category = Category::where('slug', $category_slug)->first();
+            // dd($category->products()->get());
+            $categories = Category::where('status', 0)->get();
+            $colors = Color::where('status', 0)->get();
+            $brands = Brand::where('status', 0)->get();
+            $wishlist = Wishlist::get();
             if ($category) {
                 if ($request->get('sort') == 'name_a_z') {
                     $products = $category->products()->where('status', '0')->orderBy('name', 'asc')->paginate(9);
@@ -78,29 +82,27 @@ class FrontendController extends Controller
                     $products = $category->products()->where('status', '0')->whereIn('brand', $checked)->paginate(9);
                 } elseif ($request->get('color')) {
                     $checked = $_GET['color'];
-                    $product_colors = ProductColor::where(function ($q) use ($checked) {
+                    $product_colors_id = ProductColor::where(function ($q) use ($checked) {
                         foreach ($checked as $value) {
                             $q->orWhere('color_id', $value);
                         }
                     })
                         ->pluck('product_id')
                         ->toArray();
+
                     $products = $category->products()
+                        ->whereIn('id', $product_colors_id)
                         ->where('status', '0')
-                        ->where(function ($q) use ($product_colors) {
-                            foreach ($product_colors as $value) {
-                                $q->orWhere('id', $value);
-                            }
-                        })
                         ->paginate(9);
                 } else {
                     $products = $category->products()->where('status', '0')->paginate(9);
                 }
-                return view('frontend.collection.products.index', compact('products', 'sub_cate', 'brands_filters', 'cate_filters', 'wishlist', 'colors'));
+                return view('frontend.collection.products.index', compact('products', 'brands', 'category', 'categories', 'wishlist', 'colors'));
             } else {
                 return redirect()->back();
             }
-        } elseif ($category_slug != null && $sub_cate_slug != null) {
+        } elseif (isset($category_slug) and isset($sub_cate_slug)) {
+            $categories = Category::where('status', 0)->get();
             $category = Category::where('slug', $category_slug)->first();
             $sub_cate = $category->subCategories()->where('slug', $sub_cate_slug)->first();
             $colors = Color::where('status', 0)->get();
@@ -122,7 +124,7 @@ class FrontendController extends Controller
                     $products = $sub_cate->products()->where('status', '0')->whereIn('brand', $checked)->paginate(9);
                 } elseif ($request->get('color')) {
                     $checked = $_GET['color'];
-                    $product_colors = ProductColor::where(function ($q) use ($checked) {
+                    $product_colors_id = ProductColor::where(function ($q) use ($checked) {
                         foreach ($checked as $value) {
                             $q->orWhere('color_id', $value);
                         }
@@ -130,17 +132,13 @@ class FrontendController extends Controller
                         ->pluck('product_id')
                         ->toArray();
                     $products = $sub_cate->products()
+                        ->whereIn('id', $product_colors_id)
                         ->where('status', '0')
-                        ->where(function ($q) use ($product_colors) {
-                            foreach ($product_colors as $value) {
-                                $q->orWhere('id', $value);
-                            }
-                        })
                         ->paginate(9);
                 } else {
                     $products = $sub_cate->products()->where('status', '0')->paginate(9);
                 }
-                return view('frontend.collection.products.index', compact('products', 'sub_cate', 'brands', 'category', 'wishlist', 'colors'));
+                return view('frontend.collection.products.index', compact('products', 'brands', 'categories', 'category', 'sub_cate', 'wishlist', 'colors'));
             } else {
                 return redirect()->back();
             }
@@ -148,7 +146,7 @@ class FrontendController extends Controller
             $categories = Category::where('status', '0')->get();
             $products = Product::where('status', '0')->paginate(9);
             $wishlist = Wishlist::get();
-            $colors = Color::where('status', 0)->get();
+            $colors = Color::where('status', '0')->get();
             $brands = Brand::where('status', '0')->get();
             return view('frontend.collection.products.index', compact('products', 'brands', 'categories', 'wishlist', 'colors'));
         }
@@ -156,15 +154,14 @@ class FrontendController extends Controller
 
     public function productDetails($category_slug, $sub_cate_slug, $product_slug)
     {
-        $category = Category::where('slug', $category_slug)->first();
-        $sub_cate = $category->subCategories()->where('slug', $sub_cate_slug)->first();
-        $product_details = $sub_cate->where('slug', $product_slug)->first();
+        $sub_cate = SubCategory::where('slug', $sub_cate_slug)->first();
+        $product_details = Product::where('slug', $product_slug)->first();
         $reviews = Review::where('product_id', $product_details->id)->get();
         $r_products = $sub_cate->products()->get();
         $sale_time = Sale::find(1);
         $review_count_star = $reviews->avg('rating');
         if ($product_details) {
-            return view('frontend.collection.products.product', compact('product_details', 'r_products', 'category', 'reviews', 'sale_time', 'review_count_star'));
+            return view('frontend.collection.products.product', compact('product_details', 'r_products', 'reviews', 'sale_time', 'review_count_star'));
         } else {
             return redirect()->back();
         }

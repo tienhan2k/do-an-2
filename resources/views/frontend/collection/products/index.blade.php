@@ -14,7 +14,16 @@
             <div class="wrap-breadcrumb">
                 <ul>
                     <li class="item-link"><a href="#" class="link">home</a></li>
-                    <li class="item-link"><span>{{ $sub_cate->name }}</span></li>
+                    {{-- @if ()
+
+                    @elseif ()
+
+                    @elseif ()
+
+                    @endif --}}
+                    {{-- <li class="item-link"><span>{{ $sub_cate->name }}</span></li> --}}
+                    <li class="item-link"><span>Name</span></li>
+
                 </ul>
             </div>
             <div class="row">
@@ -29,7 +38,8 @@
 
                     <div class="wrap-shop-control">
 
-                        <h1 class="shop-title">{{ $sub_cate->name }}</h1>
+                        <h1 class="shop-title">Name</h1>
+                        {{-- <h1 class="shop-title">{{ $sub_cate->name }}</h1> --}}
 
                         <div class="wrap-right">
                             <form>
@@ -100,7 +110,7 @@
                                         <div class="product-thumnail">
                                             {{-- <input type="hidden" value="1" class="qty-input">
                                             <input type="hidden" value="{{ $item->id }}" class="product_id"> --}}
-                                            <a href="{{ url('/collections/' . $category->slug . '/' . $sub_cate->slug . '/' . $item->slug) }}"
+                                            <a href="{{ url('/shop/' . $item->category->slug . '/' . $item->sCategory->slug . '/' . $item->slug) }}"
                                                 title="{{ $item->name }}">
                                                 <figure><img class="pro-img"
                                                         src="{{ asset('uploads/products/' . $item->productImages[0]->image) }}"
@@ -108,7 +118,7 @@
                                             </a>
                                         </div>
                                         <div class="product-info">
-                                            <a href="{{ url('/collections/' . $category->slug . '/' . $sub_cate->slug . '/' . $item->slug) }}"
+                                            <a href="{{ url('/shop/' . $item->category->slug . '/' . $item->sCategory->slug . '/' . $item->slug) }}"
                                                 class="product-name"><span>{{ $item->name }}</span></a>
                                             <div class="wrap-price"><span
                                                     class="product-price">{{ number_format($item->original_price) }}
@@ -156,24 +166,26 @@
                         <h2 class="widget-title">All Categories</h2>
                         <div class="widget-content">
                             <ul class="list-category vertical-list" data-show="6">
-                                @foreach ($category as $category_item)
-                                    <li
-                                        class="category-item {{ count($category_item->subCategories) > 0 ? 'has-child-cate' : '' }}">
-                                        <a href="{{ $category_item->slug }}"
-                                            class="cate-link {{ Request::is('collections/' . $category_item->slug) ? 'active' : '' }}">{{ $category_item->name }}</a>
-                                        @if (count($category_item->subCategories) > 0)
-                                            <span class="toggle-control">+</span>
-                                            <ul class="sub-cate">
-                                                @foreach ($category_item->subCategories as $s_cate)
-                                                    <li class="category-item">
-                                                        <a href="" class="cat-link"><i class="fa fa-caret-right"></i>
-                                                            {{ $s_cate->name }}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @endif
-                                    </li>
-                                @endforeach
+
+                                    @foreach ($categories as $category_item)
+                                        <li
+                                            class="category-item {{ count($category_item->subCategories) > 0 ? 'has-child-cate' : '' }} {{ Request::is('shop/' . $category_item->slug) ? 'open' : '' }}">
+                                            <a href="{{ route('frontend.products', $category_item->slug) }}"
+                                                class="cate-link {{ Request::is('shop/' . $category_item->slug) ? 'active' : '' }}">{{ $category_item->name }}</a>
+                                            @if (count($category_item->subCategories) > 0)
+                                                <span class="toggle-control">+</span>
+                                                <ul class="sub-cate">
+                                                    @foreach ($category_item->subCategories as $s_cate)
+                                                        <li class="category-item">
+                                                            <a href="{{ route('frontend.products', ['category_slug' => $s_cate->category->slug, 'sub_cate_slug' => $s_cate->slug]) }}" class="cat-link  {{ Request::is('shop/' . $s_cate->category->slug . '/' . $s_cate->slug) ? 'active' : '' }}"><i class="fa fa-caret-right"></i>
+                                                                {{ $s_cate->name }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @endforeach
+
                             </ul>
                         </div>
                     </div><!-- Categories widget-->

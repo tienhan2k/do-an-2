@@ -32,7 +32,6 @@ class ProductController extends Controller
     {
         return view('admin.product.create', [
             'categories' => Category::where('status', '0')->get(),
-            's_categories' => SubCategory::where('status', '0')->get(),
             'brands' => Brand::where('status', '0')->get(),
             'colors' => Color::where('status', '0')->get(),
             'sizes' => Size::where('status', '0')->get(),
@@ -53,7 +52,7 @@ class ProductController extends Controller
             'small_description' => $request->small_description,
             'description' => $request->description,
             'original_price' => $request->original_price,
-            'sale_price' => $request->sale_price,
+            'sale_price' => $request->sale_price != null ? $request->sale_price : '0',
             'quantity' => $request->quantity,
             'trending' => $request->trending == true ? '1' : '0',
             'featured' => $request->featured == true ? '1' : '0',
@@ -104,7 +103,6 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        // $s_categories = SubCategory::where('status', 0)->get();
         $categories = Category::where('status', 0)->get();
         $brands = Brand::where('status', 0)->get();
 
@@ -134,7 +132,6 @@ class ProductController extends Controller
         $request->validated();
 
         $product = Product::findOrFail($id);
-
         $product->update([
             'category_id' => $request->category_id,
             'sub_category_id' => $request->sub_category_id,
@@ -144,7 +141,7 @@ class ProductController extends Controller
             'small_description' => $request->small_description,
             'description' => $request->description,
             'original_price' => $request->original_price,
-            'sale_price' => $request->sale_price,
+            'sale_price' => $request->sale_price != null ? $request->sale_price : '0',
             'quantity' => $request->quantity,
             'trending' => $request->trending == true ? '1' : '0',
             'featured' => $request->featured == true ? '1' : '0',

@@ -22,9 +22,10 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                {{-- <th>Category</th> --}}
+                                <th>Category</th>
+                                <th>Sub Category</th>
                                 <th>Product</th>
-                                <th>Brand</th>
+                                {{-- <th>Brand</th> --}}
                                 <th>Price</th>
                                 <th>Sale price</th>
                                 <th>Quantity</th>
@@ -36,16 +37,24 @@
                             @forelse ($products as $index => $product)
                                 <tr>
                                     <td>{{$index + $products->firstItem()}}</td>
-                                    {{-- <td>
+                                    <td>
                                         @if ($product->category)
                                             {{ $product->category->name }}
                                         @else
                                             No category found.
                                         @endif
-                                    </td> --}}
+                                    </td>
+
+                                    <td>
+                                        @if ($product->sCategory)
+                                            {{ $product->sCategory->name }}
+                                        @else
+                                            No category found.
+                                        @endif
+                                    </td>
 
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->brand }}</td>
+                                    {{-- <td>{{ $product->brand }}</td> --}}
                                     <td><strong>{{ number_format($product->original_price) }}</strong>đ</td>
                                     <td><strong>{{ number_format($product->sale_price) }}</strong>đ</td>
                                     <td>{{ $product->quantity }}</td>

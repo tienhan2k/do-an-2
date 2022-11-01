@@ -38,7 +38,8 @@ class ProductFormRequest extends FormRequest
             ],
             'image'=> [
                 'nullable',
-                // 'mimes:png,jpg',
+                'mimes:png,jpg',
+                // 'mimetypes:image/jpeg,image/png',
             ],
 
             'category_id' => [
@@ -64,10 +65,10 @@ class ProductFormRequest extends FormRequest
                 'required',
                 'integer'
             ],
-            'sale_price' => [
-                'integer',
+            // 'sale_price' => [
+            //     'integer',
 
-            ],
+            // ],
             'quantity' => [
                 'required',
                 'integer'

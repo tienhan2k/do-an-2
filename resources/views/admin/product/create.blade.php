@@ -72,7 +72,7 @@
                                 <div class="mb-3">
                                     <label>Category</label>
                                     <select name="category_id" class="form-control" id="category_id">
-
+                                            <option value="" selected>Select Category</option>
                                         @forelse ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @empty

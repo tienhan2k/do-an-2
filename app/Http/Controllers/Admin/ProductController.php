@@ -41,6 +41,7 @@ class ProductController extends Controller
 
     public function store(ProductFormRequest $request)
     {
+        // dd($request);
         $request->validated();
 
         $product = Product::create([
@@ -120,7 +121,6 @@ class ProductController extends Controller
         return view('admin.product.edit', compact(
             'product',
             'categories',
-            's_categories',
             'brands',
             'colors',
             'sizes'

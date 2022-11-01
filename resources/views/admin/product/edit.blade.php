@@ -77,10 +77,10 @@
                                 <div class="mb-3">
                                     <label>Category</label>
                                     <select name="category_id" class="form-control" id="category_id">
-
+                                        <option value="">Select category</option>
                                         @forelse ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                                            <option value="{{ $category->id }}">
+                                                {{-- {{ $category->id == $product->category_id ? 'selected' : '' }}> --}}
                                                 {{ $category->name }}</option>
                                         @empty
                                             <option value="">None</option>

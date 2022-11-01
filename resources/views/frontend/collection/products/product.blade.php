@@ -272,14 +272,15 @@
                 <!--end sitebar-->
                 <style>
                     .pro-rela-img {
-                        height: 214px;
-                    }
+                            width: 280px !important;
+                            height: 214px !important;
+                        }
                 </style>
                 <div class="single-advance-box col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="wrap-show-advance-info-box style-1 box-in-site">
                         <h3 class="title-box">Related Products</h3>
                         <div class="wrap-products">
-                            <div class="products slide-carousel owl-carousel style-nav-1 equal-container" data-items="5"
+                            <div class="products slide-carousel owl-carousel style-nav-1 equal-container"
                                 data-loop="false" data-nav="true" data-dots="false"
                                 >
 
@@ -294,11 +295,11 @@
                                                 </figure>
                                             </a>
                                             {{-- <div class="group-flash">
-                                            <span class="flash-item new-label">new</span>
-                                        </div>
-                                        <div class="wrap-btn">
-                                            <a href="#" class="function-link">quick view</a>
-                                        </div> --}}
+                                                <span class="flash-item new-label">new</span>
+                                            </div>
+                                            <div class="wrap-btn">
+                                                <a href="#" class="function-link">quick view</a>
+                                            </div> --}}
                                         </div>
                                         <div class="product-info">
                                             <a href="{{ url('/shop/' . $related_pro->category->slug . '/' . $related_pro->sCategory->slug . '/' . $related_pro->slug) }}"

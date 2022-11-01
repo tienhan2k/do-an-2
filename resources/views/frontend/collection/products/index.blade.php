@@ -169,7 +169,7 @@
 
                                     @foreach ($categories as $category_item)
                                         <li
-                                            class="category-item {{ count($category_item->subCategories) > 0 ? 'has-child-cate' : '' }} {{ Request::is('shop/' . $category_item->slug) ? 'open' : '' }}">
+                                            class="category-item {{ count($category_item->subCategories) > 0 ? 'has-child-cate' : '' }} {{ Request::is('shop/' . $category_item->slug, 'shop/' . $category_item->slug. '/*')  ? 'open' : '' }}">
                                             <a href="{{ route('frontend.products', $category_item->slug) }}"
                                                 class="cate-link {{ Request::is('shop/' . $category_item->slug) ? 'active' : '' }}">{{ $category_item->name }}</a>
                                             @if (count($category_item->subCategories) > 0)

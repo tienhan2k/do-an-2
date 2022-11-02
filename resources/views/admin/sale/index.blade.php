@@ -3,9 +3,9 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            @if (session('message'))
+            {{-- @if (session('message'))
                 <div class="alert alert-success">{{ session('message') }}</div>
-            @endif
+            @endif --}}
             <div class="card">
                 <div class="card-header">
 
@@ -30,7 +30,7 @@
                                     <td>{{ $sale->sale_date }}</td>
                                     <td>{{ $sale->status == '1' ? 'Inactive' : 'Active' }}</td>
                                     <td>
-                                        <a href="{{ route('sale.edit', $sale->id) }}" class="btn btn-success btn-sm">Edit</a>
+                                        <a href="{{ route('sale.edit', $sale->id) }}" class="badge btn-success btn-sm">Edit</a>
                                     </td>
                                 </tr>
                             @else

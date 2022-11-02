@@ -29,8 +29,7 @@ class SizeController extends Controller
             'name' => $request->name,
             'status' => $request->status == true ? '1' : '0',
         ]);
-
-        return redirect(route('size.index'))->with('message', 'Add successful.');
+        return redirect()->route('size.index')->withSuccessMessage('Add successfully!');
     }
 
     public function edit($id)
@@ -48,7 +47,7 @@ class SizeController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('size.index'))->with('message', 'Update successful.');
+        return redirect(route('size.index'))->withSuccessMessage('Update successfully.');
     }
 
 
@@ -56,6 +55,6 @@ class SizeController extends Controller
     {
         $size = Size::findOrFail($id)->first();
         $size->delete();
-        return redirect(route('size.index'));
+        return redirect(route('size.index'))->withSuccessMessage('Delete successfully.');
     }
 }

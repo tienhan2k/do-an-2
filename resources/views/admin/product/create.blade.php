@@ -202,7 +202,7 @@
                                 aria-labelledby="image-tab" tabindex="0">
                                 <div class="md-3">
                                     <label>Upload product images</label>
-                                    <input type="file" name="image[]" multiple class="form-control" />
+                                    <input type="file" required name="image[]" multiple class="form-control" />
                                 </div>
                             </div>
 

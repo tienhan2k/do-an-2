@@ -40,21 +40,21 @@
                                     <td>{{ $user->phone }}</td>
                                     <td>
                                         @if ($user->role == '0')
-                                            <label for="" class="badge btn-sm btn-success">User</label>
+                                            <label for="" class="badge badge-pill btn-sm btn-success">User</label>
                                         @elseif ($user->role == '1')
-                                            <label for="" class="badge btn-danger">Admin</label>
+                                            <label for="" class="badge badge-pill btn-danger">Admin</label>
                                         @else
-                                            <label for="" class="badge btn-info">None</label>
+                                            <label for="" class="badge badge-pill btn-info">None</label>
                                         @endif
                                     </td>
                                     <td>
                                         <a href="{{ route('user.view', $user->id) }}"
-                                            class="btn btn-sm btn-info">View</a>
+                                            class="badge btn-info">View</a>
                                         <a href="{{ route('user.edit', $user->id) }}"
-                                            class="btn btn-sm btn-primary">Edit</a>
+                                            class="badge btn-primary">Edit</a>
                                         <a href="{{ route('user.delete', $user->id) }}"
                                             onclick="return confirm('Are you sure?')"
-                                            class="btn btn-sm btn-danger">Delete</a>
+                                            class="badge btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             @empty

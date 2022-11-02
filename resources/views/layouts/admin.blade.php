@@ -19,20 +19,19 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.5/dist/sweetalert2.min.css"> --}}
     <link rel="shortcut icon" href="{{ asset('admin/images/favicon.png') }}" />
-    {{-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha512-aEe/ZxePawj0+G2R+AaIxgrQuKT68I28qh+wgLrcAJOz3rxCP+TwrK5SPN+E5I+1IQjNtcfvb96HDagwrKRdBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     @yield('styles')
 
 </head>
 
 <body>
 
-
-
     <div class="container-scroller">
-
         @include('partials.admin.navbar')
 
         <div class="container-fluid page-body-wrapper">
@@ -51,10 +50,8 @@
 
 
 
-
     <!-- plugins:js -->
     <script src="{{ asset('admin/vendors/base/vendor.bundle.base.js') }}"></script>
-
     <!-- endinject -->
     <!-- Plugin js for this page-->
     <script src="{{ asset('admin/vendors/datatables.net/jquery.dataTables.js') }}"></script>
@@ -70,12 +67,8 @@
     <script src="{{ asset('admin/js/data-table.js') }}"></script>
     <script src="{{ asset('admin/js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('admin/js/dataTables.bootstrap4.js') }}"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script> --}}
-    <!-- End custom js for this page-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.5/moment.min.js" integrity="sha512-jom26iHej1imZmI6m/K1eEhAJraGGlj2BenvHXhQOb+d/yPTQIzUgUbvmWQznnTMZRxyrOCRBfIEyRxRndGCrg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha512-GDey37RZAxFkpFeJorEUwNoIbkTwsyC736KNSYucu1WJWFK9qTdzYub8ATxktr6Dwke7nbFaioypzbDOQykoRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    @include('sweetalert::alert')
     @yield('scripts')
 </body>
 

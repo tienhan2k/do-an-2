@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Brand;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandFormRequest;
-use App\Models\SubCategory;
 
 class BrandController extends Controller
 {
@@ -35,7 +32,7 @@ class BrandController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('brand.index'))->with('message', 'Add successful.');
+        return redirect(route('brand.index'))->withSuccessMessage('Add successful.');
     }
 
     public function edit($id)
@@ -57,7 +54,7 @@ class BrandController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('brand.index'))->with('message', 'Update successful.');
+        return redirect(route('brand.index'))->withSuccessMessage('Update successful.');
     }
 
 
@@ -65,6 +62,6 @@ class BrandController extends Controller
     {
         $brand = Brand::findOrFail($id)->first();
         $brand->delete();
-        return redirect(route('brand.index'))->with('message', 'Delete successful.');
+        return redirect(route('brand.index'))->withSuccessMessage('Delete successful.');
     }
 }

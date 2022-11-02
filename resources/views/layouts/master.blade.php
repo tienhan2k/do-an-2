@@ -24,7 +24,6 @@
 </head>
 
 <body class="home-page home-01">
-
     @include('partials.header')
 
     @yield('content')

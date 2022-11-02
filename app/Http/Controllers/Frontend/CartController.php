@@ -56,14 +56,13 @@ class CartController extends Controller
                 }
             }
         } else {
-            return response()->json(['status' => "Please login to add this item."]);
+            return response()->json(['status' => 'You need to login.']);;
         }
     }
 
     public function viewCart()
     {
         $carts_item = Cart::where('user_id', Auth::id())->get();
-        // dd($carts_item);
         return view('frontend.cart.index', compact('carts_item'));
     }
 

@@ -10,8 +10,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\CategoryFormRequest;
 
-use function Symfony\Component\VarDumper\Dumper\esc;
-
 class CategoryController extends Controller
 {
 
@@ -56,7 +54,7 @@ class CategoryController extends Controller
             ]);
         }
 
-        return redirect(route('category.index'))->with('message', 'Add successful.');
+        return redirect(route('category.index'))->withSuccessMessage('Add successful.');
     }
 
     public function storeImage($request)
@@ -109,7 +107,7 @@ class CategoryController extends Controller
             ]);
         }
 
-        return redirect(route('category.index'))->with('message', 'Update successful.');
+        return redirect(route('category.index'))->withSuccessMessage('Update successful.');
     }
 
     public function updateSubCateImage($request, $s_id)
@@ -165,9 +163,9 @@ class CategoryController extends Controller
                     File::delete($destination);
                 }
                 $category->delete();
-                return redirect(route('category.index'))->with('message', 'Delete successful.');
+                return redirect(route('category.index'))->withSuccessMessage('Delete successful.');
             } else {
-                return redirect(route('category.index'))->with('message', 'Delete failure.');
+                return redirect(route('category.index'))->withErrorMessage('Delete failure.');
             }
         } else {
             if ($category = Category::findOrFail($id)) {
@@ -178,9 +176,9 @@ class CategoryController extends Controller
                     File::delete($destination);
                 }
                 $category->delete();
-                return redirect(route('category.index'))->with('message', 'Delete successful.');
+                return redirect(route('category.index'))->withSuccessMessage('Delete successful.');
             } else {
-                return redirect(route('category.index'))->with('message', 'Delete failure.');
+                return redirect(route('category.index'))->withErrorMessage('Delete failure.');
             }
         }
 

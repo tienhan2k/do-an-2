@@ -33,7 +33,7 @@
 
                             <div class="mb-3 col-md-6">
                                 <label for="">Email</label>
-                                <textarea id="" readonly value="{{ $user->email }}" type="email" name="email" class="form-control" rows="3"></textarea>
+                                <input id="" readonly value="{{ $user->email }}" type="email" name="email" class="form-control" rows="3"/>
                             </div>
 
                             <div class="mb-3 col-md-6">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Color;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ColorFormRequest;
 
@@ -33,7 +32,7 @@ class ColorController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('color.index'))->with('message', 'Add successful.');
+        return redirect(route('color.index'))->withSuccessMessage('Add successful.');
     }
 
     public function edit($id)
@@ -54,7 +53,7 @@ class ColorController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('color.index'))->with('message', 'Update successful.');
+        return redirect(route('color.index'))->withSuccessMessage('Update successful.');
     }
 
 

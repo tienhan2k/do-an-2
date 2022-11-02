@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Slider;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\SliderFormRequest;
@@ -35,7 +35,7 @@ class SliderController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('slider.index'))->with('message', 'Add successful.');
+        return redirect(route('slider.index'))->withSuccessMessage('Add successful.');
     }
 
 
@@ -70,7 +70,7 @@ class SliderController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('slider.index'))->with('message', 'Update successful.');
+        return redirect(route('slider.index'))->withSuccessMessage('Update successful.');
     }
 
 
@@ -108,9 +108,9 @@ class SliderController extends Controller
                 File::delete($destination);
             }
             $slider->delete();
-            return redirect(route('slider.index'))->with('message', 'Delete successful');
+            return redirect(route('slider.index'))->withSuccessMessage('Delete successful');
         } else {
-            return redirect(route('slider.index'))->with('message', 'There is something wrong.');
+            return redirect(route('slider.index'))->withErrorMessage('There is something wrong.');
         }
     }
 }

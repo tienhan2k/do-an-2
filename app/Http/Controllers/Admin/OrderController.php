@@ -31,7 +31,7 @@ class OrderController extends Controller
         Order::findOrFail($id)->update([
             'status' => $request->order_status,
         ]);
-        return redirect(route('order.index'))->with('message', 'Update success!');
+        return redirect(route('order.index'))->withSuccessMessage('Update success!');
     }
 
 

@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SizeController;
+use RealRashid\SweetAlert\Facades\Alert;
 
 Auth::routes();
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {

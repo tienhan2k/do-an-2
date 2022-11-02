@@ -17,9 +17,9 @@
 </style>
     <div class="row">
         <div class="col-md-12">
-           @if (session('message'))
+           {{-- @if (session('message'))
                 <div class="alert alert-success">{{ session('message') }}</div>
-            @endif
+            @endif --}}
             <div class="card">
                 <div class="card-header">
 
@@ -69,10 +69,10 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('category.edit', $category->id) }}"
-                                            class="btn btn-sm btn-success">Edit</a>
+                                            class="badge btn-success">Edit</a>
                                         <a href="{{ route('category.delete', $category->id) }}"
                                             onclick="return confirm('Are you sure?')"
-                                            class="btn btn-sm btn-danger">Delete</a>
+                                            class="badge btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             @empty

@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\ProductFormRequest;
-use App\Models\SubCategory;
 
 class ProductController extends Controller
 {
@@ -97,7 +96,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect(route('product.index'))->with('message', 'Add successful.');
+        return redirect(route('product.index'))->withSuccessMessage('Add successful.');
     }
 
     public function edit($id)
@@ -180,7 +179,7 @@ class ProductController extends Controller
 
         if ($request->sizes) {
             foreach ($request->sizes as $key => $size) {
-                $product->productSize()->create([
+                $product->productSizes()->create([
                     'product_id' => $product->id,
                     'size_id' => $size,
                     'quantity' => $request->size_quantity[$key] ?? 1,
@@ -188,7 +187,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect(route('product.index'))->with('message', 'Update successful.');
+        return redirect(route('product.index'))->withSuccessMessage('Update successful.');
     }
 
 
@@ -205,7 +204,7 @@ class ProductController extends Controller
             }
         }
         $product->delete();
-        return redirect()->back()->with('message', 'Deleted product.');
+        return redirect()->back()->withSuccessMessage('Deleted product.');
     }
 
     public function destroyProductImages($id)
@@ -219,7 +218,7 @@ class ProductController extends Controller
         }
         $productImg->delete();
 
-        return redirect()->back()->with('message', 'Deleted!');
+        return redirect()->back()->withSuccessMessage('Deleted!');
     }
 
     public function updateProductColorQty(Request $request, $prod_color_id)
@@ -249,7 +248,7 @@ class ProductController extends Controller
     {
 
         $productSizeData = Product::findOrFail($request->product_id)
-            ->productSize()
+            ->productSizes()
             ->where('id', $prod_size_id)
             ->first();
 

@@ -42,7 +42,7 @@
                                         : '<h6 style="color: orange">No information</h6>' !!}</td>
                                     <td>
                                         <a href="{{ route('order.view', $item->id) }}"
-                                            class="btn btn-sm btn-success">View</a>
+                                            class="badge btn-success">View</a>
                                     </td>
                                 </tr>
                             @empty

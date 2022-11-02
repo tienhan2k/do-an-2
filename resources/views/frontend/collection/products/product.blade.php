@@ -97,18 +97,36 @@
                                 </div>
                             @endif
 
-                                <div>
-                                    <div class="row" style="margin-top: 20px">
-                                        <div class="col-xs-2">
-                                            <p>hihi</p>
-                                        </div>
-                                        <div class="col-xs-10">
-                                            <select name="" class="form-control" style="width: 200px" id="">
-                                                <option value="">meow</option>
-                                            </select>
-                                        </div>
+                            <div>
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col-xs-3">
+                                        <p>Color:</p>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <select name="" class="form-control" style="width: 200px" id="">
+                                            <option value="" selected>Select color</option>
+                                            @foreach ($colorPro as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div>
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col-xs-3">
+                                        <p>Size:</p>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <select name="" class="form-control" style="width: 200px" id="">
+                                            <option value="">Select size</option>
+                                            @foreach ($sizePro as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="quantity" style="margin-top: 10px">
                                 <input type="hidden" value="{{ $product_details->id }}" class="product_id">
@@ -182,7 +200,8 @@
                                                                 <div class="star-rating">
                                                                     <span
                                                                         class="width-{{ $item->rating * 20 }}-percent">Rated
-                                                                        <strong class="rating">{{ $item->rating }}</strong>
+                                                                        <strong
+                                                                            class="rating">{{ $item->rating }}</strong>
                                                                         out of 5</span>
                                                                 </div>
                                                                 <p class="meta">
@@ -285,17 +304,16 @@
                 <!--end sitebar-->
                 <style>
                     .pro-rela-img {
-                            width: 280px !important;
-                            height: 214px !important;
-                        }
+                        width: 280px !important;
+                        height: 214px !important;
+                    }
                 </style>
                 <div class="single-advance-box col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="wrap-show-advance-info-box style-1 box-in-site">
                         <h3 class="title-box">Related Products</h3>
                         <div class="wrap-products">
                             <div class="products slide-carousel owl-carousel style-nav-1 equal-container"
-                                data-loop="false" data-nav="true" data-dots="false"
-                                >
+                                data-loop="false" data-nav="true" data-dots="false">
 
                                 @forelse ($r_products as $related_pro)
                                     <div class="product product-style-2 equal-elem ">

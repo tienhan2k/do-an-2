@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use DB;
+
 use App\Models\Sale;
 use App\Models\Size;
 use App\Models\Brand;
@@ -13,7 +13,6 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Wishlist;
 use App\Models\ProductSize;
-use App\Models\SubCategory;
 use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,35 +21,14 @@ class FrontendController extends Controller
 {
     public function index()
     {
-
-        $category = Category::where('status', '0')
-            ->inRandomOrder()
-            ->firstOrFail();
-        $category = SubCategory::where('status', '0')
-            ->inRandomOrder()
-            ->firstOrFail();
+        $categories = Category::where('status', '0')->get();
         $sliders = Slider::where('status', '0')->get();
-        $products = Product::where('status', '0')
-            ->inRandomOrder()
-            ->limit(8)
-            ->get();
-        $sale_products = Product::where('sale_price', '>', 0)
-            ->inRandomOrder()
-            ->get();
-        $sale_time = Sale::first();
-        $latest_products = $category->products()->latest()->get();
-        $categories = SubCategory::where('status', '0')->get();
+        $sale_products = Product::where('sale_price', '>', 0)->get();
+        $sale_time = Sale::where('status', '0')->first();
+        $latest_products = Product::where('status', '0')->latest()->get();
 
-        return view('frontend.index', compact('categories', 'sliders',  'products', 'latest_products', 'category',  'sale_products', 'sale_time'));
+        return view('frontend.index', compact('categories', 'sliders',  'latest_products', 'sale_products', 'sale_time'));
     }
-
-    // public function getAllProducts()
-    // {
-    //     return view('frontend.collection.products.all-products', [
-    //         'products' => Product::where('status', '0')->paginate(9),
-    //         'wishlist' => Wishlist::get(),
-    //     ]);
-    // }
 
 
     public function products(Request $request, $category_slug = null, $sub_cate_slug = null)
@@ -64,18 +42,30 @@ class FrontendController extends Controller
             $sizes = Size::where('status', '0')->get();
             if ($category) {
                 if ($request->get('sort') == 'name_a_z') {
-                    $products = $category->products()->where('status', '0')->orderBy('name', 'asc')->paginate(9);
+                    $products = $category->products()->where('status', '0')
+                        ->orderBy('name', 'asc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'name_z_a') {
-                    $products = $category->products()->where('status', '0')->orderBy('name', 'desc')->paginate(9);
+                    $products = $category->products()->where('status', '0')
+                        ->orderBy('name', 'desc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'product_lastest') {
-                    $products = $category->products()->where('status', '0')->orderBy('created_at', 'desc')->paginate(9);
+                    $products = $category->products()->where('status', '0')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'price_low_high') {
-                    $products = $category->products()->where('status', '0')->orderBy('original_price', 'asc')->paginate(9);
+                    $products = $category->products()->where('status', '0')
+                        ->orderBy('original_price', 'asc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'price_high_low') {
-                    $products = $category->products()->where('status', '0')->orderBy('original_price', 'desc')->paginate(9);
+                    $products = $category->products()->where('status', '0')
+                        ->orderBy('original_price', 'desc')
+                        ->paginate(9);
                 } elseif ($request->get('brand')) {
                     $checked = $_GET['brand'];
-                    $products = $category->products()->where('status', '0')->whereIn('brand', $checked)->paginate(9);
+                    $products = $category->products()->where('status', '0')
+                        ->whereIn('brand', $checked)
+                        ->paginate(9);
                 } elseif ($request->get('color')) {
                     $checked = $_GET['color'];
                     $product_colors_id = ProductColor::where(function ($q) use ($checked) {
@@ -86,8 +76,7 @@ class FrontendController extends Controller
                         ->pluck('product_id')
                         ->toArray();
 
-                    $products = $category->products()
-                        ->whereIn('id', $product_colors_id)
+                    $products = $category->products()->whereIn('id', $product_colors_id)
                         ->where('status', '0')
                         ->paginate(9);
                 } elseif ($request->get('size')) {
@@ -121,18 +110,30 @@ class FrontendController extends Controller
             $sizes = Size::where('status', '0')->get();
             if ($sub_cate) {
                 if ($request->get('sort') == 'name_a_z') {
-                    $products = $sub_cate->products()->where('status', '0')->orderBy('name', 'asc')->paginate(9);
+                    $products = $sub_cate->products()->where('status', '0')
+                        ->orderBy('name', 'asc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'name_z_a') {
-                    $products = $sub_cate->products()->where('status', '0')->orderBy('name', 'desc')->paginate(9);
+                    $products = $sub_cate->products()->where('status', '0')
+                        ->orderBy('name', 'desc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'product_lastest') {
-                    $products = $sub_cate->products()->where('status', '0')->orderBy('created_at', 'desc')->paginate(9);
+                    $products = $sub_cate->products()->where('status', '0')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'price_low_high') {
-                    $products = $sub_cate->products()->where('status', '0')->orderBy('original_price', 'asc')->paginate(9);
+                    $products = $sub_cate->products()->where('status', '0')
+                        ->orderBy('original_price', 'asc')
+                        ->paginate(9);
                 } elseif ($request->get('sort') == 'price_high_low') {
-                    $products = $sub_cate->products()->where('status', '0')->orderBy('original_price', 'desc')->paginate(9);
+                    $products = $sub_cate->products()->where('status', '0')
+                        ->orderBy('original_price', 'desc')
+                        ->paginate(9);
                 } elseif ($request->get('brand')) {
                     $checked = $_GET['brand'];
-                    $products = $sub_cate->products()->where('status', '0')->whereIn('brand', $checked)->paginate(9);
+                    $products = $sub_cate->products()->where('status', '0')
+                        ->whereIn('brand', $checked)
+                        ->paginate(9);
                 } elseif ($request->get('color')) {
                     $checked = $_GET['color'];
                     $product_colors_id = ProductColor::where(function ($q) use ($checked) {
@@ -142,8 +143,7 @@ class FrontendController extends Controller
                     })
                         ->pluck('product_id')
                         ->toArray();
-                    $products = $sub_cate->products()
-                        ->whereIn('id', $product_colors_id)
+                    $products = $sub_cate->products()->whereIn('id', $product_colors_id)
                         ->where('status', '0')
                         ->paginate(9);
                 } elseif ($request->get('size')) {
@@ -174,18 +174,30 @@ class FrontendController extends Controller
             $brands = Brand::where('status', '0')->get();
             $sizes = Size::where('status', '0')->get();
             if ($request->get('sort') == 'name_a_z') {
-                $products = Product::where('status', '0')->orderBy('name', 'asc')->paginate(9);
+                $products = Product::where('status', '0')
+                    ->orderBy('name', 'asc')
+                    ->paginate(9);
             } elseif ($request->get('sort') == 'name_z_a') {
-                $products = Product::where('status', '0')->orderBy('name', 'desc')->paginate(9);
+                $products = Product::where('status', '0')
+                    ->orderBy('name', 'desc')
+                    ->paginate(9);
             } elseif ($request->get('sort') == 'product_lastest') {
-                $products = Product::where('status', '0')->orderBy('created_at', 'desc')->paginate(9);
+                $products = Product::where('status', '0')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(9);
             } elseif ($request->get('sort') == 'price_low_high') {
-                $products = Product::where('status', '0')->orderBy('original_price', 'asc')->paginate(9);
+                $products = Product::where('status', '0')
+                    ->orderBy('original_price', 'asc')
+                    ->paginate(9);
             } elseif ($request->get('sort') == 'price_high_low') {
-                $products = Product::where('status', '0')->orderBy('original_price', 'desc')->paginate(9);
+                $products = Product::where('status', '0')
+                    ->orderBy('original_price', 'desc')
+                    ->paginate(9);
             } elseif ($request->get('brand')) {
                 $checked = $_GET['brand'];
-                $products = Product::where('status', '0')->whereIn('brand', $checked)->paginate(9);
+                $products = Product::where('status', '0')
+                    ->whereIn('brand', $checked)
+                    ->paginate(9);
             } elseif ($request->get('color')) {
                 $checked = $_GET['color'];
                 $product_colors_id = ProductColor::where(function ($q) use ($checked) {
@@ -197,8 +209,8 @@ class FrontendController extends Controller
                     ->toArray();
 
                 $products = Product::whereIn('id', $product_colors_id)
-                                    ->where('status', '0')
-                                    ->paginate(9);
+                    ->where('status', '0')
+                    ->paginate(9);
             } elseif ($request->get('size')) {
                 $checked = $_GET['size'];
                 $product_sizes_id = ProductSize::where(function ($q) use ($checked) {
@@ -210,8 +222,8 @@ class FrontendController extends Controller
                     ->toArray();
 
                 $products = Product::whereIn('id', $product_sizes_id)
-                                    ->where('status', '0')
-                                    ->paginate(9);
+                    ->where('status', '0')
+                    ->paginate(9);
             } else {
                 $products = Product::where('status', '0')->paginate(9);
             }
@@ -229,7 +241,11 @@ class FrontendController extends Controller
         $sale_time = Sale::find(1);
         $review_count_star = $reviews->avg('rating');
         if ($product_details) {
-            return view('frontend.collection.products.product', compact('product_details', 'r_products', 'reviews', 'sale_time', 'review_count_star'));
+            $getIdColorsProduct = $product_details->productColor()->pluck('color_id')->toArray();
+            $colorPro = Color::whereIn('id', $getIdColorsProduct)->get();
+            $getIdSizesProduct = $product_details->productSizes()->pluck('size_id')->toArray();
+            $sizePro = Size::whereIn('id', $getIdSizesProduct)->get();
+            return view('frontend.collection.products.product', compact('product_details', 'colorPro', 'sizePro', 'r_products', 'reviews', 'sale_time', 'review_count_star'));
         } else {
             return redirect()->back();
         }

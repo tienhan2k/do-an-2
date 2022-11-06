@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\CheckoutController;
@@ -19,12 +20,10 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SizeController;
-use RealRashid\SweetAlert\Facades\Alert;
 
 Auth::routes();
 Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 
     Route::controller(CategoryController::class)->group(function ()
     {
@@ -127,6 +126,16 @@ Route::prefix('admin')->middleware('isAdmin', 'auth')->group(function () {
         Route::get('delete-user/{id}', 'destroy')->name('user.delete');
     });
 
+    Route::controller(CouponController::class)->group(function ()
+    {
+        Route::get('coupon', 'index')->name('coupon.index');
+        Route::get('coupon/create', 'create')->name('coupon.create');
+        Route::post('coupon', 'store')->name('coupon.store');
+        Route::get('edit-coupon/{id}', 'edit')->name('coupon.edit');
+        Route::patch('coupon/{id}', 'update')->name('coupon.update');
+        Route::get('delete-coupon/{id}', 'destroy')->name('coupon.delete');
+    });
+
 });
 
 
@@ -135,7 +144,7 @@ Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/shop/{category_slug?}/{sub_cate_slug?}', [FrontendController::class, 'products'])->name('frontend.products');
 Route::get('/shop/{category_slug}/{sub_cate_slug}/{product_slug}', [FrontendController::class, 'productDetails']);
 Route::get('/product-list', [FrontendController::class, 'getProductListAjax']);
-Route::post('/search-product', [FrontendController::class, 'searchProduct']);
+Route::get('/search-product', [FrontendController::class, 'searchProduct']);
 
 Route::get('/add-to-cart/{id}', [CartController::class, 'addProductInAllProductPage']);
 Route::post('/add-to-cart', [CartController::class, 'addProduct']);
@@ -145,11 +154,11 @@ Route::post('/add-to-wishlist', [WishlistController::class, 'store']);
 Route::get('/add-to-wishlist/{id}', [WishlistController::class, 'storeInProductPage']);
 Route::get('/delete-from-wishlist/{id}', [WishlistController::class, 'destroy']);
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart.view');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('frontend.checkout.view');
     Route::post('/place-order', [CheckoutController::class, 'placeOrder'])->name('frontend.checkout.place-order');
+    Route::post('/check-coupon-code', [CheckoutController::class, 'checkCoupon']);
     Route::get('/my-orders', [UserController::class, 'listOrders'])->name('frontend.order.view');
     Route::get('/view-orders/{id}', [UserController::class, 'viewOrder'])->name('frontend.order.details');
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('frontend.wishlist.index');
@@ -158,7 +167,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [UserController::class, 'showProfile'])->name('frontend.user.profile');
     Route::get('/profile/edit/{id}', [UserController::class, 'editProfile'])->name('frontend.user.profile-edit');
     Route::patch('/profile/update/{id}', [UserController::class, 'updateProfile'])->name('frontend.user.profile-update');
-
 });
 
 

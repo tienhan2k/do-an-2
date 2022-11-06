@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class SizeController extends Controller
 {
 
     public function index()
     {
+        Session::put('current_url', request()->fullUrl());
         return view('admin.size.index', [
             'sizes' => Size::orderBy('id')->paginate(5)
         ]);
@@ -47,7 +49,11 @@ class SizeController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('size.index'))->withSuccessMessage('Update successfully.');
+        if (session('current_url')) {
+            return redirect(session('current_url'))->withSuccessMessage('Update successful!');
+        } else {
+            return redirect(route('size.index'))->withSuccessMessage('Update successfully.');
+        }
     }
 
 

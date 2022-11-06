@@ -2,7 +2,6 @@
 
 @section('title', 'Profile')
 
-
 @section('content')
 
     <div>

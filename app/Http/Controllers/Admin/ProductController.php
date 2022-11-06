@@ -15,12 +15,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\ProductFormRequest;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
 
     public function index()
     {
+        Session::put('current_url', request()->fullUrl());
         return view('admin.product.index', [
             'products' => Product::orderBy('id')->paginate(5)
         ]);
@@ -95,7 +97,6 @@ class ProductController extends Controller
                 ]);
             }
         }
-
         return redirect(route('product.index'))->withSuccessMessage('Add successful.');
     }
 
@@ -127,7 +128,6 @@ class ProductController extends Controller
 
     public function update(ProductFormRequest $request, $id)
     {
-        // dd($request);
         $request->validated();
 
         $product = Product::findOrFail($id);
@@ -187,7 +187,11 @@ class ProductController extends Controller
             }
         }
 
-        return redirect(route('product.index'))->withSuccessMessage('Update successful.');
+        if (session('current_url')) {
+            return redirect(session('current_url'))->withSuccessMessage('Update successful!');
+        } else {
+            return redirect(route('product.index'))->withSuccessMessage('Update successful.');
+        }
     }
 
 

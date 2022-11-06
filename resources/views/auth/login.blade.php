@@ -77,8 +77,6 @@
 
 @section('title', 'Đăng nhập')
 
-@include('partials.breadcrumb')
-
 @section('content')
 
 <!--main area-->

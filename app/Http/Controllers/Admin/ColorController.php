@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Color;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ColorFormRequest;
+use Illuminate\Support\Facades\Session;
 
 class ColorController extends Controller
 {
     public function index()
     {
+        Session::put('current_url', request()->fullUrl());
         return view('admin.color.index', [
             'colors' => Color::latest()->paginate(5)
         ]);
@@ -53,7 +55,11 @@ class ColorController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('color.index'))->withSuccessMessage('Update successful.');
+        if (session('current_url')) {
+            return redirect(session('current_url'))->withSuccessMessage('Update successful!');
+        } else {
+            return redirect(route('color.index'))->withSuccessMessage('Update successful.');
+        }
     }
 
 

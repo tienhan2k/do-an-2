@@ -81,8 +81,6 @@
 
 @section('title', 'Đăng ký')
 
-@include('partials.breadcrumb')
-
 @section('content')
 
 <!--main area-->

@@ -3,13 +3,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                         <div>
                             @foreach ($errors->all() as $error)
                                 <div>{{ $error }}</div>
                             @endforeach
                         </div>
-                    @endif
+                    @endif --}}
             <div class="card">
                 <div class="card-header">
 

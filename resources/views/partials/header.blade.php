@@ -21,41 +21,23 @@
                     </div>
                     <div class="topbar-menu right-menu">
                         <ul>
-                            <li class="menu-item lang-menu menu-item-has-children parent">
-                                <a title="English" href="#"><span class="img label-before"><img src="{{ asset('assets/images/lang-en.png')}}" alt="lang-en"></span>English<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="submenu lang" >
-                                    <li class="menu-item" ><a title="hungary" href="#"><span class="img label-before"><img src="{{ asset('assets/images/lang-hun.png')}}" alt="lang-hun"></span>Hungary</a></li>
-                                    <li class="menu-item" ><a title="german" href="#"><span class="img label-before"><img src="{{ asset('assets/images/lang-ger.png')}}" alt="lang-ger" ></span>German</a></li>
-                                    <li class="menu-item" ><a title="french" href="#"><span class="img label-before"><img src="{{ asset('assets/images/lang-fra.png')}}" alt="lang-fre"></span>French</a></li>
-                                    <li class="menu-item" ><a title="canada" href="#"><span class="img label-before"><img src="{{ asset('assets/images/lang-can.png')}}" alt="lang-can"></span>Canada</a></li>
-                                </ul>
-                            </li>
-                            {{-- <li class="menu-item menu-item-has-children parent" >
-                                <a title="Dollar (USD)" href="#">Dollar (USD)<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="submenu curency" >
-                                    <li class="menu-item" >
-                                        <a title="Pound (GBP)" href="#">Pound (GBP)</a>
-                                    </li>
-                                    <li class="menu-item" >
-                                        <a title="Euro (EUR)" href="#">Euro (EUR)</a>
-                                    </li>
-                                    <li class="menu-item" >
-                                        <a title="Dollar (USD)" href="#">Dollar (USD)</a>
-                                    </li>
-                                </ul>
-                            </li> --}}
                             @if (Route::has('login'))
                                 @auth
                                     @if (Auth::user()->role == '1')
                                     <li class="menu-item menu-item-has-children parent" >
-                                        <a  href="#">xin chao {{ Auth::user()->name }}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <a  href="#">Hi, {{ Auth::user()->name }}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                         <ul class="submenu curency" >
                                             <li class="menu-item" >
-                                                <a title="" href="{{ route('dashboard') }}">Di den trang chu</a>
+                                                <a title="" href="{{ route('dashboard') }}">Go to dashboard</a>
                                             </li>
                                             <li class="menu-item" >
-                                                <a title="" href="{{ route('logout') }}">dang xuat</a>
-                                            </li>
+                                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                </a>                                            </li>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
                                         </ul>
                                     </li>
                                     @else
@@ -77,7 +59,6 @@
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                     @csrf
                                                 </form>
-
                                             </ul>
                                         </li>
                                     @endif
@@ -100,8 +81,7 @@
 
                     <div class="wrap-search center-section">
                         <div class="wrap-search-form">
-                            <form action="{{ url('search-product') }}" method="POST">
-                                @csrf
+                            <form action="{{ url('search-product') }}" method="Get">
                                 <input type="search" name="search" id="search_product" placeholder="Search here...">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                                 {{-- <div class="wrap-list-cate">
@@ -130,22 +110,27 @@
                             </form>
                         </div>
                     </div>
-
+                    <Style>
+                        .mg-top {
+                            margin-top: 10px;
+                        }
+                    </Style>
                     <div class="wrap-icon right-section">
                         <div class="wrap-icon-section wishlist">
                             <a href="{{ route('frontend.wishlist.index') }}" class="link-direction">
                                 <i class="fa fa-heart" aria-hidden="true"></i>
-                                <div class="left-info">
-                                    <span class="index">0 item</span>
+                                <div class="left-info mg-top">
+                                {{-- <span class="index wishlist-count">0</span> --}}
                                     <span class="title">Wishlist</span>
                                 </div>
                             </a>
                         </div>
+
                         <div class="wrap-icon-section minicart">
                             <a href="{{ route('frontend.cart.view') }}" class="link-direction">
                                 <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                                <div class="left-info">
-                                    <span class="index">156 items</span>
+                                <div class="left-info mg-top">
+                                    {{-- <span class="index cart-count">0</span> --}}
                                     <a href="{{ route('frontend.cart.view') }}" class="title">CART</a>
                                 </div>
                             </a>

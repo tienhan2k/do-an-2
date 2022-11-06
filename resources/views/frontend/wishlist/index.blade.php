@@ -51,7 +51,7 @@
                                     <div class="product product-style-3 equal-elem ">
                                         <div class="product-thumnail">
                                             <input type="hidden" value="1" class="qty-input">
-                                            <a href="{{ url('/collections/' . $item->products->category->slug . '/' . $item->products->slug) }}"
+                                            <a href="{{ url('/shop/' . $item->products->category->slug . '/' . $item->products->sCategory->slug . '/' . $item->products->slug) }}"
                                                 title="{{ $item->products->name }}">
                                                 <figure><img
                                                         src="{{ asset('uploads/products/' . $item->products->productImages[0]->image) }}"
@@ -59,13 +59,13 @@
                                             </a>
                                         </div>
                                         <div class="product-info">
-                                            <a href="{{ url('/collections/' . $item->products->category->slug . '/' . $item->products->slug) }}"
+                                            <a href="{{ url('/shop/' . $item->products->category->slug . '/' . $item->products->sCategory->slug . '/' . $item->products->slug) }}"
                                                 class="product-name"><span>{{ $item->products->name }}</span></a>
                                             <div class="wrap-price"><span
                                                     class="product-price">{{ number_format($item->products->original_price) }}
                                                     VNĐ</span></div>
-                                            <a onClick="addProductInAllProductPage({{ $item->product_id }})" href="javascript:0"
-                                                class="btn add-to-cart">Add To Cart</a>
+                                            <a href="javascript:0"
+                                                class="btn add-to-cart">Buy this</a>
                                             <div class="product-wish">
                                                 {{-- @if ($wishlist->contains('product_id', $item->id)) --}}
                                                     <a href="javascript:0" onclick="removeFromWishlist({{ $item->product_id }})"><i
@@ -98,14 +98,14 @@
         </div>
     </main>
     <script>
-        function addProductInAllProductPage(id) {
-            $.ajax({
-                type: "get",
-                url: "/add-to-cart/" + id,
-            }).done(function(response) {
-                swal(response.status);
-            });
-        }
+        // function addProductInAllProductPage(id) {
+        //     $.ajax({
+        //         type: "get",
+        //         url: "/add-to-cart/" + id,
+        //     }).done(function(response) {
+        //         swal(response.status);
+        //     });
+        // }
         function removeFromWishlist(id) {
             $.ajax({
                 type: "get",

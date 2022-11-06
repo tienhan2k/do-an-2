@@ -31,12 +31,10 @@ class CheckoutFormRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                'unique:users'
             ],
             'phone' => [
                 'required',
                 'string',
-                'unique:users'
             ],
             'address' => [
                 'required',

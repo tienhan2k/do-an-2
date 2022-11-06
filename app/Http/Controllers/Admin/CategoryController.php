@@ -9,12 +9,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\CategoryFormRequest;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
 
     public function index()
     {
+        Session::put('current_url', request()->fullUrl());
         return view('admin.category.index', [
             'categories' => Category::orderBy('id')->paginate(5)
         ]);
@@ -107,7 +109,11 @@ class CategoryController extends Controller
             ]);
         }
 
-        return redirect(route('category.index'))->withSuccessMessage('Update successful.');
+        if (session('current_url')) {
+            return redirect(session('current_url'))->withSuccessMessage('Update successful!');
+        } else {
+            return redirect(route('category.index'))->withSuccessMessage('Update successful.');
+        }
     }
 
     public function updateSubCateImage($request, $s_id)

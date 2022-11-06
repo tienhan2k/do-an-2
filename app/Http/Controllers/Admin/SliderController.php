@@ -7,11 +7,13 @@ use App\Models\Slider;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\SliderFormRequest;
+use Illuminate\Support\Facades\Session;
 
 class SliderController extends Controller
 {
     public function index()
     {
+        Session::put('current_url', request()->fullUrl());
         return view('admin.slider.index', [
             'sliders' => Slider::orderBy('id')->paginate(5)
         ]);
@@ -70,7 +72,11 @@ class SliderController extends Controller
             'status' => $request->status == true ? '1' : '0',
         ]);
 
-        return redirect(route('slider.index'))->withSuccessMessage('Update successful.');
+        if (session('current_url')) {
+            return redirect(session('current_url'))->withSuccessMessage('Update successful!');
+        } else {
+            return redirect(route('slider.index'))->withSuccessMessage('Update successful.');
+        }
     }
 
 

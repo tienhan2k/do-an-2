@@ -7,11 +7,13 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserFormRequest;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
     public function index()
     {
+        Session::put('current_url', request()->fullUrl());
         return view('admin.user.index', [
             'users' => User::paginate(5),
         ]);
@@ -59,13 +61,17 @@ class UserController extends Controller
             'password' => Hash::make($request->phone),
             'role' => $request->role,
         ]);
-        return redirect(route('user.index'))->withSuccessMessage('User updated.');
+
+        if (session('current_url')) {
+            return redirect(session('current_url'))->withSuccessMessage('Update successful!');
+        } else {
+            return redirect(route('user.index'))->withSuccessMessage('User updated.');
+        }
     }
 
     public function destroy($id)
     {
         User::findOrFail($id)->delete();
         return redirect(route('user.index'))->withSuccessMessage('User deleted.');
-
     }
 }

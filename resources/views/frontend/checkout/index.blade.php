@@ -145,13 +145,13 @@
                                         <p class="summary-info"><span class="title">Flat Rate</span></p>
                                         <p class="summary-info"><span class="title">{{ number_format($shipping_fee) }}
                                                 VNĐ</span></p>
-                                        <h4 class="title-box">Discount Codes</h4>
+                                        {{-- <h4 class="title-box">Discount Codes</h4>
                                         <p class="row-in-form">
                                             <label for="coupon-code">Enter Your Coupon code:</label>
                                             <input id="coupon-code" type="text" name="coupon-code" value=""
                                                 placeholder="">
                                         </p>
-                                        <button class="btn btn-small">Apply</button>
+                                        <button class="btn btn-small">Apply</button> --}}
                                     </div>
                                 </div>
                             </form>

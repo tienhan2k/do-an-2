@@ -34,31 +34,31 @@ class CartController extends Controller
         }
     }
 
-    public function addProductInAllProductPage($id)
-    {
-        // $prod_id = $request->input('prod_id');
-        // dd($request->input('prod_qty'));
+    // public function addProductInAllProductPage($id)
+    // {
+    //     // $prod_id = $request->input('prod_id');
+    //     // dd($request->input('prod_qty'));
 
-        $prod_qty = 1;
+    //     $prod_qty = 1;
 
-        if (Auth::check()) {
-            $prod_check = Product::where('id', $id)->first();
-            if ($prod_check) {
-                if (Cart::where('product_id', $id)->where('user_id', Auth::id())->exists()) {
-                    return response()->json(['status' => $prod_check->name . " is available in your cart."]);
-                } else {
-                    $cart_item = new Cart();
-                    $cart_item->product_id = $id;
-                    $cart_item->user_id = Auth::id();
-                    $cart_item->product_qty = $prod_qty;
-                    $cart_item->save();
-                    return response()->json(['status' => $prod_check->name . " added successfully. Congrats!"]);
-                }
-            }
-        } else {
-            return response()->json(['status' => 'You need to login.']);;
-        }
-    }
+    //     if (Auth::check()) {
+    //         $prod_check = Product::where('id', $id)->first();
+    //         if ($prod_check) {
+    //             if (Cart::where('product_id', $id)->where('user_id', Auth::id())->exists()) {
+    //                 return response()->json(['status' => $prod_check->name . " is available in your cart."]);
+    //             } else {
+    //                 $cart_item = new Cart();
+    //                 $cart_item->product_id = $id;
+    //                 $cart_item->user_id = Auth::id();
+    //                 $cart_item->product_qty = $prod_qty;
+    //                 $cart_item->save();
+    //                 return response()->json(['status' => $prod_check->name . " added successfully. Congrats!"]);
+    //             }
+    //         }
+    //     } else {
+    //         return response()->json(['status' => 'You need to login.']);;
+    //     }
+    // }
 
     public function viewCart()
     {
@@ -93,4 +93,5 @@ class CartController extends Controller
             return response()->json(['status' => "Please login to delete this item."]);
         }
     }
+
 }

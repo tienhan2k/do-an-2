@@ -2,8 +2,6 @@
 
 @section('title', 'Product')
 
-@include('partials.breadcrumb')
-
 @section('content')
 
     <!--main area-->
@@ -103,8 +101,7 @@
                                         <p>Color:</p>
                                     </div>
                                     <div class="col-xs-10">
-                                        <select name="" class="form-control" style="width: 200px" id="">
-                                            <option value="" selected>Select color</option>
+                                        <select name="" class="form-control" style="width: 200px" id="color">
                                             @foreach ($colorPro as $item)
                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @endforeach
@@ -118,8 +115,7 @@
                                         <p>Size:</p>
                                     </div>
                                     <div class="col-xs-10">
-                                        <select name="" class="form-control" style="width: 200px" id="">
-                                            <option value="">Select size</option>
+                                        <select name="" class="form-control" style="width: 200px" id="size">
                                             @foreach ($sizePro as $item)
                                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                                             @endforeach
@@ -304,7 +300,7 @@
                 <!--end sitebar-->
                 <style>
                     .pro-rela-img {
-                        width: 280px !important;
+                        width: 100% !important;
                         height: 214px !important;
                     }
                 </style>

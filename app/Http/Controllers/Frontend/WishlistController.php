@@ -64,4 +64,5 @@ class WishlistController extends Controller
             return response()->json(['status' => "Please login to delete this item."]);
         }
     }
+
 }

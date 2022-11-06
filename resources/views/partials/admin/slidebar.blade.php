@@ -62,6 +62,22 @@
                 </ul>
             </div>
         </li>
+        <li class="nav-item {{ Request::is('admin/coupon', 'admin/coupon/create') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-coupon"
+                aria-expanded="{{ Request::is('admin/coupon') ? 'true' : '' }}"
+                aria-controls="ui-coupon">
+                <i class="mdi mdi-tag-multiple menu-icon"></i>
+                <span class="menu-title">Coupons</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse {{ Request::is('admin/coupon', 'admin/coupon/create') ? 'show' : '' }}"
+                id="ui-coupon">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/coupon') ? 'active' : '' }}" href="{{ route('coupon.index') }}">View coupon</a></li>
+                    <li class="nav-item"> <a class="nav-link {{ Request::is('admin/coupon/create') ? 'active' : '' }}" href="{{ route('coupon.create') }}">Add coupon</a></li>
+                </ul>
+            </div>
+        </li>
 
         <li class="nav-item {{ Request::is('admin/color', 'admin/color/create') ? 'active' : '' }}"">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-color" aria-expanded="{{ Request::is('admin/color') ? 'true' : '' }}"

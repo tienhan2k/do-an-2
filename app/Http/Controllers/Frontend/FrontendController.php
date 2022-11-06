@@ -15,7 +15,9 @@ use App\Models\Wishlist;
 use App\Models\ProductSize;
 use App\Models\ProductColor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -38,7 +40,7 @@ class FrontendController extends Controller
             $categories = Category::where('status', 0)->get();
             $colors = Color::where('status', 0)->get();
             $brands = Brand::where('status', 0)->get();
-            $wishlist = Wishlist::get();
+            $wishlist = Wishlist::where('user_id', Auth::id())->get();
             $sizes = Size::where('status', '0')->get();
             if ($category) {
                 if ($request->get('sort') == 'name_a_z') {
@@ -106,7 +108,7 @@ class FrontendController extends Controller
             $sub_cate = $category->subCategories()->where('slug', $sub_cate_slug)->first();
             $colors = Color::where('status', 0)->get();
             $brands = Brand::where('status', 0)->get();
-            $wishlist = Wishlist::get();
+            $wishlist = Wishlist::where('user_id', Auth::id())->get();
             $sizes = Size::where('status', '0')->get();
             if ($sub_cate) {
                 if ($request->get('sort') == 'name_a_z') {
@@ -169,63 +171,64 @@ class FrontendController extends Controller
         } else {
             $categories = Category::where('status', '0')->get();
             $products = Product::where('status', '0')->paginate(9);
-            $wishlist = Wishlist::get();
+            $wishlist = Wishlist::where('user_id', Auth::id())->get();
             $colors = Color::where('status', '0')->get();
             $brands = Brand::where('status', '0')->get();
             $sizes = Size::where('status', '0')->get();
+            
             if ($request->get('sort') == 'name_a_z') {
                 $products = Product::where('status', '0')
                     ->orderBy('name', 'asc')
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } elseif ($request->get('sort') == 'name_z_a') {
                 $products = Product::where('status', '0')
                     ->orderBy('name', 'desc')
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } elseif ($request->get('sort') == 'product_lastest') {
                 $products = Product::where('status', '0')
                     ->orderBy('created_at', 'desc')
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } elseif ($request->get('sort') == 'price_low_high') {
                 $products = Product::where('status', '0')
                     ->orderBy('original_price', 'asc')
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } elseif ($request->get('sort') == 'price_high_low') {
                 $products = Product::where('status', '0')
                     ->orderBy('original_price', 'desc')
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } elseif ($request->get('brand')) {
                 $checked = $_GET['brand'];
                 $products = Product::where('status', '0')
                     ->whereIn('brand', $checked)
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } elseif ($request->get('color')) {
                 $checked = $_GET['color'];
-                $product_colors_id = ProductColor::where(function ($q) use ($checked) {
-                    foreach ($checked as $value) {
-                        $q->orWhere('color_id', $value);
-                    }
-                })
+                $product_colors_id = ProductColor::whereIn('color_id', $checked)
                     ->pluck('product_id')
                     ->toArray();
-
                 $products = Product::whereIn('id', $product_colors_id)
                     ->where('status', '0')
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } elseif ($request->get('size')) {
                 $checked = $_GET['size'];
-                $product_sizes_id = ProductSize::where(function ($q) use ($checked) {
-                    foreach ($checked as $value) {
-                        $q->orWhere('size_id', $value);
-                    }
-                })
+                $product_sizes_id = ProductSize::whereIn('size_id', $checked)
                     ->pluck('product_id')
                     ->toArray();
-
+                dd($product_sizes_id);
                 $products = Product::whereIn('id', $product_sizes_id)
                     ->where('status', '0')
-                    ->paginate(9);
+                    ->paginate(9)
+                    ->withQueryString();
             } else {
-                $products = Product::where('status', '0')->paginate(9);
+                $products = Product::where('status', '0')->paginate(9)
+                    ->withQueryString();
             }
             return view('frontend.collection.products.index', compact('products', 'sizes', 'brands', 'categories', 'wishlist', 'colors'));
         }
@@ -268,9 +271,61 @@ class FrontendController extends Controller
     public function searchProduct(Request $request)
     {
         if ($request->search != "") {
-            $product = Product::where("name", "LIKE", "%$request->search%")->first();
-            if ($product) {
-                return redirect('/collections/' . $product->category->slug . '/' . $product->slug);
+            $checkProducts = Product::where("name", "LIKE", "%$request->search%")->where('status', '0');
+            if ($checkProducts) {
+                $categories = Category::where('status', '0')->get();
+                $wishlist = Wishlist::where('user_id', Auth::id())->get();
+                $colors = Color::where('status', '0')->get();
+                $brands = Brand::where('status', '0')->get();
+                $sizes = Size::where('status', '0')->get();
+                // dd($request->get('search'));
+                if ($request->get('search')) {
+                    if ($request->get('sort') == 'name_a_z') {
+                        $products = $checkProducts->orderBy('name', 'asc')->paginate(9);
+                    } elseif ($request->get('sort') == 'name_z_a') {
+                        $products = $checkProducts->orderBy('name', 'desc')->paginate(9);
+                    } elseif ($request->get('sort') == 'product_lastest') {
+                        $products = $checkProducts->orderBy('created_at', 'desc')->paginate(9);
+                    } elseif ($request->get('sort') == 'price_low_high') {
+                        $products = $checkProducts->orderBy('original_price', 'asc')->paginate(9);
+                    } elseif ($request->get('sort') == 'price_high_low') {
+                        $products = $checkProducts->orderBy('original_price', 'desc')->paginate(9);
+                    } elseif ($request->get('brand')) {
+                        $checked = $_GET['brand'];
+                        $products = $checkProducts->whereIn('brand', $checked)->paginate(9);
+                    } elseif ($request->get('color')) {
+                        $checked = $_GET['color'];
+                        $product_colors_id = ProductColor::where(function ($q) use ($checked) {
+                            foreach ($checked as $value) {
+                                $q->orWhere('color_id', $value);
+                            }
+                        })
+                            ->pluck('product_id')
+                            ->toArray();
+
+                        $products = $checkProducts->whereIn('id', $product_colors_id)
+                            ->where('status', '0')
+                            ->paginate(9);
+                    } elseif ($request->get('size')) {
+                        $checked = $_GET['size'];
+                        $product_sizes_id = ProductSize::where(function ($q) use ($checked) {
+                            foreach ($checked as $value) {
+                                $q->orWhere('size_id', $value);
+                            }
+                        })
+                            ->pluck('product_id')
+                            ->toArray();
+
+                        $products = $checkProducts->whereIn('id', $product_sizes_id)
+                            ->where('status', '0')
+                            ->paginate(9);
+                    } else {
+                        $products = $checkProducts->paginate(9);
+                    }
+                    return view('frontend.collection.products.index', compact('products', 'sizes', 'brands', 'categories', 'wishlist', 'colors'));
+                } else {
+                    $products = $checkProducts->paginate(9);
+                }
             } else {
                 return redirect()->back()->with('error', 'No products found with your search :D');
             }

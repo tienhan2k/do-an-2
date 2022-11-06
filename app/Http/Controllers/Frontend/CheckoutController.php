@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\OrderItems;
 use Illuminate\Support\Str;
@@ -18,7 +20,6 @@ class CheckoutController extends Controller
     public function index()
     {
         $cartItems = Cart::where('user_id', Auth::id())->get();
-        // dd($cartItems->count());
         if ($cartItems->count() == 0) {
             return redirect('/cart')->with('error', 'YOU MUST CHOICE A PRODUCT!');
         } else {
@@ -26,17 +27,67 @@ class CheckoutController extends Controller
         }
     }
 
+    public function checkCoupon(Request $request)
+    {
+        $couponCode = $request->input('coupon_code');
+        if (Coupon::where('coupon_code', $couponCode)->exists()) {
+            $coupon = Coupon::where('coupon_code', $couponCode)->first();
+            if ($coupon->start_datetime <= Carbon::today()->format('Y-m-d') && Carbon::today()->format('Y-m-d') <= $coupon->end_datetime) {
+
+
+                $total = 0;
+                $cartItemsTotal = Cart::where('user_id', Auth::id())->get();
+                foreach($cartItemsTotal as $product)
+                {
+                    if ($product->products->sale_price > 0) {
+                        $total += ($product->products->sale_price * $product->product_qty);
+                    } else {
+                        $total += ($product->products->original_price * $product->product_qty);
+                    }
+                }
+
+
+                if ($coupon->coupon_type == '1') {
+                    $discount_price = ($total / 100) * $coupon->coupon_price;
+                } elseif ($coupon->coupon_type == '2') {
+                    $discount_price = $coupon->coupon_price;
+                }
+
+                $grandTotal = $total - $discount_price;
+                return response()->json([
+                    'status' => 'Applied.',
+                    'discount_price' => $discount_price,
+                    'grandTotal' => $grandTotal
+                ]);
+
+            } else {
+                return response()->json([
+                    'status' => 'Coupon has been expired.',
+                    'error_status' => 'error'
+                ]);
+            }
+
+        } else {
+            return response()->json([
+                'status' => 'Coupon does not exists.',
+                'error_status' => 'error'
+            ]);
+        }
+
+    }
+
     public function placeOrder(CheckoutFormRequest $request)
     {
         $request->validated();
-        // $str = Str::camel($request->name.rand(0000, 9999));
-        // dd($str);
         $total = 0;
         $cartItemsTotal = Cart::where('user_id', Auth::id())->get();
-        // dd($cartItemsTotal);
         foreach($cartItemsTotal as $product)
         {
-            $total += ($product->products->original_price * $product->product_qty);
+            if ($product->products->sale_price > 0) {
+                $total += ($product->products->sale_price * $product->product_qty);
+            } else {
+                $total += ($product->products->original_price * $product->product_qty);
+            }
         }
         $total += 30000;
         // dd($total);

@@ -2,8 +2,6 @@
 
 @section('title', 'Products')
 
-@include('partials.breadcrumb')
-
 @section('content')
 
 
@@ -46,15 +44,15 @@
                                 <div class="sort-item orderby">
                                     <select name="sort" class="use-chosen" id="sort">
                                         <option value="" selected="selected">Default sorting</option>
-                                        <option value="name_a_z" @if (isset($_GET['sort']) && $_GET['sort'] == 'name_a_z') selected='' @endif>Sort
+                                        <option value="name_a_z" @if (request()->get('sort') && request()->get('sort') == 'name_a_z') selected='' @endif>Sort
                                             by name: A - Z</option>
-                                        <option value="name_z_a" @if (isset($_GET['sort']) && $_GET['sort'] == 'name_z_a') selected='' @endif>Sort
+                                        <option value="name_z_a" @if (request()->get('sort') && request()->get('sort') == 'name_z_a') selected='' @endif>Sort
                                             by name: Z - A</option>
                                         <option value="product_lastest"
-                                            @if (isset($_GET['sort']) && $_GET['sort'] == 'product_lastest') selected='' @endif>Sort by lastest</option>
-                                        <option value="price_low_high" @if (isset($_GET['sort']) && $_GET['sort'] == 'price_low_high') selected='' @endif>
+                                            @if (request()->get('sort') && request()->get('sort') == 'product_lastest') selected='' @endif>Sort by lastest</option>
+                                        <option value="price_low_high" @if (request()->get('sort') && request()->get('sort') == 'price_low_high') selected='' @endif>
                                             Sort by price: low to high</option>
-                                        <option value="price_high_low" @if (isset($_GET['sort']) && $_GET['sort'] == 'price_high_low') selected='' @endif>
+                                        <option value="price_high_low" @if (request()->get('sort') && request()->get('sort') == 'price_high_low') selected='' @endif>
                                             Sort by price: high to low</option>
                                     </select>
                                 </div>
@@ -123,8 +121,9 @@
                                             <div class="wrap-price"><span
                                                     class="product-price">{{ number_format($item->original_price) }}
                                                     VNĐ</span></div>
-                                            <a onClick="addProductInAllProductPage({{ $item->id }})"
-                                                class="btn add-to-cart" href="javascript:0">Add To Cart</a>
+                                            {{-- <a onClick="addProductInAllProductPage({{ $item->id }})"
+                                                class="btn add-to-cart" href="javascript:0">Add To Cart</a> --}}
+                                            <a class="btn add-to-cart" href="{{ url('/shop/' . $item->category->slug . '/' . $item->sCategory->slug . '/' . $item->slug) }}">Buy this</a>
                                             <div class="product-wish">
                                                 @if ($wishlist->contains('product_id', $item->id))
                                                     <a href="javascript:0"
@@ -150,8 +149,8 @@
 
                     <div class="wrap-pagination-info">
                         <ul class="page-numbers text-center">
-                            @if (isset($_GET['sort']))
-                                {{ $products->appends(['sort' => $_GET['sort']])->links() }}
+                            @if (request()->get('brand', 'color', 'size', 'sort'))
+                                {{ $products->appends(request()->query())->links() }}
                             @else
                                 {{ $products->links() }}
                             @endif
@@ -211,9 +210,8 @@
                             padding: 10px 15px 10px 15px;
                         }
                     </style>
-                    <form action="{{ URL::current() }}" method="GET">
+                    <form>
                         <div class="widget mercado-widget filter-widget brand-widget">
-
                             <h2 class="widget-title">Brand <button type="submit"
                                     class="btn add-to-cart button-filter">Filter</button></h2>
                             <div class="widget-content">
@@ -341,17 +339,29 @@
 
     </main>
 
+@endsection
+
+@section('scripts')
     <script>
-        function addProductInAllProductPage(id) {
-            $.ajax({
-                type: "get",
-                url: "/add-to-cart/" + id,
+        // function addProductInAllProductPage(id) {
+        //     $.ajax({
+        //         type: "get",
+        //         url: "/add-to-cart/" + id,
 
-            }).done(function(response) {
-                swal(response.status);
-            });
-        }
-
+        //     }).done(function(response) {
+        //         swal(response.status);
+        //     });
+        // }
+        // function loadWishlist() {
+        //     $.ajax({
+        //         method: "GET",
+        //         url: "/load-wishlist-data",
+        //         success: function (response) {
+        //             $('.wishlist-count').html('');
+        //             $('.wishlist-count').html(response.count);
+        //         }
+        //     });
+        // }
         function addToWishlistInProductPage(id) {
             $.ajax({
                 type: "get",

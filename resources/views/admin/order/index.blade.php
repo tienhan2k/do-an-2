@@ -36,7 +36,7 @@
                                 <tr>
                                     <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                     <td>{{ $item->tracking_no }}</td>
-                                    <td>{{ $item->total_price }}</td>
+                                    <td>{{ number_format($item->total_price) }} VND</td>
                                     <td>{!! $item->status == '0'
                                         ? '<h6 style="color: red">Pending</h6>'
                                         : '<h6 style="color: orange">No information</h6>' !!}</td>

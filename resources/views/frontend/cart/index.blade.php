@@ -91,20 +91,19 @@
                         <h4 class="title-box">Order Summary</h4>
                         <p class="summary-info"><span class="title">Subtotal</span><b
                                 class="index">{{ number_format($sub_total) }} VNĐ</b></p>
-                        <p class="summary-info"><span class="title">Discount</span><b
-                                class="index discount_price">0 VNĐ</b></p>
+                        {{-- <p class="summary-info"><span class="title">Discount</span><b
+                                class="index discount_price">0 VNĐ</b></p> --}}
                         <p class="summary-info"><span class="title">Shipping</span><b
                                 class="index">{{ number_format($shipping_fee) }} VNĐ</b></p>
                         <p class="summary-info total-info "><span class="title">Total</span><b
                                 class="index grandtotal_price">{{ number_format($total = $sub_total + $shipping_fee) }} VNĐ</b></p>
                     </div>
                     <div class="checkout-info">
-                        <label class="checkbox-field">
+                        {{-- <label class="checkbox-field">
                             <input class="frm-input " name="have-code" id="have-code" value="" type="checkbox"><span>I
                                 have promo code</span>
                         </label>
                         <div style="display:none;" id="coupon" class="summary-item">
-                            {{-- <form action=""> --}}
                                 <h4 class="title-box">Coupon code</h4>
                                 <p class="row-in-form">
                                     <label for="coupon-code">Enter your coupon code:</label>
@@ -112,8 +111,8 @@
                                     <small id="error_coupon" class="text-danger"></small>
                                 </p>
                                 <button type="submit" class="btn btn-small apply_coupon_btn">Apply</button>
-                            {{-- </form> --}}
-                        </div>
+
+                        </div> --}}
                         <a class="btn btn-checkout" href="{{ route('frontend.checkout.view') }}">Check out</a>
                         <a class="link-to-shop" href="{{ route('frontend.products') }}">Continue Shopping<i
                                 class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
@@ -183,15 +182,4 @@
         <!--end container-->
 
     </main>
-    <script>
-        var checkbox = document.getElementById('have-code');
-        var delivery_div = document.getElementById('coupon');
-        checkbox.onclick = function() {
-            if (this.checked) {
-                delivery_div.style['display'] = 'block';
-            } else {
-                delivery_div.style['display'] = 'none';
-            }
-        };
-    </script>
 @endsection

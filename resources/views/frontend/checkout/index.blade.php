@@ -73,6 +73,8 @@
                                                     <tr>
                                                         <th class="text-center">Product name</th>
                                                         <th class="text-center">Quantity</th>
+                                                        <th class="text-center">Size</th>
+                                                        <th class="text-center">Color</th>
                                                         <th class="text-center">Price</th>
                                                     </tr>
                                                 </thead>
@@ -95,6 +97,8 @@
                                                         <tr>
                                                             <td>{{ $item->products->name }}</td>
                                                             <td class="text-center">{{ $item->product_qty }}</td>
+                                                            <td class="text-center">{{ $item->size }}</td>
+                                                            <td class="text-center">{{ $item->color }}</td>
                                                             <td class="text-right"> <strong>{{ number_format($sub_total) }}
                                                                 </strong>VNĐ</td>
                                                         </tr>

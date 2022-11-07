@@ -16,6 +16,8 @@ class OrderItems extends Model
         'product_id',
         'qty',
         'price',
+        'color',
+        'size',
     ];
 
     public function products(): BelongsTo

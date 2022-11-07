@@ -118,6 +118,8 @@ class CheckoutController extends Controller
                             'product_id' => $item->product_id,
                             'qty' => $item->product_qty,
                             'price' => $item->products->sale_price,
+                            'color' => $item->color,
+                            'size' => $item->size,
                         ]);
                     } else {
                         OrderItems::create([
@@ -125,6 +127,8 @@ class CheckoutController extends Controller
                             'product_id' => $item->product_id,
                             'qty' => $item->product_qty,
                             'price' => $item->products->original_price,
+                            'color' => $item->color,
+                            'size' => $item->size,
                         ]);
                     }
                     $product = Product::where('id', $item->product_id)->first();
@@ -176,13 +180,27 @@ class CheckoutController extends Controller
             ]);
 
             $cartItems = Cart::where('user_id', Auth::id())->get();
+            dd($cartItems );
             foreach ($cartItems as $item) {
-                OrderItems::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item->product_id,
-                    'qty' => $item->product_qty,
-                    'price' => $item->products->original_price,
-                ]);
+                if ($product->products->sale_price > 0) {
+                    OrderItems::create([
+                        'order_id' => $order->id,
+                        'product_id' => $item->product_id,
+                        'qty' => $item->product_qty,
+                        'price' => $item->products->sale_price,
+                        'color' => $item->color,
+                        'size' => $item->size,
+                    ]);
+                } else {
+                    OrderItems::create([
+                        'order_id' => $order->id,
+                        'product_id' => $item->product_id,
+                        'qty' => $item->product_qty,
+                        'price' => $item->products->original_price,
+                        'color' => $item->color,
+                        'size' => $item->size,
+                    ]);
+                }
                 $product = Product::where('id', $item->product_id)->first();
                 $product->quantity = $product->quantity - $item->product_qty;
                 $product->update();
@@ -202,7 +220,7 @@ class CheckoutController extends Controller
             $cartItems = Cart::where('user_id', Auth::id())->get();
             Cart::destroy($cartItems);
 
-            return redirect('/')->withSuccessMessage('Successfully! Thank you for your order.');
+            return redirect('/')->with('success', 'Successfully! Thank you for your order.');
         }
     }
 }

@@ -32,7 +32,7 @@ class LoginController extends Controller
     protected function authenticated()
     {
         if (Auth::user()->role == '1') {
-            return redirect('/admin/dashboard')->with('message', 'Welcome my bro!');
+            return redirect('/admin/dashboard')->withSuccessMessage('Welcome!');
         } else {
             return redirect('/')->with('success', 'Login successfully!');
         }

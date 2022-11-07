@@ -103,7 +103,7 @@
                                     <div class="col-xs-10">
                                         <select name="" class="form-control" style="width: 200px" id="color">
                                             @foreach ($colorPro as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -117,7 +117,7 @@
                                     <div class="col-xs-10">
                                         <select name="" class="form-control" style="width: 200px" id="size">
                                             @foreach ($sizePro as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

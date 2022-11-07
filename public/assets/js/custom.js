@@ -13,7 +13,6 @@ $(document).ready(function () {
             .closest(".product_data ")
             .find(".qty-input")
             .val();
-
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -26,6 +25,8 @@ $(document).ready(function () {
             data: {
                 prod_id: prod_id,
                 prod_qty: prod_qty,
+                prod_color: prod_color,
+                prod_size: prod_size
             },
             success: function (response) {
                 swal(response.status);

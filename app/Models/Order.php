@@ -23,6 +23,8 @@ class Order extends Model
         'total_price',
         'status',
         'tracking_no',
+        'payment_mode',
+        'payment_id',
     ];
 
     public function orederItems()

@@ -18,6 +18,19 @@
                 </div>
 
                 <div class="card-body">
+                    <form action="{{ URL::current() }}" method="get">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="">Search product</label>
+                                <input type="text" value="{{ old('search') }}" name="search" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <button type="submit" class="btn btn-sm btn-danger">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -77,7 +90,12 @@
 
                         </tbody>
                     </table>
-                    {{ $products->links() }}
+                    <br>
+                    @if (request()->get('search'))
+                                {{ $products->appends(request()->query())->links() }}
+                            @else
+                                {{ $products->links() }}
+                            @endif
                 </div>
 
 

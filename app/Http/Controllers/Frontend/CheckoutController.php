@@ -72,7 +72,6 @@ class CheckoutController extends Controller
     public function placeOrder(CheckoutFormRequest $request)
     {
         $request->validated();
-        // dd(Coupon::where('coupon_code', $request->coupon_code)->exists());
         if (Coupon::where('coupon_code', $request->coupon_code)->exists()) {
             $coupon = Coupon::where('coupon_code', $request->coupon_code)->firstOrFail();
             if ($coupon->start_datetime <= Carbon::today()->format('Y-m-d') && Carbon::today()->format('Y-m-d') <= $coupon->end_datetime) {
@@ -108,6 +107,8 @@ class CheckoutController extends Controller
                     'total_price' => $grandTotal,
                     'tracking_no' => Str::camel($request->name . rand(0000, 9999)),
                     'status' => 0,
+                    'payment_mode' => $request->payment_mode,
+                    'payment_id' => $request->payment_id,
                 ]);
 
                 $cartItems = Cart::where('user_id', Auth::id())->get();
@@ -177,10 +178,12 @@ class CheckoutController extends Controller
                 'total_price' => $total,
                 'tracking_no' => Str::camel($request->name . rand(0000, 9999)),
                 'status' => 0,
+                'payment_mode' => $request->payment_mode,
+                'payment_id' => $request->payment_id,
+
             ]);
 
             $cartItems = Cart::where('user_id', Auth::id())->get();
-            dd($cartItems );
             foreach ($cartItems as $item) {
                 if ($product->products->sale_price > 0) {
                     OrderItems::create([
@@ -220,7 +223,11 @@ class CheckoutController extends Controller
             $cartItems = Cart::where('user_id', Auth::id())->get();
             Cart::destroy($cartItems);
 
-            return redirect('/')->with('success', 'Successfully! Thank you for your order.');
+            if ($request->input('payment_mode') == 'Paid by Paypal') {
+                return response()->json(['status' => 'Successfully! Thank you for your order.']);
+            } else {
+                return redirect(route('frontend.order.view'))->with('success', 'Successfully! Thank you for your order.');
+            }
         }
     }
 }

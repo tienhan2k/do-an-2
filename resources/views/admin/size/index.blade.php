@@ -48,6 +48,7 @@
 
                         </tbody>
                     </table>
+                    <br>
                     {{ $sizes->links() }}
                 </div>
 

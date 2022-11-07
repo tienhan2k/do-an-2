@@ -66,6 +66,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <br>
                     {{ $users->links() }}
                 </div>
 

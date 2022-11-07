@@ -63,7 +63,7 @@
                             @endforelse
 
                         </tbody>
-                    </table>
+                    </table> <br>
                     {{ $sliders->links() }}
                 </div>
 

@@ -84,7 +84,7 @@
                             @endforelse
 
                         </tbody>
-                    </table>
+                    </table> <br>
                     {{ $categories->links() }}
                 </div>
 

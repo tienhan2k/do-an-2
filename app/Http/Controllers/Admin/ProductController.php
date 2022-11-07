@@ -20,12 +20,23 @@ use Illuminate\Support\Facades\Session;
 class ProductController extends Controller
 {
 
-    public function index()
+    public function index(Request $req)
     {
         Session::put('current_url', request()->fullUrl());
-        return view('admin.product.index', [
-            'products' => Product::orderBy('id')->paginate(5)
-        ]);
+
+        if ($req->search != "") {
+            $checkProducts = Product::where("name", "LIKE", "%$req->search%")->where('status', '0');
+
+            if ($checkProducts) {
+                $products = $checkProducts->orderBy('id')->paginate(5);
+            } else {
+                return redirect(route('product.index'))->withSuccessMessage('No products found with your search.');
+            }
+        } else {
+            $products = Product::orderBy('id')->paginate(5);
+        }
+
+        return view('admin.product.index', compact('products'));
     }
 
 

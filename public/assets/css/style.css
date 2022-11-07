@@ -5790,6 +5790,10 @@ table.shop_attributes tbody {
     max-width: 249px;
     width: 100%;
 }
+.summary-item .btnP.btn-mediumP {
+    max-width: 249px;
+    width: 100%;
+}
 
 .summary-item .btn {
     font-size: 14px;

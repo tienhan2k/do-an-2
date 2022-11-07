@@ -50,6 +50,7 @@
 
                         </tbody>
                     </table>
+                    <br>
                     {{ $brands->links() }}
                 </div>
 

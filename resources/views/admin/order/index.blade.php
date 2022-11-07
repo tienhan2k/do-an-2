@@ -54,6 +54,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <br>
                     {{ $orders->links() }}
                 </div>
 

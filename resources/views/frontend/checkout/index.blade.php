@@ -4,6 +4,7 @@
 
 @section('content')
     <!--main area-->
+
     <main id="main" class="main-site">
 
         <div class="container">
@@ -24,37 +25,37 @@
                                 <h3 class="box-title">Billing Address</h3>
                                 <p class="row-in-form">
                                     <label for="name">Name<span>*</span></label>
-                                    <input id="name" type="text" name="name" value="{{ Auth::user()->name }}"
-                                        placeholder="Your name">
+                                    <input id="name" class="name" type="text" name="name"
+                                        value="{{ Auth::user()->name }}" placeholder="Your name">
                                 </p>
                                 <p class="row-in-form">
                                     <label for="address">Address<span>*</span></label>
-                                    <input id="address" type="text" name="address" value="{{ Auth::user()->address }}"
-                                        placeholder="Street at apartment number">
+                                    <input id="address" class="address" type="text" name="address"
+                                        value="{{ Auth::user()->address }}" placeholder="Street at apartment number">
                                 </p>
                                 <p class="row-in-form">
                                     <label for="email">Email Address:</label>
-                                    <input id="email" type="email" name="email" value="{{ Auth::user()->email }}"
-                                        placeholder="Type your email">
+                                    <input id="email" class="email" type="email" name="email"
+                                        value="{{ Auth::user()->email }}" placeholder="Type your email">
                                 </p>
                                 <p class="row-in-form">
                                     <label for="phone">Phone number<span>*</span></label>
-                                    <input id="phone" type="text" name="phone" value="{{ Auth::user()->phone }}"
-                                        placeholder="10 digits format">
+                                    <input id="phone" class="phone" type="text" name="phone"
+                                        value="{{ Auth::user()->phone }}" placeholder="10 digits format">
                                 </p>
                                 <p class="row-in-form">
                                     <label for="province">Province<span>*</span></label>
-                                    <input id="province" type="text" name="province"
+                                    <input id="province" class="province" type="text" name="province"
                                         value="{{ Auth::user()->province }}" placeholder="Province name">
                                 </p>
                                 <p class="row-in-form">
                                     <label for="city">City<span>*</span></label>
-                                    <input id="city" type="text" name="city" value="{{ Auth::user()->city }}"
-                                        placeholder="City name">
+                                    <input id="city" class="city" type="text" name="city"
+                                        value="{{ Auth::user()->city }}" placeholder="City name">
                                 </p>
                                 <p class="row-in-form">
                                     <label for="district">District<span>*</span></label>
-                                    <input id="district" type="text" name="district"
+                                    <input id="district" class="district" type="text" name="district"
                                         value="{{ Auth::user()->district }}" placeholder="District name">
                                 </p>
                                 <p class="row-in-form">
@@ -148,7 +149,12 @@
                                         <p class="summary-info grand-total"><span>Grand Total</span> <span
                                                 class="grand-total-price grandtotal_price">{{ number_format($total = $sub_total + $shipping_fee) }}
                                                 VNĐ</span></p>
-                                        <button type="submit" class="btn btn-medium">Place order now</button>
+                                        @php
+                                            $grandTotalAllProduct = round($total / 25000, 3);
+                                        @endphp
+                                        <button type="submit" class="btn btn-medium">Place order now</button><br><br>
+
+                                        <div class="btnP btn-mediumP" id="paypal-button-container"></div>
                                     </div>
                                     <div class="summary-item shipping-method">
                                         {{-- <h4 class="title-box f-title">Shipping method</h4>
@@ -160,8 +166,8 @@
                                             <label for="coupon-code">Enter Your Coupon code:</label>
                                             <input type="text" name="coupon_code" class="coupon_code" value=""
                                                 placeholder="">
+                                                <button class="btn btn-small apply_coupon_btn">Apply</button>
                                         </p>
-                                        <button class="btn btn-small apply_coupon_btn">Apply</button>
                                     </div>
                                 </div>
                             </form>
@@ -216,6 +222,66 @@
 
         </div>
 
+
     </main>
     <!--main area-->
+
+@endsection
+
+
+@section('scripts')
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AblHHkCHVEL5eI0bNr3t9TC3gS51eVM7Cd-SKkW93gNOSHsfo5GDf0ReH-onY4ne46QYFqb6bghDVbwQ&currency=USD">
+    </script>
+    <script>
+        paypal.Buttons({
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{ $grandTotalAllProduct }}',
+                        }
+                    }]
+                });
+            },
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(function(orderData) {
+                    // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    // const transaction = orderData.purchase_units[0].payments.captures[0];
+                    // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                    var name = $('.name').val();
+                    var email = $('.email').val();
+                    var phone = $('.phone').val();
+                    var address = $('.address').val();
+                    var province = $('.province').val();
+                    var city = $('.city').val();
+                    var district = $('.district').val();
+                    $.ajaxSetup({
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                        },
+                    });
+                    $.ajax({
+                        method: "POST",
+                        url: "/place-order",
+                        data: {
+                            'name': name,
+                            'email': email,
+                            'phone': phone,
+                            'address': address,
+                            'province': province,
+                            'city': city,
+                            'district': district,
+                            'payment_mode': "Paid by Paypal",
+                            'payment_id': orderData.id,
+                        },
+                        success: function(response) {
+                            swal(response.status);
+                            window.location.href = "/my-orders"
+                        }
+                    });
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
 @endsection

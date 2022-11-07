@@ -59,7 +59,7 @@
                             @endforelse
 
                         </tbody>
-                    </table>
+                    </table><br>
                     {{ $coupons->links() }}
                 </div>
 

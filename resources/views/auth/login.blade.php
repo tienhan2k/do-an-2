@@ -125,8 +125,13 @@
                                     </label>
                                     <a class="link-function left-position" href="{{ route('password.request') }}" title="Forgotten password?">Forgotten password?</a>
                                 </fieldset>
-                                <input type="submit" class="btn btn-submit" value="Login" name="submit">
-                            </form>
+                                <input type="submit" class="btn btn-submit"  value="Login" name="submit">
+                            </form><hr>
+
+                            <a href="" class="btn1 btn-submit">
+                                <i class="fa-brands fa-facebook-f"></i>
+                                Login with Facebook
+                            </a>
                         </div>
                     </div>
                 </div><!--end main products area-->

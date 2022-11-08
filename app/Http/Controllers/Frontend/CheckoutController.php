@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 use App\Http\Requests\CheckoutFormRequest;
 
 class CheckoutController extends Controller
@@ -67,6 +69,24 @@ class CheckoutController extends Controller
                 'error_status' => 'error'
             ]);
         }
+    }
+
+    //func to send mail
+    public function sendMail($request, $tracking_num)
+    {
+        $order_data = [
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'province' => $request->province,
+            'district' => $request->district,
+            'payment_mode' => $request->payment_mode == null ? 'COD' : '',
+            'tracking_no' => $tracking_num,
+        ];
+        $items_in_cart = Cart::where('user_id', Auth::id())->get();
+        $to_customer_email = $request->email;
+        Mail::to($to_customer_email)->send(new SendMail($order_data, $items_in_cart));
     }
 
     public function placeOrder(CheckoutFormRequest $request)
@@ -148,10 +168,20 @@ class CheckoutController extends Controller
                         'district' => $request->district,
                     ]);
                 }
+
+                //send mail
+                $tracking_num = $order->tracking_no;
+                $this->sendMail($request, $tracking_num);
+
+
                 $cartItems = Cart::where('user_id', Auth::id())->get();
                 Cart::destroy($cartItems);
 
-                return redirect('/shop')->with('success', 'Successfully! Thank you for your order.');
+                if ($request->input('payment_mode') == 'Paid by Paypal') {
+                    return response()->json(['status' => 'Successfully! Thank you for your order.']);
+                } else {
+                    return redirect(route('frontend.order.view'))->with('success', 'Successfully! Thank you for your order.');
+                }
             }
         } else {
             $total = 0;
@@ -164,7 +194,6 @@ class CheckoutController extends Controller
                 }
             }
             $total += 30000;
-            // dd($total);
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'name' => $request->name,
@@ -180,7 +209,6 @@ class CheckoutController extends Controller
                 'status' => 0,
                 'payment_mode' => $request->payment_mode,
                 'payment_id' => $request->payment_id,
-
             ]);
 
             $cartItems = Cart::where('user_id', Auth::id())->get();
@@ -220,6 +248,12 @@ class CheckoutController extends Controller
                     'district' => $request->district,
                 ]);
             }
+
+            //send mail
+            $tracking_num = $order->tracking_no;
+            $this->sendMail($request, $tracking_num);
+
+
             $cartItems = Cart::where('user_id', Auth::id())->get();
             Cart::destroy($cartItems);
 

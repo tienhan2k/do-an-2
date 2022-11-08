@@ -74,6 +74,11 @@
 .main-info-area .right-section .wrap-icon-section.minicart .index{
 	background: #ff2832;
 }
+
+.wrap-login-item .form-item .btn1 {
+    background: #2761ff;
+}
+
 .has-child-cate .toggle-control:hover::after,
 .has-child-cate .toggle-control:hover::before,
 .widget.filter-widget .vertical-list li a.btn-control:hover::before,

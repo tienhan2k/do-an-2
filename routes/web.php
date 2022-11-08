@@ -15,7 +15,6 @@ use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\WishlistController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SaleController;
@@ -153,6 +152,10 @@ Route::post('/update-cart-item', [CartController::class, 'updateProduct']);
 Route::post('/add-to-wishlist', [WishlistController::class, 'store']);
 Route::get('/add-to-wishlist/{id}', [WishlistController::class, 'storeInProductPage']);
 Route::get('/delete-from-wishlist/{id}', [WishlistController::class, 'destroy']);
+
+Route::get('/auth/facebook/redirect', [\App\Http\Controllers\Auth\LoginController::class, 'facebookRedirect'])->name('facebookRedirect');
+Route::get('/auth/facebook/callback', [\App\Http\Controllers\Auth\LoginController::class, 'facebookCallback'])->name('facebookCallback');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'viewCart'])->name('frontend.cart.view');

@@ -39,6 +39,16 @@ class LoginController extends Controller
 
     }
 
+    public function facebookRedirect()
+    {
+        # code...
+    }
+
+    public function facebookCallback()
+    {
+        return 'cc';
+    }
+
     /**
      * Create a new controller instance.
      *

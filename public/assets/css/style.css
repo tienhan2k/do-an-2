@@ -3629,8 +3629,26 @@ li.menu-item .nav-label.sale-label::before {
     -moz-transition: background 0.3s ease 0s;
     transition: background 0.3s ease 0s;
 }
+.wrap-login-item .form-item .btn1 {
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 19px;
+    border: none;
+    border-radius: 0;
+    padding: 8px;
+    min-width: 119px;
+    text-align: center;
+    margin-top: 28px;
+    -webkit-transition: background 0.3s ease 0s;
+    -o-transition: background 0.3s ease 0s;
+    -moz-transition: background 0.3s ease 0s;
+    transition: background 0.3s ease 0s;
+}
 
 .wrap-login-item .form-item .btn:hover {
+    background: #222222;
+}
+.wrap-login-item .form-item .btn1:hover {
     background: #222222;
 }
 

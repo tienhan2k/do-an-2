@@ -165,7 +165,7 @@
                                         <p class="row-in-form">
                                             <label for="coupon-code">Enter Your Coupon code:</label>
                                             <input type="text" name="coupon_code" class="coupon_code" value=""
-                                                placeholder="">
+                                                placeholder="Enter ur coupon">
                                                 <button class="btn btn-small apply_coupon_btn">Apply</button>
                                         </p>
                                     </div>
@@ -218,10 +218,7 @@
 
             </div>
 
-
-
         </div>
-
 
     </main>
     <!--main area-->
@@ -246,9 +243,6 @@
             },
             onApprove: (data, actions) => {
                 return actions.order.capture().then(function(orderData) {
-                    // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                    // const transaction = orderData.purchase_units[0].payments.captures[0];
-                    // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
                     var name = $('.name').val();
                     var email = $('.email').val();
                     var phone = $('.phone').val();

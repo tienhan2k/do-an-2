@@ -4,22 +4,29 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}">
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic,900,900italic&amp;subset=latin,latin-ext" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Open%20Sans:300,400,400italic,600,600italic,700,700italic&amp;subset=latin,latin-ext" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic,900,900italic&amp;subset=latin,latin-ext"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open%20Sans:300,400,400italic,600,600italic,700,700italic&amp;subset=latin,latin-ext"
+        rel="stylesheet">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/font-awesome.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/owl.carousel.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/flexslider.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/chosen.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/color-01.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/flexslider.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/chosen.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/color-01.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     @yield('styles')
 </head>
 
@@ -32,15 +39,15 @@
 
     <!-- jquery plugins here-->
     <script src="{{ asset('assets/js/jquery-1.12.4.minb8ff.js') }}"></script>
-	<script src="{{ asset('assets/js/jquery-ui-1.12.4.minb8ff.js') }}"></script>
-	<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-	<script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
-	<script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
-	<script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
-	<script src="{{ asset('assets/js/jquery.sticky.js') }}"></script>
-	<script src="{{ asset('assets/js/jquery.flexslider.js') }}"></script>
-	<script src="{{ asset('assets/js/functions.js') }}"></script>
-	<script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-ui-1.12.4.minb8ff.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.flexslider.js') }}"></script>
+    <script src="{{ asset('assets/js/functions.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
@@ -49,17 +56,16 @@
         $.ajax({
             method: "GET",
             url: '/product-list',
-            success: function (response) {
+            success: function(response) {
                 startAutoComplete(response);
             }
         });
 
         function startAutoComplete(availableTags) {
-            $( "#search_product" ).autocomplete({
-            source: availableTags
+            $("#search_product").autocomplete({
+                source: availableTags
             });
         }
-
     </script>
 
     @if (session('status'))
@@ -69,12 +75,12 @@
     @endif
     @if (session('success'))
         <script>
-            swal('Success',"{{ session('success') }}",'success')
+            swal('Success', "{{ session('success') }}", 'success')
         </script>
     @endif
     @if (session('error'))
         <script>
-            swal('Error',"{{ session('error') }}",'error')
+            swal('Error', "{{ session('error') }}", 'error')
         </script>
     @endif
 
